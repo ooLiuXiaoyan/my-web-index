@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenClaw 部署</title>
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🦀&lt;/text&gt;&lt;/svg&gt;" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <main>
+        <h1>OpenClaw 部署</h1>
+        <section class="deploy-section">
+            <h2>Type1:本地部署</h2>
+            <ul>
+                <li>个人电脑：通过 npm 或一键安装脚本在本地运行（示例：`npm install -g openclaw`）。</li>
+                <li>Docker 容器：映射 `~/.openclaw` 目录，暴露 18789 端口，可通过 docker-compose 管理。</li>
+                <li>家庭服务器/NAS：内网或穿透访问，依托自有网络；典型用户在 Synology、Unraid 上部署自托管 K8s。</li>
+            </ul>
+            <p>优点：数据主权、隐私可控、低延迟、离线可用；风险：运维、备份、变更管理由用户负责。</p>
+
+            <h3>目前已经部署的平台</h3>
+            <div class="platform-buttons">
+                <button class="platform-btn cute-btn macos" data-platform="macos" onclick="window.open('https://zcnbpdq25nk7.feishu.cn/wiki/YF4Jw78gsiNM8akXsJUcmPfdnZb', '_blank')">
+                    <span class="icon">🍎</span>
+                    <span class="text">macOS</span>
+                </button>
+                <button class="platform-btn cute-btn windows" data-platform="windows">
+                    <span class="icon">🪟</span>
+                    <span class="text">Windows</span>
+                </button>
+                <button class="platform-btn cute-btn linux" data-platform="linux">
+                    <span class="icon">🐧</span>
+                    <span class="text">Linux</span>
+                </button>
+            </div>
+
+            <div class="deploy-configs">
+                <h4>部署配置信息</h4>
+                <ul class="config-list">
+                    <li class="config-item">
+                        <strong>配置组合1：</strong>
+                        <span class="config-detail">操作系统：macOS Monterey 12.7.6</span>
+                        <span class="config-detail">Node.js：22.16.0</span>
+                        <span class="config-detail">Model：Google/gemini-2.5-flash、deepseek-chat</span>
+                        <span class="config-detail">Search Provider：kimi(moonshot)</span>
+                        <span class="config-detail">Channel：feishu</span>
+                    </li>
+                    <li class="config-item">
+                        <strong>配置组合2：</strong>
+                        <span class="config-detail">操作系统：Windows 10</span>
+                        <span class="config-detail">OpenClaw：2026.3.x</span>
+                        <span class="config-detail">Model：kimi k2.5</span>
+                        <span class="config-detail">Channel：Feishu/Lark</span>
+                        <span class="config-detail">Search Provider：kimi</span>
+                    </li>
+                    <li class="config-item">
+                        <strong>配置组合3：</strong>
+                        <span class="config-detail">操作系统：Ubuntu 24</span>
+                        <span class="config-detail">OpenClaw：v2026.3.28</span>
+                        <span class="config-detail">Model：进行中ing</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="deploy-section">
+            <h2>Type2:云端部署</h2>
+            <ul>
+                <li>托管平台运行：例如 AWS ECS/Fargate、Azure Container Apps、Google Cloud Run。</li>
+                <li>通过 API 网关访问：统一入口，支持认证、限流和监控。</li>
+                <li>优势：部署简单、无基础设施运维、弹性扩缩容；缺点：依赖第三方，成本可变。</li>
+            </ul>
+            <p>风险：数据可能上传到第三方云平台，合规要求高，需做好加密、访问控制与审计。</p>
+
+            <h3>目前已经部署的平台</h3>
+            <div class="cloud-platform-row">
+                <button class="platform-btn cute-btn feishu" data-platform="feishu" onclick="window.location.href='openclaw-feishu-deploy.html'">
+                    <span class="icon">🦞</span>
+                    <span class="text">飞书妙搭一键部署小龙虾</span>
+                </button>
+                <span class="tooltip-icon" data-tooltip="这是我们目前餐饮AI使用的平台">❓</span>
+            </div>
+        </section>
+
+        <section class="deploy-comparison">
+            <h2>关键维度对比</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>维度</th>
+                        <th>本地部署</th>
+                        <th>云端部署</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>数据控制</td>
+                        <td>最高（完全自有）</td>
+                        <td>中等（依赖云供应商）</td>
+                    </tr>
+                    <tr>
+                        <td>部署速度</td>
+                        <td>中等（环境配置）</td>
+                        <td>高（即开即用）</td>
+                    </tr>
+                    <tr>
+                        <td>运维成本</td>
+                        <td>高（自运维）</td>
+                        <td>低（SaaS/托管模式）</td>
+                    </tr>
+                    <tr>
+                        <td>弹性伸缩</td>
+                        <td>有限（硬件资源）</td>
+                        <td>强（自动扩容）</td>
+                    </tr>
+                    <tr>
+                        <td>可用性</td>
+                        <td>取决于本地网络与电力</td>
+                        <td>高（云端 SLA）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="market-cases">
+            <h2>市场常见案例</h2>
+            <ul>
+                <li>本地部署：企业内部 AI 办公助手（例如华为、腾讯内部版本），用于严格隐私工作流。</li>
+                <li>云端部署：SaaS 型GPT平台、OzAI、Aiquote，典型场景为跨团队协同、按需扩容。</li>
+                <li>混合部署：阿里云 RocketMQ+本地模型缓存，金融行业满足合规数据不出境。</li>
+            </ul>
+        </section>
+
+        <section class="references">
+            <h2>共享文档链接</h2>
+            <ul>
+                <li>macOS部署记录：<a href="https://zcnbpdq25nk7.feishu.cn/wiki/YF4Jw78gsiNM8akXsJUcmPfdnZb" target="_blank" rel="noopener">https://zcnbpdq25nk7.feishu.cn/wiki/YF4Jw78gsiNM8akXsJUcmPfdnZb</a> 密码：<strong>qizhen_xx123</strong></li>
+                <li>Windows部署记录：<a href="https://zcnbpdq25nk7.feishu.cn/wiki/Kxzywr8AviScxXkexmBcQyHMn0e" target="_blank" rel="noopener">https://zcnbpdq25nk7.feishu.cn/wiki/Kxzywr8AviScxXkexmBcQyHMn0e</a> 密码：<strong>qizhen_xx123</strong></li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button class="deploy-float-btn secondary" onclick="window.location.href='index.html'">🏠 返回首页</button>
+        <button class="deploy-float-btn secondary" onclick="window.location.href='how-to-use.html'">🤔 怎么用？</button>
+        <button class="deploy-float-btn" onclick="window.location.href='openclaw-deploy.html'" disabled style="opacity: 0.6; cursor: not-allowed;">🚀 如何部署？</button>
+    </div>
+</body>
+
+</html>

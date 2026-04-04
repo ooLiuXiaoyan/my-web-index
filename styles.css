@@ -1,0 +1,862 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #f1f5f9;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+main {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(30, 41, 59, 0.7);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #38bdf8;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #7dd3fc;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #0ea5e9;
+    padding-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+ul li::before {
+    content: '•';
+    color: #0ea5e9;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.mermaid {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.node-button {
+    display: inline-block;
+    padding: 1rem 1.5rem;
+    margin: 0.5rem;
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.node-button:hover {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.card {
+    flex: 1 1 300px;
+    background: transparent;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-left: 4px solid #0078d4;
+}
+
+.card h3 {
+    color: #0078d4;
+    margin-top: 0;
+}
+
+.card ul {
+    padding-left: 1rem;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+}
+
+.comparison-table th,
+.comparison-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.comparison-table th {
+    background: #0078d4;
+    color: white;
+}
+
+#message {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #38bdf8;
+}
+
+.architecture-layers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.layer-card {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.layer-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(56, 189, 248, 0.8);
+    box-shadow: 0 12px 26px rgba(14, 165, 233, 0.25);
+}
+
+.layer-card h3 {
+    color: #7dd3fc;
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.layer-card p {
+    color: #cbd5e1;
+    margin-bottom: 0.75rem;
+}
+
+.layer-details {
+    margin-top: 1.5rem;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.layer-details h2 {
+    color: #38bdf8;
+    margin-bottom: 0.75rem;
+}
+
+.detail-content {
+    color: #e2e8f0;
+}
+
+.references {
+    margin-top: 1.8rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.primary-btn,
+.link-button {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1.1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.primary-btn:hover,
+.link-button:hover {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+}
+
+.deploy-section {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.deploy-comparison table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.8rem;
+}
+
+.deploy-comparison th,
+.deploy-comparison td {
+    padding: 0.7rem;
+    border: 1px solid rgba(180, 190, 210, 0.3);
+}
+
+.deploy-comparison th {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: #fff;
+    text-align: left;
+}
+
+.deploy-comparison tr:nth-child(even) {
+    background: rgba(56, 189, 248, 0.08);
+}
+
+.references h2 {
+    color: #38bdf8;
+}
+
+.references li {
+    margin-bottom: 0.5rem;
+    color: #cbd5e1;
+}
+
+.references a {
+    color: #7dd3fc;
+    text-decoration: none;
+}
+
+.references a:hover {
+    color: #38bdf8;
+    text-decoration: underline;
+}
+
+
+/* 右下角固定部署按钮 */
+
+.float-buttons {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    z-index: 1000;
+}
+
+.deploy-float-btn {
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    transition: all 0.3s ease;
+}
+
+.deploy-float-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.6);
+    background: linear-gradient(135deg, #22d3ee, #38bdf8);
+}
+
+.deploy-float-btn:active {
+    transform: translateY(0);
+}
+
+/* 次要按钮样式 */
+.deploy-float-btn.secondary {
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+.deploy-float-btn.secondary:hover {
+    background: linear-gradient(135deg, #a78bfa, #c4b5fd);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .float-buttons {
+        flex-direction: column;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .deploy-float-btn {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.9rem;
+    }
+}
+
+
+/* 平台选择按钮 - 可爱风格 */
+
+.platform-buttons {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.platform-btn {
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.platform-btn.cute-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.8rem 1rem;
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    min-width: 80px;
+    border: 2px solid transparent;
+}
+
+.platform-btn.cute-btn .icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.platform-btn.cute-btn .text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+
+/* macOS 按钮样式 */
+
+.platform-btn.cute-btn.macos {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border-color: #ff6b9d;
+}
+
+.platform-btn.cute-btn.macos:hover {
+    background: linear-gradient(145deg, #252542, #1e2a52);
+    border-color: #ff8fab;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(255, 107, 157, 0.4);
+}
+
+.platform-btn.cute-btn.macos:hover .icon {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+
+/* Windows 按钮样式 */
+
+.platform-btn.cute-btn.windows {
+    background: linear-gradient(145deg, #1e3a5f, #2d5a87);
+    border-color: #60a5fa;
+}
+
+.platform-btn.cute-btn.windows:hover {
+    background: linear-gradient(145deg, #264b73, #366b9c);
+    border-color: #93c5fd;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(96, 165, 250, 0.4);
+}
+
+.platform-btn.cute-btn.windows:hover .icon {
+    transform: scale(1.2) rotate(5deg);
+}
+
+
+/* Linux 按钮样式 */
+
+.platform-btn.cute-btn.linux {
+    background: linear-gradient(145deg, #2d1b4e, #4a1c6b);
+    border-color: #a78bfa;
+}
+
+.platform-btn.cute-btn.linux:hover {
+    background: linear-gradient(145deg, #3d2566, #5a2580);
+    border-color: #c4b5fd;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(167, 139, 250, 0.4);
+}
+
+.platform-btn.cute-btn.linux:hover .icon {
+    transform: scale(1.2) rotate(-3deg);
+}
+
+
+/* 飞书妙搭按钮样式 */
+
+.platform-btn.cute-btn.feishu {
+    background: linear-gradient(145deg, #1a365d, #234876);
+    border-color: #00d4aa;
+    flex-direction: row;
+    gap: 0.5rem;
+    min-width: auto;
+    padding: 0.7rem 1.2rem;
+}
+
+.platform-btn.cute-btn.feishu .icon {
+    font-size: 1.5rem;
+}
+
+.platform-btn.cute-btn.feishu .text {
+    white-space: nowrap;
+}
+
+.platform-btn.cute-btn.feishu:hover {
+    background: linear-gradient(145deg, #234876, #2d5a87);
+    border-color: #34d399;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 212, 170, 0.35);
+}
+
+.platform-btn.cute-btn.feishu:hover .icon {
+    transform: scale(1.15) wiggle(3deg);
+}
+
+
+/* 云端部署按钮行 */
+
+.cloud-platform-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+
+/* 问号提示图标 */
+
+.tooltip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #1a1a2e;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: help;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+}
+
+.tooltip-icon:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.6);
+    background: linear-gradient(135deg, #fcd34d, #fbbf24);
+}
+
+/* 自定义Tooltip样式 */
+.tooltip-icon {
+    position: relative;
+}
+
+.tooltip-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    padding: 0.5rem 0.75rem;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #f1f5f9;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 8px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.tooltip-icon::before {
+    content: "";
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    border: 6px solid transparent;
+    border-top-color: rgba(56, 189, 248, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.tooltip-icon:hover::after,
+.tooltip-icon:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
+
+/* 移动端适配tooltip */
+@media (max-width: 768px) {
+    .tooltip-icon::after {
+        left: auto;
+        right: 0;
+        transform: translateX(0) scale(0.8);
+        white-space: normal;
+        max-width: 200px;
+        text-align: center;
+    }
+
+    .tooltip-icon:hover::after {
+        transform: translateX(0) scale(1);
+    }
+
+    .tooltip-icon::before {
+        left: auto;
+        right: 8px;
+        transform: translateX(0) scale(0.8);
+    }
+
+    .tooltip-icon:hover::before {
+        transform: translateX(0) scale(1);
+    }
+}
+
+.platform-btn.cute-btn:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* ==================== 多维基础设施架构图样式 ==================== */
+
+/* 图例 */
+.arch-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.legend-color.infra { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+.legend-color.platform { background: linear-gradient(135deg, #388e3c, #66bb6a); }
+.legend-color.ai { background: linear-gradient(135deg, #f57c00, #ffa726); }
+.legend-color.service { background: linear-gradient(135deg, #7b1fa2, #ab47bc); }
+.legend-color.access { background: linear-gradient(135deg, #e64a19, #ff7043); }
+.legend-color.app { background: linear-gradient(135deg, #c62828, #ef5350); }
+
+/* 架构堆栈容器 */
+.arch-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+/* 架构层 */
+.arch-layer {
+    border-radius: 12px;
+    padding: 1.25rem;
+    border: 2px solid;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.arch-layer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 各层颜色主题 */
+.infra-layer {
+    background: linear-gradient(145deg, rgba(25, 118, 210, 0.15), rgba(66, 165, 245, 0.1));
+    border-color: rgba(25, 118, 210, 0.5);
+}
+
+.platform-layer {
+    background: linear-gradient(145deg, rgba(56, 142, 60, 0.15), rgba(102, 187, 106, 0.1));
+    border-color: rgba(56, 142, 60, 0.5);
+}
+
+.ai-layer {
+    background: linear-gradient(145deg, rgba(245, 124, 0, 0.15), rgba(255, 167, 38, 0.1));
+    border-color: rgba(245, 124, 0, 0.5);
+}
+
+.service-layer {
+    background: linear-gradient(145deg, rgba(123, 31, 162, 0.15), rgba(171, 71, 188, 0.1));
+    border-color: rgba(123, 31, 162, 0.5);
+}
+
+.access-layer {
+    background: linear-gradient(145deg, rgba(230, 74, 25, 0.15), rgba(255, 112, 67, 0.1));
+    border-color: rgba(230, 74, 25, 0.5);
+}
+
+.app-layer {
+    background: linear-gradient(145deg, rgba(198, 40, 40, 0.15), rgba(239, 83, 80, 0.1));
+    border-color: rgba(198, 40, 40, 0.5);
+}
+
+/* 层标题 */
+.layer-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.layer-icon {
+    font-size: 1.5rem;
+}
+
+.layer-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.infra-layer .layer-header h3 { color: #90caf9; }
+.platform-layer .layer-header h3 { color: #a5d6a7; }
+.ai-layer .layer-header h3 { color: #ffcc80; }
+.service-layer .layer-header h3 { color: #ce93d8; }
+.access-layer .layer-header h3 { color: #ffab91; }
+.app-layer .layer-header h3 { color: #ef9a9a; }
+
+/* 模块容器 */
+.layer-modules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+/* 模块卡片 */
+.module {
+    background: rgba(15, 23, 42, 0.4);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.module-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.module-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* 技术标签 */
+.tech-tag {
+    display: inline-block;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    background: rgba(56, 189, 248, 0.15);
+    color: #7dd3fc;
+    border-radius: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    transition: all 0.2s;
+}
+
+.tech-tag:hover {
+    background: rgba(56, 189, 248, 0.25);
+    transform: translateY(-1px);
+}
+
+.tech-tag.highlight {
+    background: linear-gradient(135deg, rgba(245, 124, 0, 0.3), rgba(255, 167, 38, 0.2));
+    border-color: rgba(245, 124, 0, 0.5);
+    color: #ffcc80;
+}
+
+.tech-tag.skill {
+    background: linear-gradient(135deg, rgba(198, 40, 40, 0.25), rgba(239, 83, 80, 0.15));
+    border-color: rgba(198, 40, 40, 0.4);
+    color: #ffcdD2;
+}
+
+.tech-tag.agent {
+    background: linear-gradient(135deg, rgba(123, 31, 162, 0.25), rgba(171, 71, 188, 0.15));
+    border-color: rgba(123, 31, 162, 0.4);
+    color: #e1bee7;
+}
+
+/* 部署配置信息样式 */
+.deploy-configs {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 12px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.deploy-configs h4 {
+    margin: 0 0 1rem 0;
+    color: #38bdf8;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.config-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.config-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1rem;
+    background: rgba(30, 41, 59, 0.6);
+    border-radius: 8px;
+    border-left: 3px solid #0ea5e9;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.config-item:hover {
+    background: rgba(30, 41, 59, 0.8);
+    transform: translateX(4px);
+}
+
+.config-item strong {
+    color: #7dd3fc;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.config-detail {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    padding: 0.2rem 0;
+}
+
+.config-detail:not(:last-child)::after {
+    content: "|";
+    margin: 0 0.5rem;
+    color: #475569;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    .config-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .config-detail:not(:last-child)::after {
+        content: "";
+        margin: 0;
+    }
+}
+
+/* 箭头 */
+.arch-arrow {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #64748b;
+    padding: 0.25rem 0;
+    opacity: 0.7;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    .layer-modules {
+        grid-template-columns: 1fr;
+    }
+
+    .arch-legend {
+        gap: 0.5rem;
+    }
+
+    .legend-item {
+        font-size: 0.8rem;
+    }
+
+    .arch-layer {
+        padding: 1rem;
+    }
+
+    .tech-tag {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}

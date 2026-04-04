@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw技术分享：从"对话"到"执行"</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦀</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module">
+        // Removed Mermaid import as it's no longer used
+    </script>
+</head>
+
+<body>
+    <main>
+        <h1>OpenClaw</h1>
+        <p>OpenClaw是一个开源、本地优先的AI智能体框架。</p>
+
+        <p>OpenClaw 的架构基于微服务设计，包含前端界面、API 网关、核心服务、数据存储和监控组件。</p>
+
+        <h2>智能体三层架构</h2>
+        <p>本架构由"三层组织"构成：核心"大脑"、执行"手脚"、记忆"存储"。各层协同实现 agent loop（感知→决策→执行→回顾）。</p>
+
+        <div class="architecture-layers" role="list">
+            <article class="layer layer-card" role="listitem" data-layer="brain">
+                <h3>大脑 (Brain)</h3>
+                <p>核心决策引擎：意图解析、任务规划、动态策略、风险评估。</p>
+            </article>
+            <article class="layer layer-card" role="listitem" data-layer="handsfeet">
+                <h3>手脚 (Hands & Feet)</h3>
+                <p>执行工具集：API调用、Shell、自动化浏览、文件 I/O、SaaS 集成。</p>
+            </article>
+            <article class="layer layer-card" role="listitem" data-layer="memory">
+                <h3>记忆 (Memory)</h3>
+                <p>短期与长期记忆：对话缓存、历史语境、向量数据库、知识图谱。</p>
+            </article>
+        </div>
+
+        <section id="layer-details" class="layer-details" aria-live="polite">
+            <h2>详细解读</h2>
+            <div id="detail-content" class="detail-content">
+                <p>大脑、手脚、记忆三层构成了OpenClaw的基础架构。请点击任一层查看权威资料补充内容。</p>
+            </div>
+        </section>
+
+        <h2>技术栈：模块化、轻量化、安全可控</h2>
+        <!-- <p>OpenClaw 使用现代技术栈，包括 React 前端、Node.js 后端、Kubernetes 容器编排、PostgreSQL 数据库等。</p> -->
+
+        <h2>技术架构</h2>
+        <p>从下往上的六层多维架构</p>
+
+        <!-- 图例 -->
+        <div class="arch-legend">
+            <div class="legend-item"><span class="legend-color infra"></span>基础设施层</div>
+            <div class="legend-item"><span class="legend-color platform"></span>平台软件层</div>
+            <div class="legend-item"><span class="legend-color ai"></span>AI/模型层</div>
+            <div class="legend-item"><span class="legend-color service"></span>服务层</div>
+            <div class="legend-item"><span class="legend-color access"></span>接入层</div>
+            <div class="legend-item"><span class="legend-color app"></span>应用层</div>
+        </div>
+
+        <!-- 六层架构图 -->
+        <div class="arch-stack">
+            <!-- 🔷 基础设施层 -->
+            <div class="arch-layer infra-layer">
+                <div class="layer-header">
+                    <span class="layer-icon">🔷</span>
+                    <h3>基础设施层 Infrastructure</h3>
+                </div>
+                <div class="layer-modules">
+                    <div class="module">
+                        <div class="module-title">🖥️ 硬件资源</div>
+                        <div class="module-items">
+                            <span class="tech-tag">物理服务器</span>
+                            <span class="tech-tag">云服务器ECS</span>
+                            <span class="tech-tag">K8s Nodes</span>
+                            <span class="tech-tag">存储阵列</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">🌐 网络设施</div>
+                        <div class="module-items">
+                            <span class="tech-tag">负载均衡LB</span>
+                            <span class="tech-tag">防火墙WAF</span>
+                            <span class="tech-tag">CDN</span>
+                            <span class="tech-tag">专线VPN</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">⚙️ 虚拟化层</div>
+                        <div class="module-items">
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Kubernetes</span>
+                            <span class="tech-tag">Istio</span>
+                            <span class="tech-tag">Prometheus</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arch-arrow">⬇️</div>
+
+            <!-- 🟢 平台软件层 -->
+            <div class="arch-layer platform-layer">
+                <div class="layer-header">
+                    <span class="layer-icon">🟢</span>
+                    <h3>平台软件层 Platform</h3>
+                </div>
+                <div class="layer-modules">
+                    <div class="module">
+                        <div class="module-title">🗄️ 数据存储</div>
+                        <div class="module-items">
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Redis</span>
+                            <span class="tech-tag">Elasticsearch</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">🔧 中间件</div>
+                        <div class="module-items">
+                            <span class="tech-tag">RabbitMQ</span>
+                            <span class="tech-tag">Kafka</span>
+                            <span class="tech-tag">etcd</span>
+                            <span class="tech-tag">Nginx</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">🚀 DevOps</div>
+                        <div class="module-items">
+                            <span class="tech-tag">GitLab CI</span>
+                            <span class="tech-tag">Harbor</span>
+                            <span class="tech-tag">ArgoCD</span>
+                            <span class="tech-tag">Grafana</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arch-arrow">⬇️</div>
+
+            <!-- 🟡 AI/大模型层 -->
+            <div class="arch-layer ai-layer">
+                <div class="layer-header">
+                    <span class="layer-icon">🟡</span>
+                    <h3>AI/大模型层 AI Models</h3>
+                </div>
+                <div class="layer-modules">
+                    <div class="module">
+                        <div class="module-title">🧠 大模型提供商</div>
+                        <div class="module-items">
+                            <span class="tech-tag highlight">🤖 Claude</span>
+                            <span class="tech-tag highlight">🚀 Moonshot Kimi</span>
+                            <span class="tech-tag">⭐ GPT-4</span>
+                            <span class="tech-tag">🌙 Gemini</span>
+                            <span class="tech-tag">🦙 LLaMA</span>
+                            <span class="tech-tag highlight">💎 DeepSeek</span>
+                            <span class="tech-tag highlight">🔥 Qwen</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">⚡ 模型基础设施</div>
+                        <div class="module-items">
+                            <span class="tech-tag">GPU集群 A100/H100</span>
+                            <span class="tech-tag">vLLM推理引擎</span>
+                            <span class="tech-tag">Triton服务</span>
+                            <span class="tech-tag">MLflow管理</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">📐 向量数据库</div>
+                        <div class="module-items">
+                            <span class="tech-tag">Pinecone</span>
+                            <span class="tech-tag">Milvus</span>
+                            <span class="tech-tag">pgvector</span>
+                            <span class="tech-tag">Weaviate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arch-arrow">⬇️</div>
+
+            <!-- 🟣 服务层 -->
+            <div class="arch-layer service-layer">
+                <div class="layer-header">
+                    <span class="layer-icon">🟣</span>
+                    <h3>服务层 Services</h3>
+                </div>
+                <div class="layer-modules">
+                    <div class="module">
+                        <div class="module-title">🔍 Search Providers</div>
+                        <div class="module-items">
+                            <span class="tech-tag">Google Search</span>
+                            <span class="tech-tag">Bing Search</span>
+                            <span class="tech-tag">SerpAPI</span>
+                            <span class="tech-tag">Tavily</span>
+                            <span class="tech-tag">Brave</span>
+                            <span class="tech-tag">Exa/Metaphor</span>
+                            <span class="tech-tag highlight">Telegram</span>
+                            <span class="tech-tag highlight">Kimi</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">🚪 API Gateway</div>
+                        <div class="module-items">
+                            <span class="tech-tag">Kong</span>
+                            <span class="tech-tag">AWS Gateway</span>
+                            <span class="tech-tag">Nginx Plus</span>
+                            <span class="tech-tag">GraphQL</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">🔩 微服务</div>
+                        <div class="module-items">
+                            <span class="tech-tag">用户服务</span>
+                            <span class="tech-tag">认证服务</span>
+                            <span class="tech-tag">对话服务</span>
+                            <span class="tech-tag">文档服务</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arch-arrow">⬇️</div>
+
+            <!-- 🟠 接入层 -->
+            <div class="arch-layer access-layer">
+                <div class="layer-header">
+                    <span class="layer-icon">🟠</span>
+                    <h3>接入层 Access</h3>
+                </div>
+                <div class="layer-modules">
+                    <div class="module">
+                        <div class="module-title">📱 Channels</div>
+                        <div class="module-items">
+                            <a href="http://127.0.0.1:18789/chat?session=main" class="tech-tag" style="text-decoration: underline; cursor: pointer;" target="_blank" rel="noopener">💻 Web端：Openclaw Control</a>
+                            <span class="tech-tag">📱 移动端</span>
+                            <span class="tech-tag highlight">💬 微信</span>
+                            <a href="#" class="tech-tag highlight" style="text-decoration: underline; cursor: pointer;">📱 飞书</a>
+                            <span class="tech-tag">🤖 Slack</span>
+                            <span class="tech-tag">📧 Email</span>
+                            <span class="tech-tag">🔌 WebSocket</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">🌉 Gateway</div>
+                        <div class="module-items">
+                            <span class="tech-tag">🛡️ WAF</span>
+                            <span class="tech-tag">⚖️ 限流器</span>
+                            <span class="tech-tag">🔑 认证网关</span>
+                            <span class="tech-tag">📡 WS网关</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arch-arrow">⬇️</div>
+
+            <!-- 🔴 应用层 -->
+            <div class="arch-layer app-layer">
+                <div class="layer-header">
+                    <span class="layer-icon">🔴</span>
+                    <h3>应用层 Applications</h3>
+                </div>
+                <div class="layer-modules">
+                    <div class="module">
+                        <div class="module-title">🎯 Skills</div>
+                        <div class="module-items">
+                            <span class="tech-tag skill">📝 代码生成</span>
+                            <span class="tech-tag skill">🔍 代码审查</span>
+                            <span class="tech-tag skill">🧪 测试生成</span>
+                            <span class="tech-tag skill">📊 数据分析</span>
+                            <span class="tech-tag skill">🌐 网络搜索</span>
+                            <span class="tech-tag skill">📄 文档问答</span>
+                            <span class="tech-tag skill">🔧 DevOps</span>
+                            <span class="tech-tag skill">🎨 UI设计</span>
+                        </div>
+                    </div>
+                    <div class="module">
+                        <div class="module-title">🤖 Agents</div>
+                        <div class="module-items">
+                            <span class="tech-tag agent">👨‍💻 Coding Agent</span>
+                            <span class="tech-tag agent">🔬 Research Agent</span>
+                            <span class="tech-tag agent">📈 Analysis Agent</span>
+                            <span class="tech-tag agent">🎓 Tutor Agent</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button id="how-to-use-btn" class="deploy-float-btn secondary" onclick="window.location.href='how-to-use.html'">🤔 怎么用？</button>
+        <button id="deploy-btn" class="deploy-float-btn" onclick="window.location.href='openclaw-deploy.html'">🚀 如何部署？</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

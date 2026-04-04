@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何使用 ✨ 智能体 ✨ </title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦀</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .section-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .subsection-icon {
+            font-size: 1.2rem;
+            margin-right: 0.35rem;
+        }
+        
+        .list-icon {
+            margin-right: 0.35rem;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>🎯 如何使用 OpenClaw</h1>
+        <p>将 OpenClaw 智能体框架应用到日常工作中，提升开发效率与团队协作。</p>
+
+        <section class="deploy-section">
+            <h2><span class="section-icon">💻</span>一、代码开发场景</h2>
+
+            <h3><span class="subsection-icon">✨</span>1.1 代码生成与补全</h3>
+            <ul>
+                <li><span class="list-icon">📝</span><strong>需求描述生成代码：</strong>直接描述功能需求，OpenClaw 自动生成对应代码实现
+                    <button onclick="openDrawer('code-gen-tech')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem; font-size: 0.75rem; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;">🛠️ 技术路线(待完善)</button>
+                    <button onclick="openDrawer('code-gen-case')" style="margin-left: 0.25rem; padding: 0.2rem 0.6rem; font-size: 0.75rem; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;">💡 实施案例(待完善)</button>
+                </li>
+                <li><span class="list-icon">🔌</span><strong>API 接口编写：</strong>输入接口定义，自动生成 Controller/Service/DAO 层代码</li>
+                <li><span class="list-icon">🧪</span><strong>单元测试生成：</strong>基于现有代码自动生成测试用例，提升测试覆盖率</li>
+                <li><span class="list-icon">🗄️</span><strong>SQL 语句优化：</strong>复杂查询优化建议，索引推荐</li>
+            </ul>
+
+            <h3><span class="subsection-icon">🔍</span>1.2 代码审查与重构</h3>
+            <ul>
+                <li><span class="list-icon">👀</span><strong>自动 Code Review：</strong>提交 PR 前自动检查代码规范、潜在 Bug、安全漏洞 <span class="list-icon" title="已在实施">✨</span></li>
+                <li><span class="list-icon">🔄</span><strong>重构建议：</strong>识别代码坏味道，提供重构方案</li>
+                <li><span class="list-icon">⚡</span><strong>性能分析：</strong>发现性能瓶颈，给出优化建议</li>
+                <li><span class="list-icon">📦</span><strong>依赖检查：</strong>检测过时依赖，提示安全漏洞</li>
+            </ul>
+
+            <h3><span class="subsection-icon">🏗️</span>1.3 技术方案设计</h3>
+            <ul>
+                <li><span class="list-icon">🗂️</span><strong>架构设计辅助：</strong>根据业务场景推荐合适的技术架构</li>
+                <li><span class="list-icon">🗃️</span><strong>数据库设计：</strong>根据业务模型生成 ER 图、表结构设计</li>
+                <li><span class="list-icon">🔌</span><strong>API 设计规范：</strong>RESTful/GraphQL 接口设计建议</li>
+            </ul>
+
+            <div class="case-study" style="margin-top: 1.5rem; padding: 1.25rem; background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1)); border-radius: 12px; border: 2px dashed rgba(139, 92, 246, 0.4);">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="font-size: 1.2rem;">💡</span>
+                    <span style="font-weight: 600; color: #c4b5fd;">实战案例</span>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                    <button class="platform-btn cute-btn" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.2)); border: 1px solid rgba(139, 92, 246, 0.5); padding: 0.875rem 1.5rem; border-radius: 10px; cursor: pointer; transition: all 0.3s;"
+                        onclick="openDrawer('vscode-kimi')">
+                        <span style="font-size: 1.1rem; margin-right: 0.5rem;">🚀</span>
+                        <span style="font-weight: 600; color: #e2e8f0;">Claude code + Visual Studio Code + CC Switch + Kimi API</span>
+                    </button>
+                    <a href="https://zcnbpdq25nk7.feishu.cn/wiki/E4mLwZhY3ioeg1kyd1ccU0J1nCe" target="_blank" class="platform-btn cute-btn" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2)); border: 1px solid rgba(16, 185, 129, 0.5); padding: 0.875rem 1.5rem; border-radius: 10px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center;"
+                        title="密码：3#H25742">
+                        <span style="font-size: 1.1rem; margin-right: 0.5rem;">📄</span>
+                        <span style="font-weight: 600; color: #e2e8f0;">部署文档</span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="deploy-section">
+            <h2><span class="section-icon">🔧</span>二、运维与 DevOps 场景</h2>
+
+            <h3><span class="subsection-icon">🤖</span>2.1 自动化运维</h3>
+            <ul>
+                <li><span class="list-icon">📜</span><strong>日志分析：</strong>自动分析系统日志，定位异常根因</li>
+                <li><span class="list-icon">🚨</span><strong>故障排查：</strong>根据告警信息提供排查步骤和解决方案</li>
+                <li><span class="list-icon">⚙️</span><strong>配置管理：</strong>生成 Kubernetes/Docker 配置文件</li>
+                <li><span class="list-icon">📜</span><strong>脚本编写：</strong>Shell/Python 自动化运维脚本生成</li>
+            </ul>
+
+            <h3><span class="subsection-icon">🚀</span>2.2 CI/CD 集成</h3>
+            <ul>
+                <li><span class="list-icon">📈</span><strong>流水线优化：</strong>分析现有 CI/CD 流程，提供优化建议</li>
+                <li><span class="list-icon">📦</span><strong>发布管理：</strong>辅助制定发布计划、回滚策略</li>
+                <li><span class="list-icon">📊</span><strong>监控告警：</strong>生成 Prometheus/Grafana 监控配置</li>
+            </ul>
+
+            <div class="case-study" style="margin-top: 1.5rem; padding: 1.25rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1)); border-radius: 12px; border: 2px dashed rgba(16, 185, 129, 0.4);">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="font-size: 1.2rem;">💡</span>
+                    <span style="font-weight: 600; color: #6ee7b7;">设想案例</span>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                    <button class="platform-btn cute-btn" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2)); border: 1px solid rgba(16, 185, 129, 0.5); padding: 0.875rem 1.5rem; border-radius: 10px; cursor: pointer; transition: all 0.3s;"
+                        onclick="openDrawer('ops-assistant')">
+                        <span style="font-size: 1.1rem; margin-right: 0.5rem;">🤖</span>
+                        <span style="font-weight: 600; color: #e2e8f0;">智能运维助手</span>
+                    </button>
+                    <button class="platform-btn cute-btn" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.2)); border: 1px solid rgba(245, 158, 11, 0.5); padding: 0.875rem 1.5rem; border-radius: 10px; cursor: pointer; transition: all 0.3s;"
+                        onclick="openDrawer('auto-response')">
+                        <span style="font-size: 1.1rem; margin-right: 0.5rem;">⚡</span>
+                        <span style="font-weight: 600; color: #e2e8f0;">无人值守自动响应系统</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="deploy-section">
+            <h2><span class="section-icon">👥</span>三、团队协作场景</h2>
+
+            <h3><span class="subsection-icon">📚</span>3.1 知识管理</h3>
+            <ul>
+                <li><span class="list-icon">📄</span><strong>文档自动生成：</strong>根据代码自动生成 API 文档、README</li>
+                <li><span class="list-icon">📋</span><strong>技术方案沉淀：</strong>将讨论内容整理成结构化文档</li>
+                <li><span class="list-icon">❓</span><strong>FAQ 智能问答：</strong>基于知识库回答团队成员技术问题</li>
+            </ul>
+
+            <h3><span class="subsection-icon">📅</span>3.2 项目管理</h3>
+            <ul>
+                <li><span class="list-icon">📋</span><strong>需求分析：</strong>协助梳理产品需求，拆解技术任务</li>
+                <li><span class="list-icon">⏱️</span><strong>工时估算：</strong>基于历史数据辅助评估开发工时</li>
+                <li><span class="list-icon">⚠️</span><strong>风险预警：</strong>识别项目进度风险，提前预警</li>
+            </ul>
+
+            <h3><span class="subsection-icon">💬</span>3.3 跨平台集成（通过 Feishu/Lark）</h3>
+            <ul>
+                <li><span class="list-icon">🤖</span><strong>群聊助手：</strong>在飞书群中直接@机器人提问技术问题</li>
+                <li><span class="list-icon">📰</span><strong>日报生成：</strong>自动汇总代码提交生成工作日报</li>
+                <li><span class="list-icon">📝</span><strong>会议辅助：</strong>会议纪要自动生成、待办事项提取</li>
+            </ul>
+        </section>
+
+        <section class="deploy-section">
+            <h2><span class="section-icon">🗃️</span>四、大模型语料库建设</h2>
+
+            <h3><span class="subsection-icon">📚</span>4.1 语料库架构设计</h3>
+            <ul>
+                <li><span class="list-icon">🏗️</span><strong>分层架构：</strong>原始层 → 清洗层 → 标注层 → 训练层，构建完整数据 Pipeline</li>
+                <li><span class="list-icon">📂</span><strong>分类体系：</strong>按领域（金融/医疗/法律）、类型（问答/对话/文档）、语言（中/英/多语言）多维分类</li>
+                <li><span class="list-icon">🔄</span><strong>版本控制：</strong>Git LFS 管理大文件，支持数据集版本回溯与差异对比</li>
+                <li><span class="list-icon">📊</span><strong>质量看板：</strong>实时监控数据质量指标、标注进度、分布统计</li>
+            </ul>
+
+            <h3><span class="subsection-icon">🎯</span>4.2 数据采集与处理</h3>
+            <ul>
+                <li><span class="list-icon">🌐</span><strong>多源采集：</strong>网页抓取、API 接口、PDF/Word 解析、数据库同步</li>
+                <li><span class="list-icon">🧹</span><strong>清洗 Pipeline：</strong>去重、去噪、格式统一、编码转换、敏感信息过滤</li>
+                <li><span class="list-icon">✂️</span><strong>智能分块：</strong>语义感知的文本切分，保持上下文连贯性</li>
+                <li><span class="list-icon">🏷️</span><strong>自动标注：</strong>基于规则 + 模型预标注，提升标注效率 10 倍以上</li>
+            </ul>
+
+            <h3><span class="subsection-icon">🔍</span>4.3 数据质量保障</h3>
+            <ul>
+                <li><span class="list-icon">✅</span><strong>质量检测：</strong>完整性、准确性、一致性、时效性多维度评估</li>
+                <li><span class="list-icon">👥</span><strong>人机协同：</strong>模型初筛 + 人工复核 + 专家抽检三级质检</li>
+                <li><span class="list-icon">📈</span><strong>效果反馈：</strong>训练效果反向评估数据质量，持续优化语料库</li>
+                <li><span class="list-icon">🔒</span><strong>安全合规：</strong>版权检查、隐私脱敏、内容审核，确保合法合规</li>
+            </ul>
+
+            <h3><span class="subsection-icon">⚡</span>4.4 语料库应用场景</h3>
+            <ul>
+                <li><span class="list-icon">🤖</span><strong>预训练数据：</strong>通用语料构建行业基座模型</li>
+                <li><span class="list-icon">🎯</span><strong>微调数据：</strong>高质量指令数据实现领域适配</li>
+                <li><span class="list-icon">🔍</span><strong>RAG 知识库：</strong>向量化语料支撑检索增强生成</li>
+                <li><span class="list-icon">📊</span><strong>评测基准：</strong>标准化测试集评估模型能力</li>
+            </ul>
+
+            <div class="case-study" style="margin-top: 1.5rem; padding: 1.25rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.1)); border-radius: 12px; border: 2px dashed rgba(99, 102, 241, 0.4);">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="font-size: 1.2rem;">💡</span>
+                    <span style="font-weight: 600; color: #a5b4fc;">语料库建设案例</span>
+                </div>
+                <button class="platform-btn cute-btn" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2)); border: 1px solid rgba(99, 102, 241, 0.5); padding: 0.875rem 1.5rem; border-radius: 10px; cursor: pointer; transition: all 0.3s;"
+                    onclick="openDrawer('corpus-building')">
+                    <span style="font-size: 1.1rem; margin-right: 0.5rem;">📖</span>
+                    <span style="font-weight: 600; color: #e2e8f0;">餐饮领域语料库建设实践</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="deploy-section">
+            <h2><span class="section-icon">🏢</span>五、业务场景应用</h2>
+
+            <h3><span class="subsection-icon">🍽️</span>5.1 餐饮行业（当前主要应用）</h3>
+            <ul>
+                <li><span class="list-icon">📊</span><strong>菜单智能分析：</strong>分析销售数据，推荐菜品优化方案</li>
+                <li><span class="list-icon">📦</span><strong>库存预警：</strong>基于历史消耗预测库存需求</li>
+                <li><span class="list-icon">💬</span><strong>客服自动回复：</strong>常见问题自动回答，人工客服兜底</li>
+                <li><span class="list-icon">✍️</span><strong>营销文案生成：</strong>节日活动文案、朋友圈宣传语自动生成<span> ✨ </span></li>
+                <li><span class="list-icon">📷</span><strong>食品安全：</strong>后厨拍照自动进行食安分析；摄像头定期采集食安异常数据；整治报告 ✨ </li>
+                <li><span class="list-icon">⚖️</span><strong>法律顾问：</strong>智能法律咨询与文书生成 ✨ </li>
+            </ul>
+
+            <h3><span class="subsection-icon">📈</span>5.2 数据分析场景</h3>
+            <ul>
+                <li><span class="list-icon">🧹</span><strong>数据清洗：</strong>自动生成数据清洗脚本</li>
+                <li><span class="list-icon">📊</span><strong>报表生成：</strong>自然语言描述需求，自动生成数据报表 ✨ </li>
+                <li><span class="list-icon">📉</span><strong>可视化建议：</strong>推荐合适的图表类型展示数据</li>
+            </ul>
+
+            <h3><span class="subsection-icon">🗃️</span>5.3 高质量数据集建设</h3>
+            <ul>
+                <li><span class="list-icon">🔍</span><strong>数据质量检测：</strong>自动识别脏数据、缺失值、异常值，提供清洗建议</li>
+                <li><span class="list-icon">🏷️</span><strong>智能标注辅助：</strong>利用模型预标注，降低人工标注成本，提升标注一致性</li>
+                <li><span class="list-icon">📚</span><strong>数据增强生成：</strong>基于现有样本生成多样化训练数据，扩充数据集规模</li>
+                <li><span class="list-icon">⚖️</span><strong>样本均衡优化：</strong>检测类别不平衡问题，生成少数类样本或采样策略建议</li>
+                <li><span class="list-icon">🔐</span><strong>隐私脱敏处理：</strong>自动识别敏感信息（手机号、身份证等），进行脱敏或合成数据替换</li>
+                <li><span class="list-icon">📋</span><strong>标注规范制定：</strong>协助制定标注指南、验收标准，提升数据标注质量</li>
+                <li><span class="list-icon">🔄</span><strong>数据版本管理：</strong>数据集迭代版本控制，追踪数据变更与模型效果关联</li>
+            </ul>
+        </section>
+
+        <section class="deploy-section">
+            <h2><span class="section-icon">⭐</span>六、最佳实践建议</h2>
+
+            <div class="deploy-comparison">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>场景</th>
+                            <th>推荐用法</th>
+                            <th>注意事项</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>日常编码</td>
+                            <td>代码生成 + 自动审查</td>
+                            <td>生成代码需人工复核</td>
+                        </tr>
+                        <tr>
+                            <td>故障处理</td>
+                            <td>日志分析 + 方案推荐</td>
+                            <td>生产环境操作需谨慎</td>
+                        </tr>
+                        <tr>
+                            <td>团队协作</td>
+                            <td>飞书集成 + 知识库</td>
+                            <td>敏感信息脱敏处理</td>
+                        </tr>
+                        <tr>
+                            <td>方案设计</td>
+                            <td>架构建议 + 方案对比</td>
+                            <td>结合团队实际情况决策</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="deploy-section">
+            <h2><span class="section-icon">🚀</span>七、快速开始</h2>
+            <ol>
+                <li><span class="list-icon">📱</span><strong>选择 Channel：</strong>根据团队习惯选择 Web 端、飞书或 Slack 集成</li>
+                <li><span class="list-icon">🧠</span><strong>配置 Model：</strong>根据场景选择合适的 LLM（开发场景推荐 Claude/GPT-4）</li>
+                <li><span class="list-icon">🎯</span><strong>设置 Skills：</strong>启用需要的技能（代码生成、代码审查等）</li>
+                <li><span class="list-icon">🔍</span><strong>接入 Search：</strong>配置搜索提供方，增强知识检索能力</li>
+                <li><span class="list-icon">✨</span><strong>开始使用：</strong>直接描述需求，与 OpenClaw 对话协作</li>
+            </ol>
+            <p style="margin-top: 1rem; padding: 1rem; background: rgba(56, 189, 248, 0.1); border-radius: 8px; border-left: 3px solid #0ea5e9;">
+                💡 <strong>提示：</strong>建议从小场景开始试用，逐步扩展到更多工作流中。
+            </p>
+        </section>
+
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button class="deploy-float-btn secondary" onclick="window.location.href='index.html'">🏠 返回首页</button>
+        <button class="deploy-float-btn" onclick="window.location.href='how-to-use.html'" disabled style="opacity: 0.6; cursor: not-allowed;">🤔 怎么用？</button>
+        <button class="deploy-float-btn secondary" onclick="window.location.href='openclaw-deploy.html'">🚀 如何部署？</button>
+    </div>
+
+    <!-- 抽屉遮罩层 -->
+    <div id="drawer-overlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+
+    <!-- 右侧抽屉 -->
+    <div id="drawer" class="drawer">
+        <div class="drawer-header">
+            <h3 id="drawer-title">🚀 集成方案详情</h3>
+            <button class="drawer-close" onclick="closeDrawer()">✕</button>
+        </div>
+        <div id="drawer-content" class="drawer-content">
+            <!-- 动态内容将在这里插入 -->
+        </div>
+    </div>
+
+    <style>
+        /* 抽屉遮罩层 */
+        
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 右侧抽屉 */
+        
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100%;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border-left: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .drawer.active {
+            right: 0;
+        }
+        /* 抽屉头部 */
+        
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            background: rgba(139, 92, 246, 0.1);
+        }
+        
+        .drawer-header h3 {
+            margin: 0;
+            color: #c4b5fd;
+            font-size: 1.2rem;
+        }
+        
+        .drawer-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .drawer-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+        }
+        /* 抽屉内容 */
+        
+        .drawer-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        .drawer-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .drawer-section h4 {
+            color: #e2e8f0;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+        
+        .drawer-section h5 {
+            color: #7dd3fc;
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+        
+        .drawer-section p {
+            color: #94a3b8;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .drawer-section code {
+            display: block;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            color: #a5d6a7;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid rgba(139, 92, 246, 0.5);
+        }
+        /* 步骤样式 */
+        
+        .step-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h5 {
+            color: #e2e8f0;
+            margin: 0 0 0.35rem 0;
+        }
+        
+        .step-content p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        /* 移动端适配 */
+        
+        @media (max-width: 480px) {
+            .drawer {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+
+    <script>
+        // 抽屉内容数据
+        const drawerData = {
+            'vscode-kimi': {
+                title: '🚀 集成方案详情',
+                content: `
+                    <div class="drawer-section">
+                        <h4>Claude Code + VS Code + Kimi API</h4>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">打造智能代码开发一体化工作流</p>
+                    </div>
+
+                    <div class="drawer-section">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>安装 Claude Code 扩展</h5>
+                                <p>在 VS Code 扩展商店搜索并安装 "Claude Code" 扩展，或直接从 GitHub 仓库下载安装包。</p>
+                                <code>ext:anthropic.claude-code</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>部署 CC Switch 代理服务</h5>
+                                <p>CC Switch 是一个Claude Code 配置管理工具，可以实现在多个 API 供应商之间快速切换，无需手动修改配置文件。在本案例中，它是是连接 Claude Code 与 Kimi API 的智能网关，实现协议转换和流量调度。</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>协议适配：将 Claude Code 的 OpenAI 格式请求转换为 Kimi API 格式</li>
+                                    <li>多模型路由：支持 Kimi、DeepSeek、Gemini 等多种模型动态切换</li>
+                                    <li>流量控制：请求限流、重试机制、错误降级</li>
+                                    <li>安全加固：API Key 集中管理，支持请求审计日志</li>
+                                </ul>
+                                <code>docker run -p 8080:8080 -e KIMI_API_KEY=xxx cc-switch:latest</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>配置 Kimi API</h5>
+                                <p>在 Claude Code 设置中指向 CC Switch 服务地址，实现无缝接入 Kimi 大模型能力。</p>
+                                <p><strong>Tips：当使用CC Switch 作为代理服务时，这一步要提前到第二步，只要获取一下key，然后配置到ccswitch中即可</strong></p>
+                                <code>settings.json: openai.baseUrl = "http://localhost:8080/v1"</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>启用智能功能</h5>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>智能代码补全 (Tab)</li>
+                                    <li>自然语言生成代码 (Cmd+K)</li>
+                                    <li>代码解释与重构建议</li>
+                                    <li>自动化单元测试生成</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="drawer-section" style="background: rgba(139, 92, 246, 0.1); border-radius: 8px; padding: 1rem;">
+                        <h5 style="margin-bottom: 0.5rem;">💡 效果预览</h5>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
+                            通过该集成方案，开发者可以在熟悉的 VS Code 环境中，使用 Kimi 大模型能力实现代码智能补全、生成、审查的一体化工作流，大幅提升开发效率。
+                        </p>
+                    </div>
+                `
+            },
+            'ops-assistant': {
+                title: '🤖 智能运维助手',
+                content: `
+                    <div class="drawer-section">
+                        <h4>智能运维助手</h4>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">7×24小时智能运维，让故障无处遁形</p>
+                    </div>
+
+                    <div class="drawer-section">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>日志实时分析</h5>
+                                <p>接入 ELK/ClickHouse 日志系统，AI 实时分析异常模式，自动关联相关日志。</p>
+                                <code>对接：Filebeat → Logstash → Elasticsearch</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>告警智能降噪</h5>
+                                <p>基于历史告警数据训练模型，自动合并重复告警，识别根因告警。</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>告警聚类：相似告警自动合并</li>
+                                    <li>优先级排序：业务影响评估</li>
+                                    <li>值班通知：飞书/钉钉/短信</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>故障诊断建议</h5>
+                                <p>根据告警上下文自动生成排查步骤，推荐可能的原因和解决方案。</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>运维知识库</h5>
+                                <p>沉淀历史故障案例，形成可检索的运维知识图谱。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="drawer-section" style="background: rgba(16, 185, 129, 0.1); border-radius: 8px; padding: 1rem;">
+                        <h5 style="margin-bottom: 0.5rem;">💡 应用效果</h5>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
+                            某电商公司部署后，MTTR（平均修复时间）从 45 分钟降至 12 分钟，告警噪音减少 70%，值班人员工作效率显著提升。
+                        </p>
+                    </div>
+                `
+            },
+            'auto-response': {
+                title: '⚡ 无人值守自动响应系统',
+                content: `
+                    <div class="drawer-section">
+                        <h4>无人值守自动响应系统</h4>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">常见故障自动修复，真正实现无人值守</p>
+                    </div>
+
+                    <div class="drawer-section">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>故障自动识别</h5>
+                                <p>基于多维度监控数据（Metrics/Logs/Traces），AI 判断故障类型和影响范围。</p>
+                                <code>数据源：Prometheus + Grafana Loki + Jaeger</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>预案匹配执行</h5>
+                                <p>根据故障特征自动匹配修复预案，经人工确认（或完全自动）执行修复动作。</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>服务重启：内存泄漏、连接池耗尽</li>
+                                    <li>流量切换：单点故障自动降级</li>
+                                    <li>配置回滚：配置变更导致的问题</li>
+                                    <li>扩容触发：CPU/内存使用率过高</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>执行结果验证</h5>
+                                <p>自动验证修复效果，如未恢复则升级告警、执行备选方案或通知人工介入。</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>复盘报告生成</h5>
+                                <p>自动生成故障处理报告，包含时间线、根因分析、改进建议。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="drawer-section" style="background: rgba(245, 158, 11, 0.1); border-radius: 8px; padding: 1rem;">
+                        <h5 style="margin-bottom: 0.5rem;">💡 典型应用场景</h5>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
+                            夜间低峰期自动处理磁盘清理、日志轮转、服务健康检查等常规运维任务；高峰期自动扩容应对流量洪峰，故障发生 30 秒内完成自动切换，业务无感知。
+                        </p>
+                    </div>
+
+                    <div class="drawer-section" style="background: rgba(239, 68, 68, 0.1); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                        <h5 style="margin-bottom: 0.5rem; color: #fca5a5;">⚠️ 安全提示</h5>
+                        <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">
+                            生产环境自动操作需设置熔断机制，关键操作建议配置人工确认环节，避免误操作导致更大损失。
+                        </p>
+                    </div>
+                `
+            },
+            'code-gen-tech': {
+                title: '🛠️ 需求描述生成代码 - 技术路线',
+                content: `
+                    <div class="drawer-section">
+                        <h4>技术架构与实现方案</h4>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">基于大模型的智能代码生成技术栈</p>
+                    </div>
+
+                    <div class="drawer-section">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>意图理解层</h5>
+                                <p>使用 NLU 技术解析用户自然语言需求，提取关键实体和意图。</p>
+                                <code>技术：语义解析 + 代码意图识别</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>上下文建模</h5>
+                                <p>结合项目上下文（已有代码、API 定义、数据库结构）生成符合规范的代码。</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>代码库 RAG 检索</li>
+                                    <li>依赖关系分析</li>
+                                    <li>编码规范学习</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>代码生成引擎</h5>
+                                <p>调用大模型生成代码，支持多轮迭代优化。</p>
+                                <code>模型：Claude/GPT-4 + 领域微调</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>质量验证层</h5>
+                                <p>语法检查、单元测试生成、安全扫描确保代码质量。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="drawer-section" style="background: rgba(14, 165, 233, 0.1); border-radius: 8px; padding: 1rem;">
+                        <h5 style="margin-bottom: 0.5rem;">💡 核心技术</h5>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
+                            Prompt Engineering + RAG + 代码 AST 分析，实现从自然语言到可执行代码的智能转换。
+                        </p>
+                    </div>
+                `
+            },
+            'code-gen-case': {
+                title: '💡 需求描述生成代码 - 实施案例',
+                content: `
+                    <div class="drawer-section">
+                        <h4>电商订单系统开发实战</h4>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">自然语言需求 → 生产级代码</p>
+                    </div>
+
+                    <div class="drawer-section">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>需求输入</h5>
+                                <p>开发者在对话框中描述需求：</p>
+                                <code>"创建一个订单处理接口，需要验证库存、计算价格、生成订单号并保存到数据库"</code>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>自动分析</h5>
+                                <p>OpenClaw 自动识别需求要点：</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>接口类型：RESTful API (POST)</li>
+                                    <li>业务逻辑：库存检查 → 价格计算 → 订单生成</li>
+                                    <li>数据存储：数据库写入操作</li>
+                                    <li>需要的实体：Order、Product、Inventory</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>代码生成</h5>
+                                <p>自动生成完整的 Java Spring Boot 代码：</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>Controller 层：API 接口定义</li>
+                                    <li>Service 层：业务逻辑实现</li>
+                                    <li>Repository 层：数据访问</li>
+                                    <li>DTO/Entity：数据模型</li>
+                                    <li>单元测试：覆盖主要场景</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>效果验证</h5>
+                                <p>生成的代码直接通过编译，单测覆盖率 85%+，开发时间从 4 小时缩短至 15 分钟。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="drawer-section" style="background: rgba(139, 92, 246, 0.1); border-radius: 8px; padding: 1rem;">
+                        <h5 style="margin-bottom: 0.5rem;">💡 应用效果</h5>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
+                            某互联网公司接入后，日常 CRUD 开发效率提升 60%，开发者可以更专注于复杂业务逻辑和架构设计。
+                        </p>
+                    </div>
+                `
+            },
+            'corpus-building': {
+                title: '📖 食安领域语料库建设实践',
+                content: `
+                    <div class="drawer-section">
+                        <h4>食安领域语料库建设实践</h4>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">构建高质量食品安全行业专属语料，支撑业务场景模型</p>
+                    </div>
+
+                    <div class="drawer-section">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>需求分析与规划</h5>
+                                <p>明确语料库目标：支撑菜单分析、客服对话、食安检测等业务场景。</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>菜单数据：菜品名称、配料、口味、价格区间</li>
+                                    <li>对话数据：点餐场景、投诉处理、会员服务</li>
+                                    <li>食安数据：检查标准、违规案例、整改措施</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>数据采集与清洗</h5>
+                                <p>多源采集餐饮相关数据，构建清洗 Pipeline。</p>
+                                <code>来源：公开菜单 + 合作商户 + 众包采集</code>
+                                <p style="margin-top: 0.5rem;">清洗流程：去重 → 格式统一 → 敏感信息脱敏 → 质量评分</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>智能标注与质检</h5>
+                                <p>采用模型预标注 + 人工复核的混合模式。</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>实体标注：菜品名、食材、口味、餐厅名</li>
+                                    <li>意图标注：点餐、咨询、投诉、推荐</li>
+                                    <li>质检抽检：10% 专家抽检 + 交叉验证</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>语料库管理与应用</h5>
+                                <p>建立语料版本管理，对接模型训练流程。</p>
+                                <code>规模：50万+ 菜单条目 | 10万+ 对话样本</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="drawer-section" style="background: rgba(99, 102, 241, 0.1); border-radius: 8px; padding: 1rem;">
+                        <h5 style="margin-bottom: 0.5rem;">💡 建设成果</h5>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
+                              完成餐饮领域首个百万级语料库建设，菜单识别准确率从 72% 提升至 94%，客服意图理解准确率达 91%，成为餐饮从业者食品安全顾问，市场监管部门的得力助手，支撑多个业务场景落地。
+                        </p>
+                        <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
+                              形成了一套完整的餐饮领域语料库建设方法论，为后续类似项目提供了宝贵经验。
+                        </p>
+                    </div>
+                `
+            }
+        };
+
+        function openDrawer(caseId) {
+            const data = drawerData[caseId];
+            if (data) {
+                document.getElementById('drawer-title').textContent = data.title;
+                document.getElementById('drawer-content').innerHTML = data.content;
+            }
+            document.getElementById('drawer').classList.add('active');
+            document.getElementById('drawer-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawer').classList.remove('active');
+            document.getElementById('drawer-overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ESC 键关闭抽屉
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDrawer();
+            }
+        });
+    </script>
+</body>
+
+</html>
