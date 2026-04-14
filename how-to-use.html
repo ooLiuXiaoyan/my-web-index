@@ -26,7 +26,7 @@
 
 <body>
     <main>
-        <h1>🎯 如何使用 OpenClaw</h1>
+        <h1>🎯 如何使用 OpenClaw智能体</h1>
         <p>将 OpenClaw 智能体框架应用到日常工作中，提升开发效率与团队协作。</p>
 
         <section class="deploy-section">
@@ -35,8 +35,8 @@
             <h3><span class="subsection-icon">✨</span>1.1 代码生成与补全</h3>
             <ul>
                 <li><span class="list-icon">📝</span><strong>需求描述生成代码：</strong>直接描述功能需求，OpenClaw 自动生成对应代码实现
-                    <button onclick="openDrawer('code-gen-tech')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem; font-size: 0.75rem; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;">🛠️ 技术路线(待完善)</button>
-                    <button onclick="openDrawer('code-gen-case')" style="margin-left: 0.25rem; padding: 0.2rem 0.6rem; font-size: 0.75rem; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;">💡 实施案例(待完善)</button>
+                    <!-- <button onclick="openDrawer('code-gen-tech')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem; font-size: 0.75rem; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;">🛠️ 技术路线(待完善)</button> -->
+                    <button onclick="openDrawer('code-gen-case')" style="margin-left: 0.25rem; padding: 0.2rem 0.6rem; font-size: 0.75rem; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;">💡 临安系统日志生成</button>
                 </li>
                 <li><span class="list-icon">🔌</span><strong>API 接口编写：</strong>输入接口定义，自动生成 Controller/Service/DAO 层代码</li>
                 <li><span class="list-icon">🧪</span><strong>单元测试生成：</strong>基于现有代码自动生成测试用例，提升测试覆盖率</li>
@@ -69,8 +69,7 @@
                         <span style="font-size: 1.1rem; margin-right: 0.5rem;">🚀</span>
                         <span style="font-weight: 600; color: #e2e8f0;">Claude code + Visual Studio Code + CC Switch + Kimi API</span>
                     </button>
-                    <a href="https://zcnbpdq25nk7.feishu.cn/wiki/E4mLwZhY3ioeg1kyd1ccU0J1nCe" target="_blank" class="platform-btn cute-btn" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2)); border: 1px solid rgba(16, 185, 129, 0.5); padding: 0.875rem 1.5rem; border-radius: 10px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center;"
-                        title="密码：3#H25742">
+                    <a href="https://zcnbpdq25nk7.feishu.cn/wiki/E4mLwZhY3ioeg1kyd1ccU0J1nCe?from=from_copylink" target="_blank" class="platform-btn cute-btn" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2)); border: 1px solid rgba(16, 185, 129, 0.5); padding: 0.875rem 1.5rem; border-radius: 10px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center;">
                         <span style="font-size: 1.1rem; margin-right: 0.5rem;">📄</span>
                         <span style="font-weight: 600; color: #e2e8f0;">部署文档</span>
                     </a>
@@ -704,33 +703,38 @@
                 `
             },
             'code-gen-case': {
-                title: '💡 需求描述生成代码 - 实施案例',
+                title: '💡 系统管理日志生成 - 实施案例',
                 content: `
                     <div class="drawer-section">
-                        <h4>电商订单系统开发实战</h4>
-                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">自然语言需求 → 生产级代码</p>
+                        <h4>基于 AOP 的用户操作日志自动化系统</h4>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">从手动埋点到声明式日志，一行注解实现全链路审计</p>
                     </div>
 
                     <div class="drawer-section">
                         <div class="step-item">
                             <div class="step-number">1</div>
                             <div class="step-content">
-                                <h5>需求输入</h5>
-                                <p>开发者在对话框中描述需求：</p>
-                                <code>"创建一个订单处理接口，需要验证库存、计算价格、生成订单号并保存到数据库"</code>
+                                <h5>痛点分析</h5>
+                                <p>传统日志记录需要在每个 Controller 方法中手动编写日志代码：</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>代码侵入性强，业务逻辑与日志逻辑耦合</li>
+                                    <li>容易遗漏，新增接口时经常忘记加日志</li>
+                                    <li>格式不统一，不同开发者的日志风格各异</li>
+                                    <li>维护成本高，修改日志字段需要全局调整</li>
+                                </ul>
                             </div>
                         </div>
 
                         <div class="step-item">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h5>自动分析</h5>
-                                <p>OpenClaw 自动识别需求要点：</p>
+                                <h5>方案设计</h5>
+                                <p>采用 Spring AOP + 自定义注解实现声明式日志记录：</p>
                                 <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
-                                    <li>接口类型：RESTful API (POST)</li>
-                                    <li>业务逻辑：库存检查 → 价格计算 → 订单生成</li>
-                                    <li>数据存储：数据库写入操作</li>
-                                    <li>需要的实体：Order、Product、Inventory</li>
+                                    <li><strong>@UserLogAnnotation</strong>：自定义注解，标记需要记录日志的方法</li>
+                                    <li><strong>BusinessType 枚举</strong>：统一业务类型（新增/修改/删除/登录等）</li>
+                                    <li><strong>UserLogAspect 切面</strong>：自动拦截、收集信息、保存日志</li>
+                                    <li><strong>UserLog 实体</strong>：标准化日志数据结构</li>
                                 </ul>
                             </div>
                         </div>
@@ -738,23 +742,73 @@
                         <div class="step-item">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h5>代码生成</h5>
-                                <p>自动生成完整的 Java Spring Boot 代码：</p>
-                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
-                                    <li>Controller 层：API 接口定义</li>
-                                    <li>Service 层：业务逻辑实现</li>
-                                    <li>Repository 层：数据访问</li>
-                                    <li>DTO/Entity：数据模型</li>
-                                    <li>单元测试：覆盖主要场景</li>
-                                </ul>
+                                <h5>核心代码</h5>
+                                <p>自定义注解定义：</p>
+                                <code>@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface UserLogAnnotation {
+    String title() default "";
+    BusinessType businessType() default BusinessType.OTHER;
+}</code>
+                                <p style="margin-top: 0.75rem;">AOP 切面核心逻辑：</p>
+                                <code>@Around("logPointCut()")
+public Object doAround(ProceedingJoinPoint jp) {
+    UserLogAnnotation ann = getAnnotation(jp);
+    UserLog log = new UserLog();
+    log.setTitle(ann.title());
+    log.setBusinessType(ann.businessType().getDescription());
+    log.setPerimeters(buildParametersString(jp.getArgs()));
+    // ... 获取用户信息、请求方法
+    try {
+        Object result = jp.proceed();
+        log.setIsSuccess("成功");
+        return result;
+    } catch (Exception e) {
+        log.setIsSuccess("失败");
+        throw e;
+    } finally {
+        userLogService.saveLog(log);
+    }
+}</code>
+                                <p style="margin-top: 0.75rem;">Controller 中使用（只需一行注解）：</p>
+                                <code>@UserLogAnnotation(title = "新增字典", businessType = BusinessType.INSERT)
+@PostMapping("/api/dict/add")
+public ResponseEntity&lt;?&gt; addDict(@RequestBody DataDict dict) {
+    dataDictService.insert(dict);
+    return ResponseEntity.ok(BaseResponse.success("新增成功"));
+}</code>
                             </div>
                         </div>
 
                         <div class="step-item">
                             <div class="step-number">4</div>
                             <div class="step-content">
+                                <h5>批量落地</h5>
+                                <p>利用 OpenClaw 扫描所有 Controller，自动为写操作添加注解：</p>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
+                                    <li>识别所有 POST/PUT/DELETE 映射方法</li>
+                                    <li>根据方法名智能推断 businessType（add→INSERT, update→UPDATE）</li>
+                                    <li>结合方法注释生成中文 title</li>
+                                    <li>批量生成并注入注解，保持原有代码风格</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
                                 <h5>效果验证</h5>
-                                <p>生成的代码直接通过编译，单测覆盖率 85%+，开发时间从 4 小时缩短至 15 分钟。</p>
+                                <p>生成的日志记录标准化、完整：</p>
+                                <code>{
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "username": "admin",
+  "title": "新增字典",
+  "businessType": "新增",
+  "requestMethod": "POST",
+  "perimeters": "dictType=system, dictCode=status",
+  "isSuccess": "成功",
+  "createTime": "2026-04-08 10:30:00"
+}</code>
                             </div>
                         </div>
                     </div>
@@ -762,8 +816,15 @@
                     <div class="drawer-section" style="background: rgba(139, 92, 246, 0.1); border-radius: 8px; padding: 1rem;">
                         <h5 style="margin-bottom: 0.5rem;">💡 应用效果</h5>
                         <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">
-                            某互联网公司接入后，日常 CRUD 开发效率提升 60%，开发者可以更专注于复杂业务逻辑和架构设计。
+                            某政务系统接入后，3 天内完成 200+ 个接口的日志注解补全，操作日志覆盖率从 30% 提升至 100%，日志格式完全统一。后续新增接口只需添加一行注解即可自动接入审计体系，开发和维护成本大幅降低。
                         </p>
+                    </div>
+
+                    <div class="drawer-section" style="margin-top: 1rem;">
+                        <a href="examples/USER_LOG_ANNOTATION_GUIDE.md" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; color: #7dd3fc; text-decoration: none; font-size: 0.9rem; transition: all 0.2s;">
+                            <span>📄</span>
+                            <span>查看完整指南文档</span>
+                        </a>
                     </div>
                 `
             },

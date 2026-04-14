@@ -1,0 +1,40 @@
+# ===========================================
+# Local configuration files
+# ===========================================
+.env
+.env.local
+.env.*.local
+*.local
+config.local.*
+settings.local.*
+
+.claude/
+
+# IDE / Editor settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ===========================================
+# Temporary / Cache / Log files
+# ===========================================
+*.tmp
+*.temp
+*.log
+*.cache
+.DS_Store
+Thumbs.db
+
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# ===========================================
+# Project-specific
+# ===========================================
+examples/
