@@ -754,6 +754,158 @@ $env:Path = [Environment]::GetEnvironmentVariable("Path", "User")</code>
             </div>
 
             <div class="card">
+                <h2><span>🔧</span> Windows / WSL 常见问题与解决方案</h2>
+                <p style="color: var(--text-light); margin-bottom: 20px;">以下是 Windows 环境下部署 Hermes 时最常遇到的问题，按排查优先级排列。</p>
+
+                <h3>问题 1：git clone 连接 GitHub 443 端口超时</h3>
+                <p>WSL 2 默认使用 NAT 网络，无法直接访问 Windows 上的 localhost 代理。</p>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>获取 Windows 主机真实 IP</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>ip route | grep default | awk '{print $3}'</code>
+                        </div>
+                        <p>输出类似 <code class="code-inline">172.29.192.1</code>，这就是 Windows 主机 IP。</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>设置代理（假设端口为 7890）</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>export http_proxy=http://172.29.192.1:7890
+export https_proxy=http://172.29.192.1:7890</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>确保代理软件开启"允许局域网连接"</h4>
+                        <p><strong>Clash for Windows：</strong>General → Allow LAN → 开启</p>
+                        <p><strong>Clash Verge：</strong>设置 → 网络 → 允许局域网连接 → 开启</p>
+                        <p><strong>V2Ray：</strong>配置文件中设置 <code class="code-inline">"allowLan": true</code></p>
+                    </div>
+                </div>
+
+                <div class="note warning">
+                    <span class="icon">⚠️</span>
+                    <p><strong>常见错误：</strong>代理地址指向了 DNS 服务器（如 <code class="code-inline">223.5.5.5</code>）而非主机 IP。请确保用 <code class="code-inline">ip route</code> 获取的是网关地址，不是 DNS 地址。</p>
+                </div>
+
+                <h3>问题 2：/etc/resolv.conf 被公共 DNS 覆盖</h3>
+                <p>如果 <code class="code-inline">cat /etc/resolv.conf</code> 显示 <code class="code-inline">223.5.5.5</code> 或 <code class="code-inline">8.8.8.8</code>，说明 WSL 的 DNS 配置被手动修改过。</p>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code>sudo cp /etc/resolv.conf /etc/resolv.conf.bak
+sudo rm /etc/resolv.conf
+wsl --shutdown
+wsl</code>
+                </div>
+                <p>重启 WSL 后会自动重新生成正确的 resolv.conf。</p>
+
+                <div class="note info">
+                    <span class="icon">💡</span>
+                    <p><strong>更可靠的方法：</strong>用 <code class="code-inline">ip route | grep default | awk '{print $3}'</code> 获取主机 IP，不依赖 DNS 配置。</p>
+                </div>
+
+                <h3>问题 3：WSL 重启后 IP 变化，代理失效</h3>
+                <p>在 <code class="code-inline">~/.bashrc</code> 末尾添加自动配置脚本：</p>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code>HOST_IP=$(ip route | grep default | awk '{print $3}')
+export http_proxy="http://$HOST_IP:7890"
+export https_proxy="http://$HOST_IP:7890"
+export HTTP_PROXY="http://$HOST_IP:7890"
+export HTTPS_PROXY="http://$HOST_IP:7890"</code>
+                </div>
+                <p>执行 <code class="code-inline">source ~/.bashrc</code> 生效。每次打开终端自动适配新 IP。</p>
+
+                <h3>问题 4：Python 3.14 版本不兼容</h3>
+                <p>Hermes 要求 Python <code class="code-inline">>=3.11,&lt;3.14</code>。如果系统 Python 是 3.14+，需要降级。</p>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>安装 pyenv</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+curl https://pyenv.run | bash</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>配置 pyenv 并安装 Python 3.12</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+pyenv install 3.12.9</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>在项目中使用 Python 3.12</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>cd ~/hermes-agent
+pyenv local 3.12.9
+rm -rf venv
+python -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -e .</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note info">
+                    <span class="icon">💡</span>
+                    <p>备选方案：使用 deadsnakes PPA <code class="code-inline">sudo add-apt-repository ppa:deadsnakes/ppa && sudo apt install python3.12 python3.12-venv</code>，但可能与系统 Python 冲突，推荐用 pyenv。</p>
+                </div>
+
+                <h3>问题 5：git config --unset-all 报错 wrong number of arguments</h3>
+                <p><code class="code-inline">--unset-all</code> 后面只需要跟一个配置键名，不能同时跟值。</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code>git config --global --unset-all user.name
+git config --global user.name "你的新名字"</code>
+                </div>
+                <p>或者直接编辑配置文件 <code class="code-inline">~/.gitconfig</code> 修改。</p>
+
+                <div class="note warning">
+                    <span class="icon">⚠️</span>
+                    <p><strong>WSL 与 Windows Git 配置隔离：</strong>WSL 的 <code class="code-inline">~/.gitconfig</code> 和 Windows 的 <code class="code-inline">C:\Users\用户名\.gitconfig</code> 互不影响，请在正确的终端中配置。</p>
+                </div>
+
+                <h3>问题 6：在 WSL 中执行 wsl 命令报 not found</h3>
+                <p><code class="code-inline">wsl</code> 是 Windows 命令，在 WSL 内应使用 <code class="code-inline">wsl.exe</code>。不要执行 <code class="code-inline">sudo apt install wsl</code>，那是完全不相关的包。</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code>wsl.exe --version</code>
+                </div>
+            </div>
+
+            <div class="card">
                 <h2>Windows 特定注意事项</h2>
                 <table>
                     <tr>
@@ -781,6 +933,234 @@ $env:Path = [Environment]::GetEnvironmentVariable("Path", "User")</code>
                         <td>WSL2 需要 <code class="code-inline">systemd=true</code> 在 <code class="code-inline">/etc/wsl.conf</code> 中</td>
                     </tr>
                 </table>
+            </div>
+
+            <!-- WSL 部署常见问题排查 -->
+            <div class="card">
+                <h2>WSL 部署常见问题排查</h2>
+                <p style="color: var(--text-light); margin-bottom: 20px;">以下问题在 Windows + WSL2 环境部署 Hermes 时极为常见，按出现频率排序。</p>
+
+                <!-- 问题 1 -->
+                <div class="note danger">
+                    <span class="icon">🔴</span>
+                    <p><strong>问题 1：git clone 报错 "Failed to connect to github.com port 443: Connection timed out"</strong></p>
+                </div>
+                <p><strong>原因：</strong>WSL2 默认使用 NAT 网络模式，<code class="code-inline">localhost</code> 指向 WSL 自身而非 Windows 主机。如果你在 Windows 上开了代理（Clash / V2Ray 等），WSL 无法直接通过 <code class="code-inline">localhost</code> 访问它。</p>
+
+                <h4>解决方案：配置 WSL 代理</h4>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>获取 Windows 主机真实 IP</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code># 方法 A：通过默认网关（推荐，不受 DNS 影响）
+HOST_IP=$(ip route | grep default | awk '{print $3}')
+echo $HOST_IP  # 应显示类似 172.x.x.1 的私有 IP
+
+# 方法 B：通过 resolv.conf
+cat /etc/resolv.conf | grep nameserver | awk '{print $2}'</code>
+                        </div>
+                        <div class="note warning">
+                            <span class="icon">⚠️</span>
+                            <p><strong>注意：</strong>如果 <code class="code-inline">resolv.conf</code> 中是 <code class="code-inline">223.5.5.5</code> 或 <code class="code-inline">8.8.8.8</code>（公共 DNS），说明该文件被手动覆盖了，请用方法 A 获取 IP。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>设置代理环境变量</h4>
+                        <p>假设主机 IP 是 <code class="code-inline">172.31.176.1</code>，代理端口是 <code class="code-inline">7890</code>：</p>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>export http_proxy=http://172.31.176.1:7890
+export https_proxy=http://172.31.176.1:7890</code>
+                        </div>
+                        <p>或写入 Git 全局配置：</p>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>git config --global http.proxy http://172.31.176.1:7890
+git config --global https.proxy http://172.31.176.1:7890</code>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>验证代理是否生效</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                            <code>curl -v https://github.com  # 应返回 HTTP/2 200</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note info">
+                    <span class="icon">💡</span>
+                    <p><strong>代理端口速查：</strong>Clash = 7890，Clash Verge = 7897，V2Ray = 10809，Shadowsocks = 1080，Surge = 6152</p>
+                </div>
+
+                <!-- 问题 2 -->
+                <div class="note danger">
+                    <span class="icon">🔴</span>
+                    <p><strong>问题 2：代理 IP 正确但仍然超时（代理软件未开启"允许局域网连接"）</strong></p>
+                </div>
+                <p><strong>原因：</strong>代理软件默认只监听 <code class="code-inline">127.0.0.1</code>，不接受来自 WSL 虚拟网络的连接。</p>
+                <h4>解决方案</h4>
+                <ul style="margin: 10px 0 10px 20px; color: var(--text-light);">
+                    <li><strong>Clash for Windows：</strong>General → Allow LAN → 开启</li>
+                    <li><strong>Clash Verge：</strong>设置 → 网络 → 允许局域网连接 → 开启</li>
+                    <li><strong>V2Ray：</strong>配置文件中 <code class="code-inline">"allowLan": true</code></li>
+                </ul>
+
+                <!-- 问题 3 -->
+                <div class="note danger">
+                    <span class="icon">🔴</span>
+                    <p><strong>问题 3：WSL 重启后代理失效（IP 地址变化）</strong></p>
+                </div>
+                <p><strong>原因：</strong>WSL2 每次启动时可能分配不同的虚拟网卡 IP。</p>
+                <h4>解决方案：在 <code class="code-inline">~/.bashrc</code> 中添加自动代理配置</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code># 添加到 ~/.bashrc 末尾
+if command -v ip &amp;&gt; /dev/null; then
+    HOST_IP=$(ip route | grep default | awk '{print $3}')
+    if [ -n "$HOST_IP" ]; then
+        export http_proxy="http://$HOST_IP:7890"
+        export https_proxy="http://$HOST_IP:7890"
+        export HTTP_PROXY="http://$HOST_IP:7890"
+        export HTTPS_PROXY="http://$HOST_IP:7890"
+    fi
+fi
+
+# 生效
+source ~/.bashrc</code>
+                </div>
+
+                <!-- 问题 4 -->
+                <div class="note danger">
+                    <span class="icon">🔴</span>
+                    <p><strong>问题 4：Python 版本不兼容（"requires-python = &gt;=3.11,&lt;3.14"）</strong></p>
+                </div>
+                <p><strong>原因：</strong>Hermes 要求 Python 3.11~3.13，但 Ubuntu 可能安装了 Python 3.14（开发版），导致 <code class="code-inline">pip install -e .</code> 报错。</p>
+                <h4>解决方案：使用 pyenv 安装正确的 Python 版本</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code># 1. 安装 pyenv 依赖
+sudo apt update
+sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+# 2. 安装 pyenv
+curl https://pyenv.run | bash
+
+# 3. 配置（添加到 ~/.bashrc 末尾）
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'command -v pyenv &gt;/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+
+# 4. 安装 Python 3.12
+pyenv install 3.12.9
+
+# 5. 在项目中使用
+cd ~/hermes-agent
+pyenv local 3.12.9
+
+# 6. 重建虚拟环境并安装
+rm -rf venv
+python -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -e .</code>
+                </div>
+
+                <!-- 问题 5 -->
+                <div class="note danger">
+                    <span class="icon">🔴</span>
+                    <p><strong>问题 5：git config --global --unset-all 报错 "wrong number of arguments"</strong></p>
+                </div>
+                <p><strong>原因：</strong>命令格式错误。<code class="code-inline">--unset-all</code> 后面只能跟一个配置键名，不能同时跟值。</p>
+                <h4>解决方案</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code># 正确用法：只跟键名
+git config --global --unset-all user.name
+
+# 如需精准删除某个值
+git config --global --unset-all user.name --value="John"
+
+# 或直接覆盖设置（更简单）
+git config --global user.name "你的新名字"</code>
+                </div>
+
+                <!-- 问题 6 -->
+                <div class="note danger">
+                    <span class="icon">🔴</span>
+                    <p><strong>问题 6：在 WSL 中执行 <code class="code-inline">wsl --version</code> 报错 "command not found"</strong></p>
+                </div>
+                <p><strong>原因：</strong><code class="code-inline">wsl</code> 是 Windows 系统命令，WSL Linux 环境中不存在。系统提示的 <code class="code-inline">sudo apt install wsl</code> 是另一个无关的包。</p>
+                <h4>解决方案</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code># 在 WSL 中调用 Windows 命令需加 .exe 后缀
+wsl.exe --version
+
+# 或在 Windows PowerShell 中执行
+wsl --version
+
+# 如果已误装无关的 wsl 包，可卸载
+sudo apt remove wsl</code>
+                </div>
+
+                <!-- 问题 7 -->
+                <div class="note danger">
+                    <span class="icon">🔴</span>
+                    <p><strong>问题 7：resolv.conf 被公共 DNS 覆盖，无法获取宿主机 IP</strong></p>
+                </div>
+                <p><strong>原因：</strong>VPN 软件、Docker 或手动修改覆盖了 <code class="code-inline">/etc/resolv.conf</code>，导致其中是 <code class="code-inline">223.5.5.5</code>（阿里 DNS）或 <code class="code-inline">8.8.8.8</code>（Google DNS）而非 WSL 网关。</p>
+                <h4>解决方案</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code># 不依赖 resolv.conf，直接从路由表获取网关 IP（最可靠）
+HOST_IP=$(ip route | grep default | awk '{print $3}')
+echo $HOST_IP
+
+# 如需恢复 WSL 自动生成的 resolv.conf
+sudo rm /etc/resolv.conf
+exit  # 退出 WSL
+wsl --shutdown  # 在 PowerShell 中执行
+wsl             # 重新进入
+
+# 检查 /etc/wsl.conf 确保自动生成开启
+cat /etc/wsl.conf
+# 应包含：
+# [network]
+# generateResolvConf = true</code>
+                </div>
+
+                <!-- 快速诊断清单 -->
+                <h3>快速诊断清单</h3>
+                <p>遇到网络问题时，按顺序执行以下命令：</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code># 1. 检查 WSL 能否访问外网
+ping 8.8.8.8
+
+# 2. 获取 Windows 主机 IP
+ip route | grep default | awk '{print $3}'
+
+# 3. 检查当前代理环境变量
+env | grep -i proxy
+
+# 4. 测试代理连通性（替换 IP 和端口）
+curl -x http://$(ip route | grep default | awk '{print $3}'):7890 https://github.com -I
+
+# 5. 检查 Git 代理配置
+git config --global --list | grep -i proxy</code>
+                </div>
             </div>
         </div>
 
@@ -1030,6 +1410,36 @@ OPENAI_API_KEY=your_key_here
 
 # DeepSeek
 DEEPSEEK_API_KEY=your_key_here</code>
+            </div>
+
+            <h3>4. 关闭终端后重新进入 Hermes</h3>
+            <p>关闭终端后再次使用 Hermes，只需重新激活虚拟环境：</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                <code># 进入项目目录
+cd ~/hermes-agent
+
+# 激活虚拟环境（看到提示符前出现 (venv) 即成功）
+source venv/bin/activate
+
+# 开始使用
+hermes chat</code>
+            </div>
+            <div class="note info">
+                <span class="icon">💡</span>
+                <p><strong>一键快捷方式：</strong>在 <code class="code-inline">~/.bashrc</code> 中添加别名，之后只需输入 <code class="code-inline">hermes-go chat</code> 即可直接进入：</p>
+            </div>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                <code>echo 'alias hermes-go="cd ~/hermes-agent && source venv/bin/activate && hermes"' >> ~/.bashrc
+source ~/.bashrc
+
+# 之后使用
+hermes-go chat</code>
+            </div>
+            <div class="note warning">
+                <span class="icon">⚠️</span>
+                <p><strong>验证虚拟环境：</strong>运行 <code class="code-inline">which python</code>，如果显示 <code class="code-inline">~/hermes-agent/venv/bin/python</code> 说明已正确激活。如果 <code class="code-inline">hermes</code> 命令找不到，重新执行 <code class="code-inline">pip install -e .</code> 安装。</p>
             </div>
         </div>
 
