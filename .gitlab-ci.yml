@@ -1,11 +1,19 @@
+stages:
+  - deploy
+
 pages:
   stage: deploy
   script:
     - mkdir -p public
-    - cp *.html *.css *.js public/
-    - cp -r examples public/
+    - cp -f *.html public/
+    - cp -f *.css public/
+    - cp -f *.js public/
+    - cp -rf examples public/
+    - echo "Deployed to public/"
   artifacts:
     paths:
       - public
   only:
     - main
+  tags:
+    - shell
