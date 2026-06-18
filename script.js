@@ -1,4 +1,62 @@
-// 按钮跳转由 HTML onclick 处理
+// ==================== 版本配置 ====================
+const APP_VERSION = '2.1.0';
+const VERSION_KEY = 'app_last_seen_version';
+const VISITOR_KEY = 'app_visitor_count';
+const CHANGELOG = [
+    'AI厂商信息更新至2026年6月最新状态',
+    '新增Hermes智能体框架模块（安装指南+使用指南）',
+    '导航结构重组为 OpenClaw/Hermes/AI厂商/文档 四大分组',
+    '前端页面层次与视觉体验优化',
+];
+
+// ==================== 版本更新提醒 ====================
+function checkVersionUpdate() {
+    const lastSeen = localStorage.getItem(VERSION_KEY);
+    if (lastSeen !== APP_VERSION) {
+        showUpdateNotice();
+    }
+}
+
+function showUpdateNotice() {
+    if (document.getElementById('version-update-modal')) return;
+
+    const changelogHTML = CHANGELOG.map(item => `<li>${item}</li>`).join('');
+
+    const modal = document.createElement('div');
+    modal.id = 'version-update-modal';
+    modal.innerHTML = `
+        <div class="vu-overlay" onclick="dismissUpdate()"></div>
+        <div class="vu-dialog">
+            <div class="vu-header">
+                <span class="vu-icon">🎉</span>
+                <h3>系统已更新至 v${APP_VERSION}</h3>
+            </div>
+            <div class="vu-body">
+                <p class="vu-subtitle">本次更新内容：</p>
+                <ul class="vu-changelog">${changelogHTML}</ul>
+            </div>
+            <div class="vu-footer">
+                <button class="vu-btn" onclick="dismissUpdate()">我知道了</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    requestAnimationFrame(() => {
+        modal.classList.add('vu-active');
+    });
+}
+
+function dismissUpdate() {
+    localStorage.setItem(VERSION_KEY, APP_VERSION);
+    const modal = document.getElementById('version-update-modal');
+    if (modal) {
+        modal.classList.remove('vu-active');
+        setTimeout(() => modal.remove(), 300);
+    }
+}
+
+// ==================== 智能体三层架构 ====================
 
 const layerData = {
     brain: {
@@ -64,4 +122,38 @@ layerCards.forEach(card => {
 
 window.addEventListener('DOMContentLoaded', () => {
     renderLayer('brain');
+    checkVersionUpdate();
+    initVisitorCounter();
 });
+
+// ==================== 访客计数器 ====================
+function initVisitorCounter() {
+    const counterEl = document.getElementById('visitor-count');
+    if (!counterEl) return;
+
+    let count = parseInt(localStorage.getItem(VISITOR_KEY) || '0', 10);
+    const isNewVisitor = !localStorage.getItem(VISITOR_KEY);
+
+    if (isNewVisitor) {
+        count = 1;
+    } else {
+        count += 1;
+    }
+    localStorage.setItem(VISITOR_KEY, count);
+
+    animateCounter(counterEl, count);
+}
+
+function animateCounter(el, target) {
+    let current = 0;
+    const duration = 1200;
+    const step = Math.max(1, Math.floor(target / (duration / 16)));
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        el.textContent = current.toLocaleString();
+    }, 16);
+}
