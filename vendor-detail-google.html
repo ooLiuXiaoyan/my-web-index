@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google / DeepMind - 产品知识图谱</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ===== 页面整体布局 ===== */
+        .kg-layout {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            min-height: 520px;
+        }
+
+        .kg-graph-section {
+            flex: 1.1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kg-detail-panel {
+            flex: 1;
+            min-width: 0;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 1.25rem;
+            overflow-y: auto;
+            max-height: 560px;
+        }
+
+        /* ===== 知识图谱容器 ===== */
+        .kg-graph-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            max-height: 520px;
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.06) 0%, transparent 70%);
+            border-radius: 16px;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .kg-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .kg-lines line {
+            stroke: rgba(255, 255, 255, 0.12);
+            stroke-width: 2;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawLine 1.2s ease forwards;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* ===== 中心节点 ===== */
+        .kg-center-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4285f4, #34a853, #fbbc04, #ea4335);
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite, popCenter 0.6s ease forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 8px 32px rgba(66, 133, 244, 0.35);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .kg-center-node:hover {
+            transform: translate(-50%, -50%) scale(1.08);
+            box-shadow: 0 12px 40px rgba(66, 133, 244, 0.5);
+        }
+
+        .kg-center-node img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+
+        .kg-center-node span {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            line-height: 1.2;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes popCenter {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        /* ===== 分类节点 ===== */
+        .kg-node {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            z-index: 10;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            opacity: 0;
+            transform: scale(0);
+            animation: popNode 0.5s ease forwards;
+            user-select: none;
+        }
+
+        .kg-node:hover {
+            transform: scale(1.12);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+            z-index: 20;
+        }
+
+        .kg-node.active {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3), 0 6px 24px rgba(0, 0, 0, 0.5);
+            transform: scale(1.1);
+        }
+
+        .kg-node .node-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes popNode {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            70% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ===== 详情面板 ===== */
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid;
+        }
+
+        .detail-header .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .detail-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #f1f5f9;
+        }
+
+        .detail-products {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .detail-product-item {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 10px;
+            padding: 0.875rem 1rem;
+            border-left: 3px solid;
+            transition: all 0.25s ease;
+        }
+
+        .detail-product-item:hover {
+            background: rgba(30, 41, 59, 0.85);
+            transform: translateX(4px);
+        }
+
+        .detail-product-item .p-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .detail-product-item .p-name a {
+            color: #7dd3fc;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.15rem 0.5rem;
+            background: rgba(56, 189, 248, 0.12);
+            border-radius: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: all 0.2s;
+        }
+
+        .detail-product-item .p-name a:hover {
+            background: rgba(56, 189, 248, 0.25);
+            color: #38bdf8;
+        }
+
+        .detail-product-item .p-desc {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .detail-overview {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            padding: 0.5rem 0;
+        }
+
+        .detail-overview ul {
+            margin: 0.5rem 0 0 0;
+            padding-left: 1.2rem;
+        }
+
+        .detail-overview ul li {
+            margin-bottom: 0.4rem;
+            color: #94a3b8;
+        }
+
+        .detail-overview ul li::before {
+            color: #0ea5e9;
+        }
+
+        /* ===== 典型案例时间线 ===== */
+        .cases-section {
+            margin-top: 2.5rem;
+        }
+
+        .cases-section h2 {
+            margin-bottom: 1.25rem;
+        }
+
+        .cases-timeline {
+            position: relative;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0.5rem 1.5rem 0.5rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cases-timeline::before {
+            content: '';
+            position: absolute;
+            top: 2.2rem;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4285f4, #34a853, #fbbc04, #ea4335);
+            border-radius: 2px;
+            opacity: 0.4;
+        }
+
+        .case-card {
+            position: relative;
+            min-width: 280px;
+            max-width: 280px;
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            border-radius: 14px;
+            padding: 1.25rem;
+            scroll-snap-align: start;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+        }
+
+        .case-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.15);
+        }
+
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: -1.5rem;
+            left: 1.5rem;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            border: 3px solid #0f172a;
+            z-index: 2;
+        }
+
+        .case-year {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-desc {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* ===== 返回按钮 ===== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(56, 189, 248, 0.1);
+            color: #7dd3fc;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            transform: translateX(-3px);
+        }
+
+        .page-intro {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== 统计信息条 ===== */
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.25rem 0;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .stat-item strong {
+            color: #38bdf8;
+            font-size: 1.1rem;
+        }
+
+        /* ===== 滚动条美化 ===== */
+        .kg-detail-panel::-webkit-scrollbar,
+        .cases-timeline::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .kg-detail-panel::-webkit-scrollbar-track,
+        .cases-timeline::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 3px;
+        }
+
+        .kg-detail-panel::-webkit-scrollbar-thumb,
+        .cases-timeline::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 3px;
+        }
+
+        /* ===== 响应式适配 ===== */
+        @media (max-width: 900px) {
+            .kg-layout {
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .kg-graph-container {
+                max-height: 420px;
+            }
+
+            .kg-detail-panel {
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kg-graph-container {
+                max-height: 360px;
+            }
+
+            .kg-center-node {
+                width: 80px;
+                height: 80px;
+            }
+
+            .kg-center-node img {
+                width: 28px;
+                height: 28px;
+            }
+
+            .kg-center-node span {
+                font-size: 0.55rem;
+            }
+
+            .kg-node {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .case-card {
+                min-width: 260px;
+                max-width: 260px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-btn">🏠 首页</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🤖 OpenClaw ▾</button>
+                <div class="dropdown-menu">
+                    <a href="how-to-use.html"><span class="sub-icon">🎯</span>如何使用</a>
+                    <a href="openclaw-deploy.html"><span class="sub-icon">🚀</span>部署指南</a>
+                    <a href="openclaw-feishu-deploy.html"><span class="sub-icon">🦞</span>飞书妙搭部署</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🧠 Hermes ▾</button>
+                <div class="dropdown-menu">
+                    <a href="hermes-install-guide.html"><span class="sub-icon">📦</span>安装指南</a>
+                    <a href="hermes-usage-guide.html"><span class="sub-icon">📘</span>使用指南</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="ai-vendors.html" class="nav-btn">🌐 AI厂商</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn active">💡 文档 ▾</button>
+                <div class="dropdown-menu">
+                    <a href="ai-concepts.html"><span class="sub-icon">💡</span>AI新概念</a>
+                    <a href="vendor-detail-google.html"><span class="sub-icon">🔍</span>Google产品图谱</a>
+                </div>
+            </div>
+        </nav>
+
+        <a href="ai-vendors.html" class="back-btn">← 返回厂商列表</a>
+        <h1>🔍 Google / DeepMind 产品知识图谱</h1>
+
+        <div class="page-intro">
+            Google / DeepMind 是全球AI领域布局最完整的科技巨头之一。从2017年 Transformer 论文到 2024 年诺贝尔化学奖，从 Gemini 多模态大模型到 Waymo 自动驾驶，其产品生态横跨基础模型、消费应用、开发者工具、企业办公、AI Agent、云计算、自研硬件与科学研究，形成了独特的"AI-first"全栈体系。
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">🧠 <strong>9</strong> 大产品系列</div>
+            <div class="stat-item">📦 <strong>60+</strong> 核心产品</div>
+            <div class="stat-item">🏆 <strong>1</strong> 项诺贝尔奖</div>
+            <div class="stat-item">🌍 <strong>180+</strong> 国家可用</div>
+        </div>
+
+        <div class="kg-layout">
+            <div class="kg-graph-section">
+                <div class="kg-graph-container" id="graphContainer">
+                    <svg class="kg-lines" id="graphLines" xmlns="http://www.w3.org/2000/svg"></svg>
+                    <div class="kg-center-node" id="centerNode" title="查看整体介绍">
+                        <img src="https://www.google.com/s2/favicons?domain=deepmind.google&sz=128" alt="Google">
+                        <span>Google /<br>DeepMind</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kg-detail-panel" id="detailPanel">
+                <!-- 动态渲染 -->
+            </div>
+        </div>
+
+        <section class="cases-section">
+            <h2>📜 典型案例与里程碑</h2>
+            <div class="cases-timeline" id="casesTimeline">
+                <!-- 动态渲染 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button class="deploy-float-btn secondary" onclick="window.location.href='index.html'">🏠 返回首页</button>
+        <button class="deploy-float-btn secondary" onclick="window.location.href='ai-vendors.html'">🤖 AI厂商</button>
+    </div>
+
+    <script>
+        // ===== 数据定义 =====
+        const vendorData = {
+            overview: {
+                title: 'Google / DeepMind 全景概览',
+                content: `
+                    <p>Google / DeepMind 是全球人工智能领域最具影响力的组织之一，由 Google Brain 与 DeepMind 于2023年合并而成，由 Demis Hassabis 领导。</p>
+                    <ul>
+                        <li><strong>基础研究</strong>：Transformer 架构（2017）、AlphaGo/AlphaZero（强化学习）、AlphaFold（蛋白质结构预测）</li>
+                        <li><strong>大模型</strong>：Gemini 系列原生多模态模型，Gemma 开源生态</li>
+                        <li><strong>AI Agent</strong>：Project Astra（通用助手）、Mariner（浏览器Agent）、Jules（编程Agent）</li>
+                        <li><strong>基础设施</strong>：自研 TPU 芯片、Vertex AI 企业平台、Google Cloud AI</li>
+                        <li><strong>科学突破</strong>：2024年诺贝尔化学奖（AlphaFold）、GNoME 材料发现、气候预测</li>
+                    </ul>
+                    <p style="margin-top:0.75rem;color:#94a3b8;font-size:0.85rem;">💡 点击左侧知识图谱中的任意节点，查看该分类下的详细产品信息。</p>
+                `
+            },
+            categories: {
+                model: {
+                    title: '核心大模型',
+                    color: '#f57c00',
+                    desc: '从旗舰 Gemini 到开源 Gemma，覆盖文本、图像、音频、视频的全模态模型矩阵',
+                    products: [
+                        { name: 'Gemini 3 / 3.1 Pro', desc: '当前最智能的旗舰模型，具备顶级推理、编码与多模态理解能力', link: 'https://deepmind.google/models/gemini/pro/' },
+                        { name: 'Gemini 3 / 3.1 Flash', desc: '快速且经济高效的多模态模型，适合高吞吐量场景', link: 'https://deepmind.google/models/gemini/flash/' },
+                        { name: 'Gemini 2.5 Pro', desc: '前代旗舰，以超长上下文与复杂推理著称，支持最高 200 万 token', link: 'https://deepmind.google/models/gemini/' },
+                        { name: 'Gemma 4', desc: '2026年发布的最新开源模型家族，Apache 2.0 协议，字节级最强开源模型', link: 'https://deepmind.google/models/gemma/' },
+                        { name: 'Gemma 3n', desc: '支持音频、文本、图像、视频的多模态开源模型，可在端侧运行', link: 'https://deepmind.google/models/gemma/' },
+                        { name: 'Imagen 4', desc: '领先的文本到图像生成模型，支持高质量图像创作与编辑', link: 'https://cloud.google.com/vertex-ai/generative-ai/docs/models/imagen/' },
+                        { name: 'Veo 3 / 3.1', desc: '视频生成模型，支持原生音频、4K 分辨率与竖屏视频', link: 'https://deepmind.google/models/veo/' },
+                        { name: 'Lyria 3', desc: '高保真音乐生成模型，支持最长 3 分钟的曲目创作', link: 'https://deepmind.google/models/lyria/' },
+                        { name: 'Gemini Diffusion', desc: '基于扩散架构的 Gemini 模型，生成速度比 Flash-Lite 快 5 倍', link: 'https://deepmind.google/models/gemini/' },
+                    ]
+                },
+                consumer: {
+                    title: '通用产品',
+                    color: '#4285f4',
+                    desc: '面向普通用户的 AI 消费级应用，集成在 Google 核心产品中',
+                    products: [
+                        { name: 'Gemini App', desc: '通用 AI 助手应用，集成搜索、文档处理与多轮对话', link: 'https://gemini.google.com' },
+                        { name: 'Gemini Live', desc: '实时语音/视频对话，支持屏幕共享、摄像头流与低延迟交互', link: 'https://gemini.google.com' },
+                        { name: 'Google AI Studio', desc: '开发者 Playground，可测试最新模型、管理 Prompt 与生成媒体', link: 'https://aistudio.google.com' },
+                        { name: 'NotebookLM', desc: 'AI 驱动的笔记与研究工具，可生成音频概览（Audio Overview）', link: 'https://notebooklm.google.com' },
+                        { name: 'AI Overviews / AI Mode', desc: 'Google 搜索中的 AI 摘要与深度问答模式', link: 'https://www.google.com' },
+                        { name: 'Circle to Search', desc: '圈选屏幕任意内容即可触发即时搜索', link: 'https://www.google.com' },
+                        { name: 'Google Lens', desc: '视觉识别与智能搜索，支持翻译、购物、文本提取', link: 'https://lens.google.com' },
+                        { name: 'Flow', desc: 'AI 视频生成创作工具，面向消费者的内容创作', link: 'https://gemini.google.com' },
+                    ]
+                },
+                dev: {
+                    title: '开发/编程',
+                    color: '#34a853',
+                    desc: '面向开发者的工具链，从模型 API 到全栈 AI 应用框架',
+                    products: [
+                        { name: 'Gemini API', desc: 'REST/gRPC API，支持多模态输入、函数调用与工具使用，最高 200 万 token 上下文', link: 'https://ai.google.dev' },
+                        { name: 'Vertex AI', desc: '企业级 AI 平台，提供 200+ 模型与完整的训练/部署/编排工具', link: 'https://cloud.google.com/vertex-ai' },
+                        { name: 'Google Colab', desc: '在线 Python Notebook 环境，免费 GPU/TPU，内置 Gemini 辅助编程', link: 'https://colab.google' },
+                        { name: 'Firebase Genkit', desc: '开源框架，支持 Python/Go，用于构建 Agentic AI 应用与复杂工作流', link: 'https://firebase.google.com/docs/genkit' },
+                        { name: 'Project IDX', desc: '基于云的 AI 驱动开发环境，支持多种编程语言与框架', link: 'https://idx.google.com' },
+                        { name: 'SignGemma', desc: '开源手语翻译模型（ASL to English），服务听障人群', link: 'https://deepmind.google/models/gemma/' },
+                        { name: 'Gemini Code Assist', desc: 'IDE 中的 AI 代码助手，支持代码补全、解释与重构', link: 'https://cloud.google.com/products/gemini/code-assist' },
+                        { name: 'Google Antigravity', desc: 'Agent-first 时代的开发平台，将 IDE 演进为 Agent 驱动的工作流', link: 'https://aistudio.google.com' },
+                    ]
+                },
+                enterprise: {
+                    title: '企业办公',
+                    color: '#00bcd4',
+                    desc: '深度集成 Google Workspace 的 AI 能力，提升办公效率',
+                    products: [
+                        { name: 'Gemini for Workspace', desc: 'Docs/Sheets/Slides/Gmail 全面 AI 化，支持智能撰写与数据分析', link: 'https://workspace.google.com/products/gemini/' },
+                        { name: 'Flow for Workspace', desc: 'Workspace 中的 AI 流程自动化工具', link: 'https://workspace.google.com' },
+                        { name: 'Gmail Smart Compose', desc: '智能邮件撰写与上下文感知回复建议', link: 'https://www.google.com/gmail/' },
+                        { name: 'Google Meet AI', desc: '会议实时摘要、翻译、智能笔记与行动项提取', link: 'https://meet.google.com' },
+                        { name: 'Gemini Enterprise', desc: 'Workspace 企业级 AI 附加组件，提供高级安全与治理', link: 'https://workspace.google.com/products/gemini/' },
+                    ]
+                },
+                agent: {
+                    title: '智能体Agent',
+                    color: '#ea4335',
+                    desc: 'Google 全面进军 AI Agent 的核心产品矩阵，从通用助手到专业 Agent',
+                    products: [
+                        { name: 'Project Astra', desc: '通用 AI 助手，支持视频理解与 10 分钟记忆保持，可在手机和原型眼镜上运行', link: 'https://deepmind.google/models/project-astra/' },
+                        { name: 'Project Mariner', desc: '自主浏览器 Agent，可理解网页内容、填写表单、完成多步骤任务', link: 'https://deepmind.google/models/project-mariner/' },
+                        { name: 'Jules', desc: '自主 AI 编程 Agent，GitHub 集成，异步执行，可修复 Bug 并提交 PR', link: 'https://jules.google.com' },
+                        { name: 'Deep Research / Max', desc: '自主研究 Agent，深度信息搜集、分析与报告生成，已接入 Gemini API', link: 'https://gemini.google.com' },
+                        { name: 'Gemini Agent Mode', desc: 'Gemini 应用中的 Agent 模式，支持端到端任务执行与多步骤规划', link: 'https://gemini.google.com' },
+                        { name: 'Gemini Robotics', desc: '最先进的视觉-语言-动作模型，支持真实世界机器人任务', link: 'https://deepmind.google/models/gemini/' },
+                    ]
+                },
+                cloud: {
+                    title: '云产品',
+                    color: '#9c27b0',
+                    desc: 'Google Cloud 上的企业级 AI 基础设施与服务',
+                    products: [
+                        { name: 'Vertex AI Agent Builder', desc: '可视化构建企业级 AI Agent，低代码/无代码方式', link: 'https://cloud.google.com/products/agent-builder' },
+                        { name: 'Vertex Model Garden', desc: '200+ 开源与第三方模型的集市，一键部署', link: 'https://cloud.google.com/vertex-ai/docs/model-garden' },
+                        { name: 'BigQuery ML + Gemini', desc: '数据仓库中的 AI 辅助 SQL 生成与自然语言数据分析', link: 'https://cloud.google.com/bigquery/docs/gemini-for-bigquery' },
+                        { name: 'Dialogflow / CCAI', desc: '对话 AI 平台，构建客服机器人、语音 Agent 与 IVR 系统', link: 'https://cloud.google.com/dialogflow' },
+                        { name: 'Document AI', desc: '非结构化文档的智能解析、OCR 与结构化数据提取', link: 'https://cloud.google.com/document-ai' },
+                        { name: 'Gemini Cloud Assist', desc: 'Cloud Console 中的 AI 架构设计助手，生成 IaC 配置与成本优化建议', link: 'https://cloud.google.com/products/gemini' },
+                    ]
+                },
+                hardware: {
+                    title: '硬件产品',
+                    color: '#607d8b',
+                    desc: '从数据中心到边缘设备，自研 AI 算力基础设施',
+                    products: [
+                        { name: 'TPU v5 / v6', desc: '张量处理单元，专为深度学习训练与推理优化的 AI 加速器', link: 'https://cloud.google.com/tpu' },
+                        { name: 'Coral', desc: '边缘 AI 计算平台与开发板，支持在设备端运行机器学习模型', link: 'https://coral.ai' },
+                        { name: 'Pixel (Tensor chip)', desc: '自研手机 SoC，内置 AI 加速单元，支持本地 Gemini Nano', link: 'https://store.google.com' },
+                        { name: 'Nest', desc: '智能家居设备，集成 Gemini 语音助手与实时摄像头描述', link: 'https://store.google.com/category/nest' },
+                    ]
+                },
+                industry: {
+                    title: '行业方案',
+                    color: '#fbc02d',
+                    desc: '以 AI for Science 为核心理念，在科学、医疗、交通等领域的前沿探索',
+                    products: [
+                        { name: 'AlphaFold 3', desc: '蛋白质与所有生物分子结构预测，获 2024 诺贝尔化学奖', link: 'https://deepmind.google/discover/blog/alphafold-3-predicts-the-structure-and-interactions-of-all-of-lifes-molecules/' },
+                        { name: 'Med-PaLM / MedGemma', desc: '医疗大模型，多模态医学文本与图像理解', link: 'https://deepmind.google/models/gemma/' },
+                        { name: 'Waymo', desc: 'L4 级自动驾驶，累计行驶数千万英里，已在美国多城市商业运营', link: 'https://waymo.com' },
+                        { name: 'GNoME', desc: '材料发现 AI，预测 220 万种新材料晶体结构', link: 'https://deepmind.google/discover/blog/materials-ai-gnome/' },
+                        { name: '气候科学 AI', desc: '天气预报、洪水预测与气候建模，准确性超越传统物理模型', link: 'https://deepmind.google/discover/blog/' },
+                        { name: '零售 AI 工具', desc: 'AI Impact Summit 发布的零售行业智能化解决方案', link: 'https://blog.google/products/ai/' },
+                    ]
+                }
+            },
+            cases: [
+                { year: '2016', title: 'AlphaGo 战胜李世石', desc: '4:1 战胜围棋世界冠军，首次证明 AI 可在完全信息博弈中超越人类顶尖水平，全球观看超 2 亿人次。' },
+                { year: '2017', title: 'Transformer 论文', desc: 'Google Brain 发表《Attention Is All You Need》，提出 Transformer 架构，奠定 GPT、BERT 等现代大模型的基础。' },
+                { year: '2020', title: 'AlphaFold 2 突破', desc: '在 CASP14 蛋白质结构预测竞赛中达到原子级精度，解决困扰生物学界 50 年的"蛋白质折叠问题"。' },
+                { year: '2022', title: 'PaLM 大模型', desc: '发布 5400 亿参数大语言模型，展示大规模语言模型的涌现能力（Emergent Abilities）。' },
+                { year: '2023', title: 'Gemini 发布', desc: '发布原生多模态大模型，可直接处理文本、图像、音频、视频，无需拼接独立模态模型。' },
+                { year: '2024', title: 'Agent Trio 战略', desc: '推出 Project Astra（通用助手）、Mariner（浏览器 Agent）、Jules（编程 Agent），全面进军 AI Agent 时代。' },
+                { year: '2024', title: '诺贝尔化学奖', desc: 'Demis Hassabis 与 John Jumper 因 AlphaFold 获 2024 诺贝尔化学奖，AI for Science 的里程碑时刻。' },
+                { year: '2025', title: 'Gemini 3 与 Jules GA', desc: 'Gemini 3 系列发布，推理与编码能力再上新台阶；Jules 从 Beta 转为正式版，新增 Scheduled Tasks 等功能。' },
+                { year: '2026', title: 'Gemma 4 开源', desc: '发布 Gemma 4 开源模型家族，被称为"字节级最强开源模型"，进一步开放 AI 生态。' },
+            ]
+        };
+
+        const categoryKeys = ['model', 'consumer', 'dev', 'enterprise', 'agent', 'cloud', 'hardware', 'industry'];
+        let activeKey = 'model';
+
+        // ===== 渲染知识图谱 =====
+        function renderGraph() {
+            const container = document.getElementById('graphContainer');
+            const svg = document.getElementById('graphLines');
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const cx = width / 2;
+            const cy = height / 2;
+            const r = Math.min(width, height) / 2 * 0.72;
+
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.innerHTML = '';
+
+            // 清除旧的分类节点
+            document.querySelectorAll('.kg-node').forEach(n => n.remove());
+
+            // 创建分类节点
+            categoryKeys.forEach((key, i) => {
+                const cat = vendorData.categories[key];
+                const angle = (i * 45) * Math.PI / 180;
+                const nx = cx + r * Math.cos(angle);
+                const ny = cy + r * Math.sin(angle);
+
+                // 画连线
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', cx);
+                line.setAttribute('y1', cy);
+                line.setAttribute('x2', nx);
+                line.setAttribute('y2', ny);
+                line.style.animationDelay = `${0.3 + i * 0.1}s`;
+                svg.appendChild(line);
+
+                // 创建节点
+                const node = document.createElement('div');
+                node.className = 'kg-node' + (key === activeKey ? ' active' : '');
+                node.style.background = `linear-gradient(135deg, ${cat.color}cc, ${cat.color}99)`;
+                node.style.animationDelay = `${0.5 + i * 0.1}s`;
+                node.style.left = '0px';
+                node.style.top = '0px';
+                node.innerHTML = `<span class="node-dot" style="background:${cat.color}"></span>${cat.title}`;
+                node.dataset.key = key;
+                node.addEventListener('click', () => {
+                    activeKey = key;
+                    updateActiveNode();
+                    renderDetail();
+                });
+                container.appendChild(node);
+
+                // 用 requestAnimationFrame 确保节点已渲染再定位
+                requestAnimationFrame(() => {
+                    const nw = node.offsetWidth;
+                    const nh = node.offsetHeight;
+                    node.style.left = `${nx - nw / 2}px`;
+                    node.style.top = `${ny - nh / 2}px`;
+                });
+            });
+        }
+
+        function updateActiveNode() {
+            document.querySelectorAll('.kg-node').forEach(node => {
+                node.classList.toggle('active', node.dataset.key === activeKey);
+            });
+        }
+
+        // ===== 渲染详情面板 =====
+        function renderDetail() {
+            const panel = document.getElementById('detailPanel');
+            const data = vendorData.categories[activeKey];
+
+            let html = `
+                <div class="detail-header" style="border-color: ${data.color};">
+                    <div class="dot" style="background: ${data.color};"></div>
+                    <h3>${data.title}</h3>
+                </div>
+                <p style="color:#94a3b8;font-size:0.88rem;margin-bottom:1rem;line-height:1.6;">${data.desc}</p>
+                <div class="detail-products">
+            `;
+
+            data.products.forEach(p => {
+                html += `
+                    <div class="detail-product-item" style="border-left-color: ${data.color};">
+                        <div class="p-name">
+                            <span>${p.name}</span>
+                            <a href="${p.link}" target="_blank" rel="noopener">官网 →</a>
+                        </div>
+                        <div class="p-desc">${p.desc}</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            panel.innerHTML = html;
+        }
+
+        function renderOverview() {
+            const panel = document.getElementById('detailPanel');
+            panel.innerHTML = `
+                <div class="detail-header" style="border-color: #4285f4;">
+                    <div class="dot" style="background: linear-gradient(135deg, #4285f4, #34a853, #fbbc04, #ea4335);"></div>
+                    <h3>${vendorData.overview.title}</h3>
+                </div>
+                <div class="detail-overview">${vendorData.overview.content}</div>
+            `;
+        }
+
+        // ===== 渲染时间线 =====
+        function renderTimeline() {
+            const container = document.getElementById('casesTimeline');
+            container.innerHTML = vendorData.cases.map(c => `
+                <div class="case-card">
+                    <div class="case-year">${c.year}</div>
+                    <div class="case-title">${c.title}</div>
+                    <div class="case-desc">${c.desc}</div>
+                </div>
+            `).join('');
+        }
+
+        // ===== 中心节点点击 =====
+        document.getElementById('centerNode').addEventListener('click', () => {
+            activeKey = null;
+            updateActiveNode();
+            renderOverview();
+        });
+
+        // ===== 初始化 =====
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGraph();
+            renderDetail();
+            renderTimeline();
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(renderGraph, 200);
+        });
+    </script>
+</body>
+
+</html>

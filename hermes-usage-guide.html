@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermes 使用指南 - 权威功能与实战场景</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            animation: pulse-glow 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-banner h2 {
+            position: relative;
+            font-size: 2rem;
+            color: #c4b5fd;
+            border: none;
+            padding-bottom: 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-banner p {
+            position: relative;
+            color: #a5b4fc;
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .capability-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.15);
+        }
+
+        .capability-card h4 {
+            color: #38bdf8;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .capability-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .scenario-section {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 14px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s;
+        }
+
+        .scenario-section:hover {
+            border-color: rgba(139, 92, 246, 0.45);
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+        }
+
+        .scenario-icon {
+            font-size: 2.2rem;
+            flex-shrink: 0;
+        }
+
+        .scenario-title {
+            font-size: 1.4rem;
+            color: #c4b5fd;
+            margin: 0;
+        }
+
+        .scenario-subtitle {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .scenario-content {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .scenario-content h4 {
+            color: #7dd3fc;
+            font-size: 1.05rem;
+            margin: 1.25rem 0 0.5rem;
+        }
+
+        .scenario-content p {
+            margin-bottom: 0.75rem;
+        }
+
+        .use-case-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .use-case-list li {
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #8b5cf6;
+            transition: transform 0.2s;
+        }
+
+        .use-case-list li:hover {
+            transform: translateX(4px);
+        }
+
+        .use-case-list li strong {
+            color: #c4b5fd;
+        }
+
+        .code-example {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin: 0.75rem 0;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .code-example .comment {
+            color: #64748b;
+        }
+
+        .code-example .cmd {
+            color: #c4b5fd;
+        }
+
+        .code-example .flag {
+            color: #fbbf24;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .domain-tag {
+            display: inline-block;
+            padding: 0.25rem 0.7rem;
+            font-size: 0.78rem;
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            font-weight: 600;
+        }
+
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .feature-table th,
+        .feature-table td {
+            padding: 0.85rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-table th {
+            color: #c4b5fd;
+            font-weight: 600;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .feature-table td {
+            color: #cbd5e1;
+            font-size: 0.93rem;
+        }
+
+        .feature-table tr:hover td {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .tip-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .tip-box .icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .tip-box p {
+            margin: 0;
+            font-size: 0.92rem;
+            color: #a7f3d0;
+        }
+
+        .tip-box strong {
+            color: #6ee7b7;
+        }
+
+        .warning-box {
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .warning-box .icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .warning-box p {
+            margin: 0;
+            font-size: 0.92rem;
+            color: #fde68a;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            background: rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero-banner h2 {
+                font-size: 1.5rem;
+            }
+
+            .capability-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scenario-section {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <a href="index.html" class="back-link">← 返回首页</a>
+
+        <h1>📘 Hermes 使用指南</h1>
+
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-btn">🏠 首页</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🤖 OpenClaw ▾</button>
+                <div class="dropdown-menu">
+                    <a href="how-to-use.html"><span class="sub-icon">🎯</span>如何使用</a>
+                    <a href="openclaw-deploy.html"><span class="sub-icon">🚀</span>部署指南</a>
+                    <a href="openclaw-feishu-deploy.html"><span class="sub-icon">🦞</span>飞书妙搭部署</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn active">🧠 Hermes ▾</button>
+                <div class="dropdown-menu">
+                    <a href="hermes-install-guide.html"><span class="sub-icon">📦</span>安装指南</a>
+                    <a href="hermes-usage-guide.html"><span class="sub-icon">📘</span>使用指南</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="ai-vendors.html" class="nav-btn">🌐 AI厂商</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">💡 文档 ▾</button>
+                <div class="dropdown-menu">
+                    <a href="ai-concepts.html"><span class="sub-icon">💡</span>AI新概念</a>
+                    <a href="vendor-detail-google.html"><span class="sub-icon">🔍</span>Google产品图谱</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <div class="hero-banner">
+            <h2>Hermes — 开源本地优先 AI 智能体框架</h2>
+            <p>由 Nous Research 开发，支持多模型接入、工具调用、自定义技能，覆盖从原型验证到企业级部署的全场景需求</p>
+        </div>
+
+        <!-- 核心能力概览 -->
+        <h2>核心能力一览</h2>
+        <div class="capability-grid">
+            <div class="capability-card">
+                <h4>🧠 多模型接入</h4>
+                <p>支持 OpenAI、Anthropic、DeepSeek、本地 Ollama 等 20+ 模型提供商，按需切换。</p>
+            </div>
+            <div class="capability-card">
+                <h4>🔧 工具调用</h4>
+                <p>内置文件读写、Shell 执行、HTTP 请求、数据库查询等工具，支持自定义工具扩展。</p>
+            </div>
+            <div class="capability-card">
+                <h4>🎯 自定义技能</h4>
+                <p>通过 Skill 系统封装领域知识，一键安装社区技能，快速构建专属工作流。</p>
+            </div>
+            <div class="capability-card">
+                <h4>💾 记忆系统</h4>
+                <p>短期对话缓存 + 长期持久记忆，跨会话保持上下文，知识持续积累。</p>
+            </div>
+            <div class="capability-card">
+                <h4>🔌 MCP 协议</h4>
+                <p>原生支持 Model Context Protocol，无缝对接第三方 MCP 服务器和工具生态。</p>
+            </div>
+            <div class="capability-card">
+                <h4>🔐 安全可控</h4>
+                <p>代码本地执行，数据不出境；权限分级管理，敏感操作需确认，合规无忧。</p>
+            </div>
+        </div>
+
+        <!-- 功能对比表 -->
+        <h2>功能矩阵</h2>
+        <table class="feature-table">
+            <thead>
+                <tr>
+                    <th>功能</th>
+                    <th>描述</th>
+                    <th>典型场景</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>交互式会话</strong></td>
+                    <td>多轮对话，上下文感知，实时响应</td>
+                    <td>日常问答、代码调试、文档查询</td>
+                </tr>
+                <tr>
+                    <td><strong>批量处理</strong></td>
+                    <td>非交互模式，支持脚本化批量任务</td>
+                    <td>批量数据清洗、批量代码审查</td>
+                </tr>
+                <tr>
+                    <td><strong>文件操作</strong></td>
+                    <td>读写文件、目录管理、代码搜索</td>
+                    <td>项目重构、文档生成、配置管理</td>
+                </tr>
+                <tr>
+                    <td><strong>Shell 执行</strong></td>
+                    <td>运行系统命令、脚本执行</td>
+                    <td>DevOps 自动化、环境搭建</td>
+                </tr>
+                <tr>
+                    <td><strong>网络搜索</strong></td>
+                    <td>实时联网搜索，获取最新信息</td>
+                    <td>技术调研、竞品分析</td>
+                </tr>
+                <tr>
+                    <td><strong>子代理编排</strong></td>
+                    <td>并行/串行子代理协作，复杂任务拆解</td>
+                    <td>大型项目开发、多步骤工作流</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ==================== 实战场景 ==================== -->
+
+        <h2 style="margin-top: 3rem; border-bottom: 3px solid #8b5cf6; padding-bottom: 0.75rem; color: #c4b5fd;">🌍 行业实战场景</h2>
+        <p style="color: #94a3b8;">以下场景基于 Hermes 核心能力，结合地理信息研发、人工智能、数据治理、企业出海、工业互联网五大领域的典型需求展开。</p>
+
+        <!-- 场景一：地理信息研发 -->
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">🗺️</span>
+                <div>
+                    <h3 class="scenario-title">地理信息研发（GIS）</h3>
+                    <div class="scenario-subtitle">空间数据处理 · 地图服务开发 · 遥感分析</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <h4>场景一：空间数据 ETL 自动化</h4>
+                <p>地理信息研发中，数据来源多样（Shapefile、GeoJSON、遥感影像、矢量瓦片），格式转换与清洗是高频任务。Hermes 可通过自定义技能封装 GDAL/OGR 工具链，实现一键式数据转换。</p>
+                <div class="code-example">
+<span class="comment"># 通过 Hermes 批量转换 Shapefile 为 GeoJSON</span>
+<span class="cmd">hermes chat -q</span> <span class="flag">"将 data/shapes/ 目录下所有 .shp 文件转为 GeoJSON，输出到 output/geojson/"</span>
+
+<span class="comment"># Hermes 会自动调用 GDAL 工具完成转换：</span>
+<span class="comment"># ogr2ogr -f GeoJSON output/file.geojson data/shapes/file.shp</span>
+                </div>
+                <ul class="use-case-list">
+                    <li><strong>坐标系批量转换</strong> — 将不同来源的空间数据统一到 WGS84 或 CGCS2000 坐标系</li>
+                    <li><strong>遥感影像预处理</strong> — 批量裁剪、波段合成、辐射校正脚本生成</li>
+                    <li><strong>地理编码服务</strong> — 地址文本转坐标，支持批量处理百万级地址</li>
+                </ul>
+
+                <h4>场景二：地图服务开发辅助</h4>
+                <p>使用 Hermes 辅助开发 Mapbox GL / OpenLayers / Leaflet 前端代码，快速搭建 WebGIS 应用原型。</p>
+                <div class="code-example">
+<span class="comment"># 让 Hermes 生成一个基于 OpenLayers 的矢量瓦片查看器</span>
+<span class="cmd">hermes</span> <span class="flag">--skill webgis-dev</span> <span class="flag">--model deepseek-v3</span>
+
+> 生成一个 OpenLayers 3.16 的矢量瓦片地图应用，
+> 支持图层切换、要素点击查询、坐标显示功能
+                </div>
+                <div class="tip-box">
+                    <span class="icon">💡</span>
+                    <p><strong>最佳实践：</strong>将 Hermes 的记忆系统用于存储项目中的空间数据 Schema 和 API 规范，确保多轮对话中保持一致的上下文。</p>
+                </div>
+            </div>
+            <div class="tag-row">
+                <span class="domain-tag">GIS开发</span>
+                <span class="domain-tag">GDAL</span>
+                <span class="domain-tag">遥感</span>
+                <span class="domain-tag">空间分析</span>
+                <span class="domain-tag">坐标转换</span>
+            </div>
+        </div>
+
+        <!-- 场景二：人工智能 -->
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">🤖</span>
+                <div>
+                    <h3 class="scenario-title">人工智能</h3>
+                    <div class="scenario-subtitle">模型开发 · Prompt 工程 · Agent 构建</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <h4>场景一：模型评估与对比</h4>
+                <p>AI 研发人员需要在多个模型之间快速切换，评估不同模型在特定任务上的表现。Hermes 的多模型接入能力使这一过程高效可控。</p>
+                <div class="code-example">
+<span class="comment"># 快速对比不同模型对同一任务的表现</span>
+<span class="cmd">hermes model</span>  <span class="comment"># 交互式选择模型</span>
+
+<span class="comment"># 使用 DeepSeek-V3</span>
+<span class="cmd">hermes chat</span> <span class="flag">--model deepseek/deepseek-chat</span> <span class="flag">--q "分析这段代码的性能瓶颈"</span>
+
+<span class="comment"># 切换到 Claude Sonnet 对比</span>
+<span class="cmd">hermes model</span> anthropic/claude-sonnet-4-20250514
+<span class="cmd">hermes chat</span> <span class="flag">--q "分析这段代码的性能瓶颈"</span>
+                </div>
+                <ul class="use-case-list">
+                    <li><strong>Prompt 模板管理</strong> — 在记忆系统中存储经过验证的 Prompt 模板，跨会话复用</li>
+                    <li><strong>Agent 工作流设计</strong> — 使用子代理编排复杂的多步骤 AI Pipeline</li>
+                    <li><strong>RAG 管道调试</strong> — 通过文件工具读取文档片段，测试检索增强生成效果</li>
+                </ul>
+
+                <h4>场景二：代码生成与审查</h4>
+                <p>Hermes 可作为 AI 辅助编程助手，在项目目录中读取代码上下文，生成符合项目风格的新代码。</p>
+                <div class="code-example">
+<span class="comment"># 在项目目录中启动 Hermes，自动加载项目上下文</span>
+<span class="cmd">hermes</span> <span class="flag">--workspace ./my-project</span>
+
+> 为 src/services/ 目录下的 API 模块编写单元测试，
+> 使用 pytest，覆盖正常路径和边界情况
+                </div>
+                <div class="warning-box">
+                    <span class="icon">⚠️</span>
+                    <p><strong>注意：</strong>AI 生成的代码需经过人工审查。Hermes 的工具调用权限分级机制可确保敏感操作（如 git push）需用户确认。</p>
+                </div>
+            </div>
+            <div class="tag-row">
+                <span class="domain-tag">模型评估</span>
+                <span class="domain-tag">Prompt工程</span>
+                <span class="domain-tag">Agent编排</span>
+                <span class="domain-tag">代码生成</span>
+                <span class="domain-tag">RAG</span>
+            </div>
+        </div>
+
+        <!-- 场景三：数据治理 -->
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">📊</span>
+                <div>
+                    <h3 class="scenario-title">数据治理</h3>
+                    <div class="scenario-subtitle">数据质量 · 元数据管理 · 合规审查</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <h4>场景一：数据质量自动检测</h4>
+                <p>数据治理的核心挑战之一是数据质量。Hermes 可通过自定义技能封装数据质量检测规则，对数据集进行自动扫描并生成质量报告。</p>
+                <div class="code-example">
+<span class="comment"># 使用 Hermes 扫描 CSV 数据集质量</span>
+<span class="cmd">hermes chat</span> <span class="flag">--skill data-quality</span>
+
+> 分析 data/customers.csv 的数据质量：
+> 1. 检查空值比例
+> 2. 识别重复记录
+> 3. 验证字段格式（邮箱、手机号、身份证）
+> 4. 生成质量报告到 reports/ 目录
+                </div>
+                <ul class="use-case-list">
+                    <li><strong>Schema 一致性校验</strong> — 自动比对数据库 Schema 与文档定义，发现漂移</li>
+                    <li><strong>敏感数据扫描</strong> — 识别数据集中的 PII 信息（姓名、手机号、身份证号）</li>
+                    <li><strong>数据血缘追踪</strong> — 分析 ETL 脚本，自动生成数据流向图</li>
+                </ul>
+
+                <h4>场景二：元数据管理自动化</h4>
+                <p>通过 Hermes 与数据库工具的集成，自动提取表结构、字段描述、数据类型等元数据，生成数据字典。</p>
+                <div class="code-example">
+<span class="comment"># 通过 MCP 连接 PostgreSQL 数据库</span>
+<span class="comment"># 在 ~/.hermes/.env 中配置</span>
+<span class="cmd">MCP_SERVERS</span>=postgres@localhost:5432/mydb
+
+<span class="comment"># 让 Hermes 生成数据字典</span>
+<span class="cmd">hermes</span> <span class="flag">--mcp postgres</span>
+
+> 连接数据库，提取所有表的元数据，
+> 生成 Markdown 格式的数据字典到 docs/data-dict.md
+                </div>
+                <div class="tip-box">
+                    <span class="icon">💡</span>
+                    <p><strong>合规提示：</strong>在处理敏感数据时，建议使用本地模型（如 Ollama 运行的 Qwen/Llama）以确保数据不出境。Hermes 原生支持本地模型接入。</p>
+                </div>
+            </div>
+            <div class="tag-row">
+                <span class="domain-tag">数据质量</span>
+                <span class="domain-tag">元数据</span>
+                <span class="domain-tag">合规审查</span>
+                <span class="domain-tag">数据字典</span>
+                <span class="domain-tag">PII检测</span>
+            </div>
+        </div>
+
+        <!-- 场景四：企业出海 -->
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">🌐</span>
+                <div>
+                    <h3 class="scenario-title">企业出海</h3>
+                    <div class="scenario-subtitle">多语言处理 · 本地化 · 跨境合规</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <h4>场景一：多语言内容本地化</h4>
+                <p>企业出海面临的首要挑战是语言。Hermes 支持多语言 Prompt，可批量完成产品文案、帮助文档、营销素材的翻译与本地化。</p>
+                <div class="code-example">
+<span class="comment"># 批量翻译产品文案为多语言版本</span>
+<span class="cmd">hermes chat</span> <span class="flag">--model deepseek-v3</span>
+
+> 将 docs/product-intro.md 翻译为英语、日语、韩语、西班牙语，
+> 保持技术术语一致性，输出到 docs/translations/ 目录下
+> 每个语言版本保留对应的文件名后缀（_en, _ja, _ko, _es）
+                </div>
+                <ul class="use-case-list">
+                    <li><strong>UI 文案国际化</strong> — 批量提取代码中的硬编码字符串，生成 i18n 资源文件</li>
+                    <li><strong>本地化适配建议</strong> — 分析目标市场文化差异，提供 UI/UX 本地化建议</li>
+                    <li><strong>多语言客服知识库</strong> — 构建多语言 FAQ，支持跨语言语义检索</li>
+                </ul>
+
+                <h4>场景二：跨境合规文档生成</h4>
+                <p>不同国家/地区的数据保护法规差异巨大（GDPR、CCPA、PIPL）。Hermes 可辅助生成合规文档模板。</p>
+                <div class="code-example">
+<span class="comment"># 生成 GDPR 合规隐私政策模板</span>
+<span class="cmd">hermes chat</span>
+
+> 根据我们产品的功能（用户注册、数据收集、第三方分析），
+> 生成符合 GDPR 要求的隐私政策文档模板，
+> 包含数据收集说明、用户权利、数据保留政策等关键条款
+                </div>
+                <div class="warning-box">
+                    <span class="icon">⚠️</span>
+                    <p><strong>重要提醒：</strong>AI 生成的合规文档仅供参考，必须经过法律专业人士审核后方可使用。Hermes 适合作为起草工具，而非最终合规方案。</p>
+                </div>
+            </div>
+            <div class="tag-row">
+                <span class="domain-tag">多语言</span>
+                <span class="domain-tag">本地化</span>
+                <span class="domain-tag">GDPR</span>
+                <span class="domain-tag">i18n</span>
+                <span class="domain-tag">跨境合规</span>
+            </div>
+        </div>
+
+        <!-- 场景五：工业互联网 -->
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">🏭</span>
+                <div>
+                    <h3 class="scenario-title">工业互联网</h3>
+                    <div class="scenario-subtitle">设备监控 · 预测性维护 · 产线优化</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <h4>场景一：设备日志分析与故障诊断</h4>
+                <p>工业设备产生的日志量巨大，人工排查效率低。Hermes 可通过文件工具批量读取日志，结合模型能力进行智能诊断。</p>
+                <div class="code-example">
+<span class="comment"># 分析设备运行日志中的异常模式</span>
+<span class="cmd">hermes chat</span> <span class="flag">--model deepseek-v3</span>
+
+> 读取 logs/ 目录下最近 7 天的设备运行日志，
+> 识别异常模式：
+> 1. 温度超限事件
+> 2. 振动频率异常
+> 3. 通信超时
+> 4. 能耗突变
+> 输出异常报告到 reports/device-analysis.md
+                </div>
+                <ul class="use-case-list">
+                    <li><strong>预测性维护</strong> — 基于历史数据模式，预测设备故障窗口期</li>
+                    <li><strong>OPC UA 数据解读</strong> — 解析 OPC UA 协议数据，生成可读的设备状态报告</li>
+                    <li><strong>产线效率分析</strong> — 分析 OEE（设备综合效率）数据，识别瓶颈环节</li>
+                </ul>
+
+                <h4>场景二：工业文档智能检索</h4>
+                <p>工业企业的设备手册、操作规程、维修记录通常分散在多个系统中。Hermes 的文件工具和记忆系统可用于构建智能文档助手。</p>
+                <div class="code-example">
+<span class="comment"># 构建设备知识库问答系统</span>
+<span class="cmd">hermes</span> <span class="flag">--skill industrial-docs</span> <span class="flag">--memory long-term</span>
+
+> 将 docs/manuals/ 目录下所有设备手册加载到长期记忆中，
+> 之后可以快速查询："CNC 数控机床 X 轴报警 E07 的处理步骤是什么？"
+                </div>
+                <div class="tip-box">
+                    <span class="icon">💡</span>
+                    <p><strong>部署建议：</strong>工业场景对实时性要求高，建议将 Hermes 部署在边缘计算节点上，使用本地模型（如 Qwen-7B）以降低延迟。Hermes 支持 Ollama 本地部署。</p>
+                </div>
+            </div>
+            <div class="tag-row">
+                <span class="domain-tag">设备监控</span>
+                <span class="domain-tag">预测性维护</span>
+                <span class="domain-tag">OPC UA</span>
+                <span class="domain-tag">OEE分析</span>
+                <span class="domain-tag">边缘部署</span>
+            </div>
+        </div>
+
+        <!-- 常用命令速查 -->
+        <h2 style="margin-top: 3rem;">常用命令速查</h2>
+        <table class="feature-table">
+            <thead>
+                <tr>
+                    <th>命令</th>
+                    <th>说明</th>
+                    <th>适用场景</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes</code></td>
+                    <td>启动交互式会话</td>
+                    <td>日常开发、问答</td>
+                </tr>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes chat -q "问题"</code></td>
+                    <td>单次查询模式</td>
+                    <td>脚本集成、批量任务</td>
+                </tr>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes model</code></td>
+                    <td>切换/查看模型</td>
+                    <td>模型评估、任务适配</td>
+                </tr>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes skills list</code></td>
+                    <td>查看已安装技能</td>
+                    <td>能力管理</td>
+                </tr>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes tools</code></td>
+                    <td>管理工具集</td>
+                    <td>工具扩展</td>
+                </tr>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes config edit</code></td>
+                    <td>编辑配置</td>
+                    <td>环境配置</td>
+                </tr>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes doctor</code></td>
+                    <td>检查安装状态</td>
+                    <td>故障排查</td>
+                </tr>
+                <tr>
+                    <td><code style="color: #c4b5fd;">hermes update</code></td>
+                    <td>更新到最新版本</td>
+                    <td>版本维护</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 进阶资源 -->
+        <h2 style="margin-top: 3rem;">进阶资源</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 10px; padding: 1.25rem;">
+                <h4 style="color: #c4b5fd; margin-top: 0;">📖 官方文档</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem;">完整的 API 参考、配置指南和架构说明</p>
+                <a href="https://hermes-agent.nousresearch.com/docs/" target="_blank" style="color: #818cf8; text-decoration: none; font-weight: 600;">docs.nousresearch.com →</a>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 10px; padding: 1.25rem;">
+                <h4 style="color: #c4b5fd; margin-top: 0;">🔧 GitHub 仓库</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem;">源码、Issues、社区讨论和贡献指南</p>
+                <a href="https://github.com/NousResearch/hermes-agent" target="_blank" style="color: #818cf8; text-decoration: none; font-weight: 600;">github.com/NousResearch →</a>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 10px; padding: 1.25rem;">
+                <h4 style="color: #c4b5fd; margin-top: 0;">💬 社区讨论</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem;">与全球开发者交流最佳实践和用例</p>
+                <a href="https://github.com/NousResearch/hermes-agent/discussions" target="_blank" style="color: #818cf8; text-decoration: none; font-weight: 600;">Discussions →</a>
+            </div>
+        </div>
+
+        <div class="back-link" style="margin-top: 2rem; margin-bottom: 0;">
+            <a href="hermes-install-guide.html" style="color: #c4b5fd; text-decoration: none;">📦 还没安装？查看安装指南 →</a>
+        </div>
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button class="deploy-float-btn secondary" onclick="window.location.href='index.html'">🏠 返回首页</button>
+        <button class="deploy-float-btn" onclick="window.location.href='hermes-install-guide.html'">📦 安装指南</button>
+    </div>
+</body>
+
+</html>

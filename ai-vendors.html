@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能厂商 - 产品集合</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 厂商页面专用样式 */
+        
+        .vendor-section {
+            margin-top: 2rem;
+        }
+        
+        .vendor-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            color: #38bdf8;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0ea5e9;
+        }
+        
+        .vendor-section-title .flag {
+            font-size: 1.8rem;
+        }
+        
+        .vendor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+        
+        .vendor-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 14px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .vendor-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 10px 28px rgba(14, 165, 233, 0.2);
+        }
+        
+        .vendor-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .vendor-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .vendor-logo img {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+        }
+        
+        .vendor-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin: 0;
+        }
+        
+        .vendor-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .vendor-tag.international {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(167, 139, 250, 0.15));
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .vendor-tag.domestic {
+            background: linear-gradient(135deg, rgba(245, 124, 0, 0.25), rgba(255, 167, 38, 0.15));
+            color: #ffcc80;
+            border: 1px solid rgba(245, 124, 0, 0.3);
+        }
+        
+        .vendor-desc {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+            flex-grow: 1;
+        }
+        
+        .vendor-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .product-tag {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.78rem;
+            background: rgba(56, 189, 248, 0.12);
+            color: #7dd3fc;
+            border-radius: 16px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            transition: all 0.2s;
+        }
+        
+        .product-tag:hover {
+            background: rgba(56, 189, 248, 0.22);
+            transform: translateY(-1px);
+        }
+        
+        .vendor-features {
+            margin: 0 0 0.75rem 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .vendor-features li {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            padding-left: 1rem;
+            position: relative;
+            margin-bottom: 0.35rem;
+        }
+        
+        .vendor-features li::before {
+            content: '▸';
+            color: #0ea5e9;
+            position: absolute;
+            left: 0;
+            font-size: 0.8rem;
+        }
+        
+        .vendor-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+            align-self: flex-start;
+        }
+        
+        .vendor-link:hover {
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+        }
+
+        .vendor-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .expand-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            align-self: flex-start;
+            border: none;
+            cursor: pointer;
+        }
+
+        .expand-btn:hover {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+        }
+
+        .ownership-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.35rem;
+            margin-bottom: 0.6rem;
+            padding: 0.4rem 0.65rem;
+            background: rgba(251, 191, 36, 0.07);
+            border: 1px solid rgba(251, 191, 36, 0.18);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+
+        .ownership-info .label {
+            color: #fbbf24;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(56, 189, 248, 0.1);
+            color: #7dd3fc;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            transform: translateX(-3px);
+        }
+        
+        .page-intro {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        @media (max-width: 768px) {
+            .vendor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-btn">🏠 首页</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🤖 OpenClaw ▾</button>
+                <div class="dropdown-menu">
+                    <a href="how-to-use.html"><span class="sub-icon">🎯</span>如何使用</a>
+                    <a href="openclaw-deploy.html"><span class="sub-icon">🚀</span>部署指南</a>
+                    <a href="openclaw-feishu-deploy.html"><span class="sub-icon">🦞</span>飞书妙搭部署</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🧠 Hermes ▾</button>
+                <div class="dropdown-menu">
+                    <a href="hermes-install-guide.html"><span class="sub-icon">📦</span>安装指南</a>
+                    <a href="hermes-usage-guide.html"><span class="sub-icon">📘</span>使用指南</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="ai-vendors.html" class="nav-btn active">🌐 AI厂商</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">💡 文档 ▾</button>
+                <div class="dropdown-menu">
+                    <a href="ai-concepts.html"><span class="sub-icon">💡</span>AI新概念</a>
+                    <a href="vendor-detail-google.html"><span class="sub-icon">🔍</span>Google产品图谱</a>
+                </div>
+            </div>
+        </nav>
+
+        <a href="index.html" class="back-btn">← 返回首页</a>
+        <h1>🤖 人工智能厂商</h1>
+
+        <div class="page-intro">
+            本页面整理了当前全球主流的人工智能厂商，涵盖国际科技巨头与国内领先企业。各厂商在基础大模型、对话产品、行业应用、AI基础设施等领域各有所长，共同推动着人工智能技术的快速迭代与生态繁荣。
+        </div>
+
+        <!-- 国际厂商 -->
+        <section class="vendor-section">
+            <h2 class="vendor-section-title"><span class="flag">🌍</span>国际厂商</h2>
+            <div class="vendor-grid">
+                <!-- OpenAI -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=openai.com&sz=128" alt="OpenAI"></div>
+                        <h3 class="vendor-name">OpenAI</h3>
+                        <span class="vendor-tag international">美国</span>
+                    </div>
+                    <p class="vendor-desc">全球最具影响力的AI研究公司之一，GPT系列大模型的开创者，引领了生成式AI浪潮。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>Microsoft~27% · OpenAI基金会(非营利)~26% · 员工~25% · SoftBank~12% · Sam Altman 0%股权 · 估值~$852B</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">ChatGPT</span>
+                        <span class="product-tag">GPT-4o</span>
+                        <span class="product-tag">DALL·E</span>
+                        <span class="product-tag">Sora</span>
+                        <span class="product-tag">Whisper</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>多模态能力领先，支持文本、图像、语音、视频</li>
+                        <li>强大的推理与代码生成能力</li>
+                        <li>开发者生态完善，API覆盖广泛</li>
+                    </ul>
+                    <a href="https://openai.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- Google / DeepMind -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=deepmind.google&sz=128" alt="Google"></div>
+                        <h3 class="vendor-name">Google / DeepMind</h3>
+                        <span class="vendor-tag international">美国</span>
+                    </div>
+                    <p class="vendor-desc">谷歌旗下拥有DeepMind和Google Brain两大AI研究团队，在基础研究与应用落地方面均处于全球前列。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>Alphabet Inc. (NASDAQ: GOOGL) 全资子公司 · 2023年DeepMind与Google Brain合并</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">Gemini</span>
+                        <span class="product-tag">Google AI Studio</span>
+                        <span class="product-tag">Vertex AI</span>
+                        <span class="product-tag">AlphaFold</span>
+                        <span class="product-tag">Imagen</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>原生多模态大模型，上下文窗口长</li>
+                        <li>与Google搜索、Workspace深度集成</li>
+                        <li>在科学计算（蛋白质结构预测）领域突破显著</li>
+                    </ul>
+                    <div class="vendor-actions">
+                        <a href="https://deepmind.google/" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                        <a href="vendor-detail-google.html" class="expand-btn">📖 展开讲讲</a>
+                    </div>
+                </article>
+
+                <!-- Anthropic -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=anthropic.com&sz=128" alt="Anthropic"></div>
+                        <h3 class="vendor-name">Anthropic</h3>
+                        <span class="vendor-tag international">美国</span>
+                    </div>
+                    <p class="vendor-desc">由OpenAI前研究员创立，以AI安全为核心理念，Claude系列模型以超长上下文和安全性著称。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>私人公司 · Amazon投资~$40亿(最大外部股东) · Google投资~$20亿 · Dario &amp; Daniela Amodei联合创立</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">Claude 3.5/4</span>
+                        <span class="product-tag">Claude Code</span>
+                        <span class="product-tag">Computer Use</span>
+                        <span class="product-tag">Constitutional AI</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>超长上下文窗口（最高支持百万token级别）</li>
+                        <li>强调AI安全与对齐（Constitutional AI）</li>
+                        <li>Claude Code支持终端级自主编程</li>
+                    </ul>
+                    <a href="https://www.anthropic.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- Microsoft -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=128" alt="Microsoft"></div>
+                        <h3 class="vendor-name">Microsoft</h3>
+                        <span class="vendor-tag international">美国</span>
+                    </div>
+                    <p class="vendor-desc">通过投资OpenAI并深度整合AI能力到全线产品，微软正成为企业级AI应用的核心推动者。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>NASDAQ上市公司(MSFT) · 机构投资者为主(Vanguard、BlackRock等) · Bill Gates仍持少量股份</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">Copilot</span>
+                        <span class="product-tag">Azure OpenAI</span>
+                        <span class="product-tag">GitHub Copilot</span>
+                        <span class="product-tag">Microsoft 365 Copilot</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>全线产品AI化（Office、Windows、GitHub）</li>
+                        <li>Azure云提供企业级AI基础设施</li>
+                        <li>与OpenAI深度合作，模型能力快速同步</li>
+                    </ul>
+                    <a href="https://www.microsoft.com/ai" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- Meta -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=meta.com&sz=128" alt="Meta"></div>
+                        <h3 class="vendor-name">Meta (Facebook)</h3>
+                        <span class="vendor-tag international">美国</span>
+                    </div>
+                    <p class="vendor-desc">坚持开源路线，LLaMA系列大模型推动了全球开源大模型生态的发展与普及。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>NASDAQ上市公司(META) · Mark Zuckerberg持股~13%但拥有~54%投票权(A/B股) · 机构股东分散</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">LLaMA 3/4</span>
+                        <span class="product-tag">Meta AI</span>
+                        <span class="product-tag">PyTorch</span>
+                        <span class="product-tag">Segment Anything</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>开源大模型策略，社区生态活跃</li>
+                        <li>LLaMA系列性能逼近闭源顶尖模型</li>
+                        <li>在元宇宙、社交场景的AI应用探索深入</li>
+                    </ul>
+                    <a href="https://ai.meta.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- NVIDIA -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=nvidia.com&sz=128" alt="NVIDIA"></div>
+                        <h3 class="vendor-name">NVIDIA</h3>
+                        <span class="vendor-tag international">美国</span>
+                    </div>
+                    <p class="vendor-desc">AI算力的基石，GPU与CUDA生态垄断了深度学习训练与推理市场，正向全栈AI平台转型。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>NASDAQ上市公司(NVDA) · Jensen Huang持股~3.5% · Vanguard、BlackRock为最大机构股东</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">H100/A100 GPU</span>
+                        <span class="product-tag">CUDA</span>
+                        <span class="product-tag">TensorRT</span>
+                        <span class="product-tag">NIM</span>
+                        <span class="product-tag">Omniverse</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>数据中心GPU算力统治地位</li>
+                        <li>CUDA软件生态护城河深厚</li>
+                        <li>推出NIM微服务，布局AI推理平台</li>
+                    </ul>
+                    <a href="https://www.nvidia.com/ai/" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- xAI -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=x.ai&sz=128" alt="xAI"></div>
+                        <h3 class="vendor-name">xAI</h3>
+                        <span class="vendor-tag international">美国</span>
+                    </div>
+                    <p class="vendor-desc">埃隆·马斯克创立的AI公司，Grok大模型与X平台深度整合，主打实时信息获取与开放式对话。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>私人公司 · Elon Musk绝对控股 · 未披露外部投资者信息</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">Grok 3</span>
+                        <span class="product-tag">Colossus超算</span>
+                        <span class="product-tag">X Premium</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>实时访问X平台数据，信息时效性强</li>
+                        <li>自建超大规模算力集群</li>
+                        <li>风格偏向幽默、较少内容过滤</li>
+                    </ul>
+                    <a href="https://x.ai" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- Mistral AI -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=mistral.ai&sz=128" alt="Mistral AI"></div>
+                        <h3 class="vendor-name">Mistral AI</h3>
+                        <span class="vendor-tag international">法国</span>
+                    </div>
+                    <p class="vendor-desc">欧洲最具代表性的AI创业公司，Mixtral稀疏混合专家模型在开源社区获得高度评价。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>私人公司 · Arthur Mensch等创始人控股 · 投资者含General Catalyst、a16z、Lightspeed、Microsoft、NVIDIA</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">Mistral Large</span>
+                        <span class="product-tag">Mixtral 8x22B</span>
+                        <span class="product-tag">Le Chat</span>
+                        <span class="product-tag">La Plateforme</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>Mixtral开创开源MoE架构先河</li>
+                        <li>欧洲本土AI代表，注重数据隐私合规</li>
+                        <li>模型效率高，推理成本优化出色</li>
+                    </ul>
+                    <a href="https://mistral.ai" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- 国内厂商 -->
+        <section class="vendor-section">
+            <h2 class="vendor-section-title"><span class="flag">🇨🇳</span>国内厂商</h2>
+            <div class="vendor-grid">
+                <!-- 百度 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=baidu.com&sz=128" alt="百度"></div>
+                        <h3 class="vendor-name">百度</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">国内最早布局AI的互联网巨头之一，文心大模型是国内首批通过备案的生成式AI产品。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>NASDAQ/港交所上市(BIDU/9888) · 李彦宏持股~18.2%拥有~57%投票权(A/B股) · 创始人绝对控制</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">文心一言</span>
+                        <span class="product-tag">文心大模型</span>
+                        <span class="product-tag">飞桨PaddlePaddle</span>
+                        <span class="product-tag">百度智能云千帆</span>
+                        <span class="product-tag">Apollo自动驾驶</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>全栈自研，从框架到大模型到应用</li>
+                        <li>在NLP、自动驾驶领域积累深厚</li>
+                        <li>飞桨是国内头部深度学习开源框架</li>
+                    </ul>
+                    <a href="https://yiyan.baidu.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 阿里巴巴 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=alibaba.com&sz=128" alt="阿里巴巴"></div>
+                        <h3 class="vendor-name">阿里巴巴</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">通义千问系列模型能力国内领先，开源策略积极，在电商、办公、设计等场景落地丰富。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>NYSE/港交所上市(BABA/9988) · 无单一控股股东 · 软银曾大幅减持 · 马云通过合伙人间接影响</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">通义千问</span>
+                        <span class="product-tag">通义万相</span>
+                        <span class="product-tag">通义灵码</span>
+                        <span class="product-tag">钉钉AI助理</span>
+                        <span class="product-tag">魔搭社区</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>开源模型Qwen系列全球影响力大</li>
+                        <li>多模态能力强（文本、图像、代码）</li>
+                        <li>阿里云提供完善的AI基础设施</li>
+                    </ul>
+                    <a href="https://tongyi.aliyun.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 字节跳动 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=bytedance.com&sz=128" alt="字节跳动"></div>
+                        <h3 class="vendor-name">字节跳动</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">依托推荐算法与内容生态优势，豆包及云雀大模型在C端应用和创作工具上表现出色。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>未上市私人公司 · 张一鸣持股~21%(创始人/实控人)拥有~60%+投票权 · 机构~58%(软银~9.9%/泛大西洋~9.1%) · 员工~21%</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">豆包</span>
+                        <span class="product-tag">云雀大模型</span>
+                        <span class="product-tag">Coze/扣子</span>
+                        <span class="product-tag">即梦AI</span>
+                        <span class="product-tag">剪映AI</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>C端产品用户规模大，豆包DAU领先</li>
+                        <li>内容创作工具（视频、图片）AI化深入</li>
+                        <li>Coze平台降低AI应用开发门槛</li>
+                    </ul>
+                    <a href="https://www.doubao.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 腾讯 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=tencent.com&sz=128" alt="腾讯"></div>
+                        <h3 class="vendor-name">腾讯</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">混元大模型依托腾讯在社交、游戏、内容的生态优势，专注多模态与场景化落地。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>港交所上市(0700.HK) · Naspers(南非报业/Prosus)~24% · 马化腾~8.7% · 股权分散无单一控股股东</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">腾讯元宝</span>
+                        <span class="product-tag">混元大模型</span>
+                        <span class="product-tag">腾讯文档AI</span>
+                        <span class="product-tag">AI Lab</span>
+                        <span class="product-tag">腾讯云TI平台</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>在微信、QQ、游戏等场景深度融合</li>
+                        <li>中文理解与文化适应性较强</li>
+                        <li>AI Lab在游戏AI、医疗AI有研究积累</li>
+                    </ul>
+                    <a href="https://yuanbao.tencent.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 华为 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=huawei.com&sz=128" alt="华为"></div>
+                        <h3 class="vendor-name">华为</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">全栈自主可控的AI路线，从昇腾芯片到MindSpore框架再到盘古大模型，聚焦行业应用。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>100%员工持股私人公司 · 任正非~0.73%(创始人) · 华为投资控股工会委员会~99.27%(10万+员工) · 无上市计划</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">盘古大模型</span>
+                        <span class="product-tag">昇腾AI芯片</span>
+                        <span class="product-tag">MindSpore</span>
+                        <span class="product-tag">ModelArts</span>
+                        <span class="product-tag">鸿蒙小艺</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>国产化AI芯片与软件栈全自研</li>
+                        <li>盘古在行业大模型（气象、矿山、制造）领先</li>
+                        <li>昇腾生态是国内替代NVIDIA的主力</li>
+                    </ul>
+                    <a href="https://www.huaweicloud.com/product/pangu.html" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 月之暗面 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=moonshot.cn&sz=128" alt="月之暗面"></div>
+                        <h3 class="vendor-name">月之暗面 (Moonshot AI)</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">国内AI独角兽，Kimi智能助手以超长上下文和优秀的文档处理能力迅速获得市场认可。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>私人公司 · 杨植麟(创始人/实控人) · 阿里巴巴投资~$8亿获~36%优先股(财报披露) · 腾讯、红杉中国、美团等参投</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">Kimi智能助手</span>
+                        <span class="product-tag">Kimi k1.5</span>
+                        <span class="product-tag">Moonshot API</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>超长上下文窗口（支持200万字）</li>
+                        <li>长文档理解与生成为核心优势</li>
+                        <li>推理模型k1.5在数学代码任务表现优异</li>
+                    </ul>
+                    <a href="https://kimi.moonshot.cn" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- DeepSeek -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=deepseek.com&sz=128" alt="DeepSeek"></div>
+                        <h3 class="vendor-name">DeepSeek</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">幻方量化旗下AI公司，以极高的训练效率和开源策略震撼全球，被称为"AI界的拼多多"。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>私人公司 · 梁文锋绝对控股~84.29%(直接34%+间接) · 由幻方量化孵化 · 未接受外部股权融资(截至2026.4)</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">DeepSeek-V3</span>
+                        <span class="product-tag">DeepSeek-R1</span>
+                        <span class="product-tag">DeepSeek Coder</span>
+                        <span class="product-tag">DeepSeek Math</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>训练成本极低，性能比肩顶尖闭源模型</li>
+                        <li>完全开源，MIT协议商用友好</li>
+                        <li>R1推理模型在数学、逻辑任务上表现突出</li>
+                    </ul>
+                    <a href="https://www.deepseek.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 智谱AI -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=zhipuai.cn&sz=128" alt="智谱AI"></div>
+                        <h3 class="vendor-name">智谱AI</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">源自清华大学KEG实验室，ChatGLM系列是国内最早开源的双语对话大模型之一。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>私人公司 · 创始人唐杰、刘德兵等 · 阿里/腾讯/美团/红杉中国/高瓴/沙特阿美等投资 · 估值超$30亿</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">ChatGLM</span>
+                        <span class="product-tag">GLM-4</span>
+                        <span class="product-tag">智谱清言</span>
+                        <span class="product-tag">CodeGeeX</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>GLM架构创新，自然语言处理基础扎实</li>
+                        <li>开源生态活跃，CodeGeeX代码助手知名</li>
+                        <li>Agent能力国内领先，AutoGLM可操控手机</li>
+                    </ul>
+                    <a href="https://www.zhipuai.cn" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 百川智能 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=baichuan-ai.com&sz=128" alt="百川智能"></div>
+                        <h3 class="vendor-name">百川智能</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">由搜狗创始人王小川创立，专注医疗等大模型应用，Baichuan系列开源模型广受开发者欢迎。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>私人公司 · 创始人王小川控股 · 阿里/腾讯/小米/深创投/红杉中国等投资 · 估值超200亿元</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">Baichuan 4</span>
+                        <span class="product-tag">百小应</span>
+                        <span class="product-tag">Baichuan-Med</span>
+                        <span class="product-tag">Baichuan API</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>创始人具备深厚搜索与互联网产品经验</li>
+                        <li>医疗大模型是差异化优势方向</li>
+                        <li>开源模型在中文社区应用广泛</li>
+                    </ul>
+                    <a href="https://www.baichuan-ai.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 商汤科技 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=sensetime.com&sz=128" alt="商汤科技"></div>
+                        <h3 class="vendor-name">商汤科技</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">亚洲领先的AI软件公司，从计算机视觉起家，向多模态大模型与AI基础设施全面转型。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>港交所上市(0020.HK) · 创始人汤晓鸥(已故) · 股权分散无单一控股股东 · 软银曾为主要股东已减持</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">日日新 SenseNova</span>
+                        <span class="product-tag">商量 SenseChat</span>
+                        <span class="product-tag">秒画</span>
+                        <span class="product-tag">SenseCore</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>计算机视觉领域积累深厚</li>
+                        <li>SenseCore算力基础设施规模庞大</li>
+                        <li>在智慧城市、自动驾驶、医疗等场景落地广泛</li>
+                    </ul>
+                    <a href="https://www.sensetime.com" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+
+                <!-- 科大讯飞 -->
+                <article class="vendor-card">
+                    <div class="vendor-header">
+                        <div class="vendor-logo"><img src="https://www.google.com/s2/favicons?domain=xfyun.cn&sz=128" alt="科大讯飞"></div>
+                        <h3 class="vendor-name">科大讯飞</h3>
+                        <span class="vendor-tag domestic">国内</span>
+                    </div>
+                    <p class="vendor-desc">国内语音AI龙头，讯飞星火大模型在语音交互、教育、办公等垂直领域深耕细作。</p>
+                    <div class="ownership-info"><span class="label">🏛️ 控股：</span>深交所上市(002230.SZ) · 中国移动~10.7%(最大单一股东) · 刘庆峰(创始人)~5.5%通过一致行动人协议控制</div>
+                    <div class="vendor-products">
+                        <span class="product-tag">讯飞星火</span>
+                        <span class="product-tag">讯飞听见</span>
+                        <span class="product-tag">讯飞输入法</span>
+                        <span class="product-tag">智医助理</span>
+                    </div>
+                    <ul class="vendor-features">
+                        <li>语音识别与合成技术国内领先</li>
+                        <li>教育、医疗行业AI应用落地成熟</li>
+                        <li>智能硬件（学习机、翻译机）生态完善</li>
+                    </ul>
+                    <a href="https://xinghuo.xfyun.cn" class="vendor-link" target="_blank" rel="noopener">访问官网 →</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button class="deploy-float-btn secondary" onclick="window.location.href='index.html'">🏠 返回首页</button>
+    </div>
+
+    <script>
+        // 页面交互逻辑
+    </script>
+</body>
+
+</html>

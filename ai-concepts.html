@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI新概念 - 新兴名词解读</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .concept-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 14px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 10px 28px rgba(14, 165, 233, 0.2);
+        }
+
+        .concept-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .concept-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .concept-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin: 0;
+        }
+
+        .concept-subtitle {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .concept-body {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .concept-body p {
+            margin-bottom: 0.75rem;
+        }
+
+        .concept-body strong {
+            color: #7dd3fc;
+        }
+
+        .concept-tag {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.15));
+            color: #c4b5fd;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            margin-top: 0.75rem;
+            font-weight: 600;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(139, 92, 246, 0.08));
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-section p {
+            color: #e2e8f0;
+            margin: 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>💡 AI新概念</h1>
+
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-btn">🏠 首页</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🤖 OpenClaw ▾</button>
+                <div class="dropdown-menu">
+                    <a href="how-to-use.html"><span class="sub-icon">🎯</span>如何使用</a>
+                    <a href="openclaw-deploy.html"><span class="sub-icon">🚀</span>部署指南</a>
+                    <a href="openclaw-feishu-deploy.html"><span class="sub-icon">🦞</span>飞书妙搭部署</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🧠 Hermes ▾</button>
+                <div class="dropdown-menu">
+                    <a href="hermes-install-guide.html"><span class="sub-icon">📦</span>安装指南</a>
+                    <a href="hermes-usage-guide.html"><span class="sub-icon">📘</span>使用指南</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="ai-vendors.html" class="nav-btn">🌐 AI厂商</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn active">💡 文档 ▾</button>
+                <div class="dropdown-menu">
+                    <a href="ai-concepts.html"><span class="sub-icon">💡</span>AI新概念</a>
+                    <a href="vendor-detail-google.html"><span class="sub-icon">🔍</span>Google产品图谱</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="intro-section">
+            <p>人工智能技术日新月异，随之涌现出大量新兴概念与职业角色。本页收录并解读当前AI领域最具代表性的新兴名词，帮助你快速理解行业趋势。</p>
+        </div>
+
+        <h2>新兴名词一览</h2>
+
+        <div class="concept-grid">
+            <!-- FDE -->
+            <article class="concept-card">
+                <div class="concept-header">
+                    <span class="concept-icon">🚀</span>
+                    <div>
+                        <h3 class="concept-title">FDE</h3>
+                        <div class="concept-subtitle">Forward Deployed Engineer</div>
+                    </div>
+                </div>
+                <div class="concept-body">
+                    <p><strong>前沿部署工程师</strong>是AI领域新兴的复合型职位，核心使命是<strong>"让前沿技术精准扎根产业"</strong>。</p>
+                    <p>FDE既非传统单一领域工程师，也不是局限于实验室的AI研究者。他们将AI模型与企业真实场景深度结合，定制化部署解决方案，弥合技术与业务之间的鸿沟。</p>
+                    <p>据行业报告，2025年FDE岗位招聘量激增逾<strong>800%</strong>，OpenAI、Anthropic等头部公司均在大幅扩张FDE团队。</p>
+                </div>
+                <span class="concept-tag">🔥 热门职位</span>
+            </article>
+
+            <!-- OPC -->
+            <article class="concept-card">
+                <div class="concept-header">
+                    <span class="concept-icon">🔗</span>
+                    <div>
+                        <h3 class="concept-title">OPC</h3>
+                        <div class="concept-subtitle">Open Platform Communication</div>
+                    </div>
+                </div>
+                <div class="concept-body">
+                    <p><strong>开放平台通信</strong>原是工业自动化领域的互操作性标准，在AI时代成为连接物理世界与智能系统的关键桥梁。</p>
+                    <p><strong>OPC UA</strong>（统一架构）使AI能够安全、可靠地接入工业设备、传感器和物联网数据，实现跨平台、跨厂商的数据交换。</p>
+                    <p>在智能制造和工业AI场景中，OPC是AI模型获取实时产线数据、实现预测性维护和智能控制的核心协议层。</p>
+                </div>
+                <span class="concept-tag">🏭 工业AI基础设施</span>
+            </article>
+
+            <!-- AI Native -->
+            <article class="concept-card">
+                <div class="concept-header">
+                    <span class="concept-icon">🌱</span>
+                    <div>
+                        <h3 class="concept-title">AI Native</h3>
+                        <div class="concept-subtitle">AI 原生</div>
+                    </div>
+                </div>
+                <div class="concept-body">
+                    <p><strong>AI原生</strong>指从架构设计到功能实现都以AI为核心驱动的应用或系统，区别于将AI功能"嫁接"到传统产品上的模式。</p>
+                    <p>AI Native产品的特征是：<strong>没有AI，产品就不存在</strong>。AI不是附加功能，而是产品的灵魂与核心引擎。</p>
+                    <p>代表产品包括 Cursor、Perplexity、Claude Code、Gamma 等，它们重新定义了人机交互的范式。</p>
+                </div>
+                <span class="concept-tag">🔄 产品范式变革</span>
+            </article>
+
+            <!-- Prompt Engineer -->
+            <article class="concept-card">
+                <div class="concept-header">
+                    <span class="concept-icon">📝</span>
+                    <div>
+                        <h3 class="concept-title">Prompt Engineer</h3>
+                        <div class="concept-subtitle">提示词工程师</div>
+                    </div>
+                </div>
+                <div class="concept-body">
+                    <p><strong>提示词工程师</strong>是专门设计和优化AI提示词（Prompt）以获得最佳输出的专业角色，被誉为"与大模型对话的翻译官"。</p>
+                    <p>核心技能涵盖意图精确表达、上下文构建、输出格式控制、多轮对话引导等，是一门融合语言学、心理学和工程学的跨界艺术。</p>
+                    <p>随着大模型能力的进化，Prompt Engineer正从"调词术"向更高级的<strong>"AI对话架构师"</strong>演进。</p>
+                </div>
+                <span class="concept-tag">🎨 人机交互艺术</span>
+            </article>
+
+            <!-- Context Engineer -->
+            <article class="concept-card">
+                <div class="concept-header">
+                    <span class="concept-icon">🧠</span>
+                    <div>
+                        <h3 class="concept-title">Context Engineer</h3>
+                        <div class="concept-subtitle">上下文工程师</div>
+                    </div>
+                </div>
+                <div class="concept-body">
+                    <p><strong>上下文工程师</strong>负责设计和管理AI系统的上下文窗口、记忆机制与语境连贯性，是解决AI"健忘症"的关键角色。</p>
+                    <p>工作涉及RAG检索增强生成、向量数据库管理、知识图谱构建、长期记忆系统设计等，确保AI在多轮交互中保持认知连贯。</p>
+                    <p>在复杂Agent系统和企业级AI应用中，Context Engineer的作用尤为关键，直接决定AI的"智商上限"。</p>
+                </div>
+                <span class="concept-tag">🧩 记忆与语境架构</span>
+            </article>
+
+            <!-- Builder -->
+            <article class="concept-card">
+                <div class="concept-header">
+                    <span class="concept-icon">🛠️</span>
+                    <div>
+                        <h3 class="concept-title">Builder</h3>
+                        <div class="concept-subtitle">构建者 / 创作者</div>
+                    </div>
+                </div>
+                <div class="concept-body">
+                    <p><strong>Builder</strong>指利用AI工具快速将想法转化为应用、原型或解决方案的创作者，代表了<strong>"创意即产品"</strong>的新时代开发范式。</p>
+                    <p>Builder不需要深厚的编程背景，借助AI辅助开发平台（如Bolt、Lovable、Replit Agent、Vibe Coding等），即可独立完成从设计到部署的全流程。</p>
+                    <p>这一群体正在重塑软件生产关系：开发门槛被颠覆，个人创作者也能产出过去需要团队协作才能完成的产品。</p>
+                </div>
+                <span class="concept-tag">⚡ 新型创作者经济</span>
+            </article>
+        </div>
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button class="deploy-float-btn secondary" onclick="window.location.href='index.html'">🏠 返回首页</button>
+    </div>
+</body>
+
+</html>

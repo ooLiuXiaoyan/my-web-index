@@ -29,7 +29,7 @@ const layerData = {
     },
     memory: {
         title: '记忆 (Memory)',
-        summary: '记忆层为大脑赋能，提供语境保持、知识检索、经验复用。',
+        summary: '记忆层为大脑赋能，提供语境保持、知识检索、经验复用。一般存储为.md文件，方便版本控制和人工编辑。',
         details: `
             <ul>
                 <li>短期记忆：交互会话缓存、历史问答上下文。</li>
@@ -37,7 +37,6 @@ const layerData = {
                 <li>知识库：FAQ、文档、行业规范，命名实体与知识图谱。</li>
                 <li>检索策略：Semantic Search、Hybrid Search、LLM 重新排序。</li>
             </ul>
-            <p>语料库,.md文件</p>
         `,
     },
 };

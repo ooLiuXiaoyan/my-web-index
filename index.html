@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenClaw技术分享：从"对话"到"执行"</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦀</text></svg>">
+    <title>AI 智能体技术分享 — OpenClaw & Hermes</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
     <link rel="stylesheet" href="styles.css">
     <script type="module">
         // Removed Mermaid import as it's no longer used
@@ -14,11 +14,50 @@
 
 <body>
     <main>
-        <h1>OpenClaw</h1>
+        <!-- 页面标题区 -->
+        <div class="page-header">
+            <h1>🤖 AI 智能体技术分享</h1>
+            <p class="page-subtitle">从"对话"到"执行" — 探索 OpenClaw 与 Hermes 开源 AI 智能体框架</p>
+        </div>
+
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-btn active">🏠 首页</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🤖 OpenClaw ▾</button>
+                <div class="dropdown-menu">
+                    <a href="how-to-use.html"><span class="sub-icon">🎯</span>如何使用</a>
+                    <a href="openclaw-deploy.html"><span class="sub-icon">🚀</span>部署指南</a>
+                    <a href="openclaw-feishu-deploy.html"><span class="sub-icon">🦞</span>飞书妙搭部署</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🧠 Hermes ▾</button>
+                <div class="dropdown-menu">
+                    <a href="hermes-install-guide.html"><span class="sub-icon">📦</span>安装指南</a>
+                    <a href="hermes-usage-guide.html"><span class="sub-icon">📘</span>使用指南</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="ai-vendors.html" class="nav-btn">🌐 AI厂商</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">💡 文档 ▾</button>
+                <div class="dropdown-menu">
+                    <a href="ai-concepts.html"><span class="sub-icon">💡</span>AI新概念</a>
+                    <a href="vendor-detail-google.html"><span class="sub-icon">🔍</span>Google产品图谱</a>
+                </div>
+            </div>
+        </nav>
+
         <p>OpenClaw是一个开源、本地优先的AI智能体框架。</p>
 
         <p>OpenClaw 的架构基于微服务设计，包含前端界面、API 网关、核心服务、数据存储和监控组件。</p>
 
+        <!-- 智能体三层架构 -->
+        <section class="section-group">
         <h2>智能体三层架构</h2>
         <p>本架构由"三层组织"构成：核心"大脑"、执行"手脚"、记忆"存储"。各层协同实现 agent loop（感知→决策→执行→回顾）。</p>
 
@@ -43,10 +82,10 @@
                 <p>大脑、手脚、记忆三层构成了OpenClaw的基础架构。请点击任一层查看权威资料补充内容。</p>
             </div>
         </section>
+        </section>
 
-        <h2>技术栈：模块化、轻量化、安全可控</h2>
-        <!-- <p>OpenClaw 使用现代技术栈，包括 React 前端、Node.js 后端、Kubernetes 容器编排、PostgreSQL 数据库等。</p> -->
-
+        <!-- 技术架构 -->
+        <section class="section-group">
         <h2>技术架构</h2>
         <p>从下往上的六层多维架构</p>
 
@@ -290,13 +329,72 @@
                 </div>
             </div>
         </div>
+        </section>
+
+        <!-- Hermes 模块 -->
+        <section class="hermes-module">
+            <h2>🤖 Hermes 智能体框架</h2>
+            <p style="text-align: center; color: #94a3b8; margin-bottom: 0.5rem;">由 Nous Research 开发的开源本地优先 AI 智能体框架，支持多模型接入与跨平台部署</p>
+
+            <div class="hermes-cards">
+                <!-- 安装指南卡片 -->
+                <article class="hermes-card purple">
+                    <div class="hermes-card-header">
+                        <span class="hermes-card-icon">📦</span>
+                        <div>
+                            <h3>如何安装 Hermes？</h3>
+                            <div class="hermes-card-sub">跨平台详细安装教程</div>
+                        </div>
+                    </div>
+                    <p>支持 macOS、Windows（WSL2）和 Linux 三大主流操作系统。通过一键安装脚本或手动安装，快速部署 Hermes 智能体框架到本地环境。</p>
+                    <ul>
+                        <li>✅ macOS (Apple Silicon / Intel)</li>
+                        <li>✅ Windows (WSL2 / 原生)</li>
+                        <li>✅ Ubuntu / Debian / Fedora / Arch</li>
+                        <li>✅ Docker 容器化部署</li>
+                    </ul>
+                    <a href="hermes-install-guide.html" class="hermes-card-btn">🚀 查看安装指南</a>
+                </article>
+
+                <!-- 使用指南卡片 -->
+                <article class="hermes-card blue">
+                    <div class="hermes-card-header">
+                        <span class="hermes-card-icon">📘</span>
+                        <div>
+                            <h3>Hermes 可以做什么？</h3>
+                            <div class="hermes-card-sub">权威使用指南与实战场景</div>
+                        </div>
+                    </div>
+                    <p>从代码生成到数据分析，从智能问答到自动化运维——深入了解 Hermes 在各行业领域的核心能力与最佳实践。</p>
+                    <ul>
+                        <li>🌍 地理信息研发 — 空间数据分析与智能标注</li>
+                        <li>🤖 人工智能 — 多模型编排与 Agent 工作流</li>
+                        <li>📊 数据治理 — 数据质量检测与合规审查</li>
+                        <li>🌐 企业出海 — 多语言处理与本地化适配</li>
+                        <li>🏭 工业互联网 — 设备监控与预测性维护</li>
+                    </ul>
+                    <a href="hermes-usage-guide.html" class="hermes-card-btn">📖 查看使用指南</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- 底部导航 -->
+        <div class="page-footer-nav">
+            <a href="how-to-use.html">🎯 如何使用</a>
+            <a href="ai-vendors.html">🌐 AI厂商</a>
+            <a href="openclaw-deploy.html">🚀 部署指南</a>
+            <a href="hermes-install-guide.html">📦 Hermes 安装</a>
+            <a href="hermes-usage-guide.html">📘 Hermes 使用</a>
+            <a href="ai-concepts.html">💡 AI新概念</a>
+        </div>
 
     </main>
 
     <!-- 右下角固定悬浮按钮 -->
     <div class="float-buttons">
-        <button id="how-to-use-btn" class="deploy-float-btn secondary" onclick="window.location.href='how-to-use.html'">🤔 怎么用？</button>
-        <button id="deploy-btn" class="deploy-float-btn" onclick="window.location.href='openclaw-deploy.html'">🚀 如何部署？</button>
+        <button class="deploy-float-btn secondary" onclick="window.location.href='how-to-use.html'">🎯 如何使用</button>
+        <button class="deploy-float-btn secondary" onclick="window.location.href='hermes-usage-guide.html'">🧠 Hermes</button>
+        <button class="deploy-float-btn" onclick="window.location.href='openclaw-deploy.html'">🚀 部署指南</button>
     </div>
 
     <script src="script.js"></script>

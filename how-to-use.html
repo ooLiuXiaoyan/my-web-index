@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>如何使用 ✨ 智能体 ✨ </title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦀</text></svg>">
+    <title>如何使用智能体 — OpenClaw 实战指南</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
     <link rel="stylesheet" href="styles.css">
     <style>
         .section-icon {
@@ -26,8 +26,41 @@
 
 <body>
     <main>
-        <h1>🎯 如何使用 OpenClaw智能体</h1>
-        <p>将 OpenClaw 智能体框架应用到日常工作中，提升开发效率与团队协作。</p>
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-btn">🏠 首页</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn active">🤖 OpenClaw ▾</button>
+                <div class="dropdown-menu">
+                    <a href="how-to-use.html"><span class="sub-icon">🎯</span>如何使用</a>
+                    <a href="openclaw-deploy.html"><span class="sub-icon">🚀</span>部署指南</a>
+                    <a href="openclaw-feishu-deploy.html"><span class="sub-icon">🦞</span>飞书妙搭部署</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🧠 Hermes ▾</button>
+                <div class="dropdown-menu">
+                    <a href="hermes-install-guide.html"><span class="sub-icon">📦</span>安装指南</a>
+                    <a href="hermes-usage-guide.html"><span class="sub-icon">📘</span>使用指南</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="ai-vendors.html" class="nav-btn">🌐 AI厂商</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">💡 文档 ▾</button>
+                <div class="dropdown-menu">
+                    <a href="ai-concepts.html"><span class="sub-icon">💡</span>AI新概念</a>
+                    <a href="vendor-detail-google.html"><span class="sub-icon">🔍</span>Google产品图谱</a>
+                </div>
+            </div>
+        </nav>
+
+        <a href="index.html" class="back-btn">← 返回首页</a>
+        <h1>🎯 如何使用 ✨ 智能体 ✨ </h1>
+        <p>将代码/文档/Openclaw等智能体框架应用到日常工作中，提升开发效率与团队协作。</p>
 
         <section class="deploy-section">
             <h2><span class="section-icon">💻</span>一、代码开发场景</h2>
@@ -278,8 +311,6 @@
     <!-- 右下角固定悬浮按钮 -->
     <div class="float-buttons">
         <button class="deploy-float-btn secondary" onclick="window.location.href='index.html'">🏠 返回首页</button>
-        <button class="deploy-float-btn" onclick="window.location.href='how-to-use.html'" disabled style="opacity: 0.6; cursor: not-allowed;">🤔 怎么用？</button>
-        <button class="deploy-float-btn secondary" onclick="window.location.href='openclaw-deploy.html'">🚀 如何部署？</button>
     </div>
 
     <!-- 抽屉遮罩层 -->
