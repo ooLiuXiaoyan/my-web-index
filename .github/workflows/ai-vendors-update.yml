@@ -1,0 +1,64 @@
+name: AI厂商信息更新提醒
+
+on:
+  schedule:
+    - cron: '0 9 */3 * *'  # 每3天 UTC 09:00 (北京时间17:00)
+  workflow_dispatch:
+
+jobs:
+  create-reminder:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: 创建更新提醒 Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const today = new Date().toISOString().split('T')[0];
+            const body = `## 📋 AI厂商信息更新提醒
+
+            **检查日期：** ${today}
+            **自动触发：** 每3天定期提醒
+
+            ### 需要检查的厂商
+
+            **国际：**
+            - [ ] OpenAI — 检查 GPT 系列新模型、产品更新
+            - [ ] Google/DeepMind — 检查 Gemini 系列更新
+            - [ ] Anthropic — 检查 Claude 系列更新
+            - [ ] Microsoft — 检查 Copilot 更新
+            - [ ] Meta — 检查 LLaMA 系列更新
+            - [ ] NVIDIA — 检查 GPU/芯片更新
+            - [ ] xAI — 检查 Grok 更新
+            - [ ] Mistral — 检查 Mistral 系列更新
+
+            **国内：**
+            - [ ] 百度 — 检查文心一言更新
+            - [ ] 阿里巴巴 — 检查通义千问/Qwen更新
+            - [ ] 字节跳动 — 检查豆包更新
+            - [ ] 腾讯 — 检查混元更新
+            - [ ] 华为 — 检查盘古/昇腾更新
+            - [ ] 月之暗面 — 检查 Kimi 更新
+            - [ ] DeepSeek — 检查 DeepSeek 更新
+            - [ ] 智谱AI — 检查 ChatGLM 更新
+            - [ ] 百川智能 — 检查 Baichuan 更新
+            - [ ] 商汤科技 — 检查 SenseNova 更新
+            - [ ] 科大讯飞 — 检查星火更新
+
+            ### 操作步骤
+            1. 访问各厂商官网获取最新信息
+            2. 更新 \`ai-vendors.html\` 中对应厂商的产品标签、描述和特性
+            3. 提交并推送到 GitHub
+            4. 关闭此 Issue
+
+            ---
+            *此 Issue 由 GitHub Actions 自动创建*`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🤖 AI厂商信息更新 — ${today}`,
+              body: body,
+              labels: ['automated', 'ai-vendors-update']
+            });
