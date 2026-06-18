@@ -1047,6 +1047,27 @@ ul li::before {
     font-variant-numeric: tabular-nums;
 }
 
+.visitor-counter {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    padding: 0.3rem 0.6rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    color: #64748b;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+}
+
+.visitor-counter #visitor-count {
+    color: #94a3b8;
+    font-weight: 600;
+}
+
 /* ==================== 子页面导航栏增强 ==================== */
 
 .top-nav {
