@@ -1,12 +1,9 @@
 // ==================== 版本配置 ====================
-const APP_VERSION = '2.1.0';
+const APP_VERSION = '2.1.1';
 const VERSION_KEY = 'app_last_seen_version';
 const VISITOR_KEY = 'app_visitor_count';
 const CHANGELOG = [
-    'AI厂商信息更新至2026年6月最新状态',
-    '新增Hermes智能体框架模块（安装指南+使用指南）',
-    '导航结构重组为 OpenClaw/Hermes/AI厂商/文档 四大分组',
-    '前端页面层次与视觉体验优化',
+    'Hermes安装指南新增WSL启动说明',
 ];
 
 // ==================== 版本更新提醒 ====================
