@@ -99,6 +99,40 @@
             margin: 0;
             font-size: 1rem;
         }
+
+        .concept-detail-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+            padding: 0.45rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #38bdf8;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(56, 189, 248, 0.05));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .concept-detail-btn:hover {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.1));
+            border-color: rgba(56, 189, 248, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
+        }
+
+        .concept-detail-btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.25s ease;
+        }
+
+        .concept-detail-btn:hover svg {
+            transform: translateX(3px);
+        }
     </style>
 </head>
 
@@ -168,15 +202,16 @@
                     <span class="concept-icon">🔗</span>
                     <div>
                         <h3 class="concept-title">OPC</h3>
-                        <div class="concept-subtitle">Open Platform Communication</div>
+                        <div class="concept-subtitle">One Person Company / Open Platform Communication</div>
                     </div>
                 </div>
                 <div class="concept-body">
-                    <p><strong>开放平台通信</strong>原是工业自动化领域的互操作性标准，在AI时代成为连接物理世界与智能系统的关键桥梁。</p>
-                    <p><strong>OPC UA</strong>（统一架构）使AI能够安全、可靠地接入工业设备、传感器和物联网数据，实现跨平台、跨厂商的数据交换。</p>
-                    <p>在智能制造和工业AI场景中，OPC是AI模型获取实时产线数据、实现预测性维护和智能控制的核心协议层。</p>
+                    <p><strong>OPC</strong>在AI时代拥有双重含义：</p>
+                    <p><strong>1. One Person Company（一人公司）</strong>——借助AI工具，一个人即可完成产品设计、开发、营销、运营的全流程，真正实现<strong>"一人即团队"</strong>。Builder、Agentic Coding等技术让个人创作者拥有过去整个团队的产出能力。</p>
+                    <p><strong>2. Open Platform Communication（开放平台通信）</strong>——工业自动化领域的互操作性标准。<strong>OPC UA</strong>（统一架构）使AI能够安全接入工业设备与物联网数据，实现跨平台数据交换。</p>
+                    <p>一人公司的崛起正在重塑商业格局，而开放平台通信则为工业AI提供了坚实的数据基座。</p>
                 </div>
-                <span class="concept-tag">🏭 工业AI基础设施</span>
+                <span class="concept-tag">🏭 商业与工业AI双赛道</span>
             </article>
 
             <!-- AI Native -->
@@ -313,6 +348,27 @@
                     <p>Physical AI正在从实验室走向产业：工厂自动化、仓储物流、家庭服务机器人等场景开始落地，被认为是继大语言模型之后的下一个万亿级赛道。</p>
                 </div>
                 <span class="concept-tag">🦾 下一个万亿赛道</span>
+            </article>
+
+            <!-- MCP -->
+            <article class="concept-card">
+                <div class="concept-header">
+                    <span class="concept-icon">🔌</span>
+                    <div>
+                        <h3 class="concept-title">MCP</h3>
+                        <div class="concept-subtitle">Model Context Protocol</div>
+                    </div>
+                </div>
+                <div class="concept-body">
+                    <p><strong>模型上下文协议</strong>是由 Anthropic 发起的开源标准，为AI应用连接外部系统提供统一接口——被誉为<strong>"AI的USB-C接口"</strong>。</p>
+                    <p>MCP采用<strong>客户端-服务器架构</strong>，基于 JSON-RPC 2.0 协议，定义了三大核心原语：<strong>Tools</strong>（可执行工具）、<strong>Resources</strong>（数据资源）、<strong>Prompts</strong>（交互模板），让AI模型能安全地访问文件系统、数据库、API等外部能力。</p>
+                    <p>2025-2026年MCP迅速成为行业标准：Claude、ChatGPT、VS Code Copilot、Cursor等主流AI产品均已原生支持，生态覆盖数百个MCP Server实现。</p>
+                </div>
+                <span class="concept-tag">🔥 AI基础设施标准</span>
+                <a href="mcp-detail.html" class="concept-detail-btn">
+                    查看详情
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
             </article>
         </div>
     </main>

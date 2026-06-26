@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP 深度解读 - Model Context Protocol</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔌</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .mcp-detail {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            margin-top: 1.5rem;
+        }
+
+        .mcp-detail h2 {
+            color: #38bdf8;
+            font-size: 1.6rem;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mcp-tagline {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .mcp-section-title {
+            color: #7dd3fc;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 1.8rem 0 0.8rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .mcp-arch-diagram {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .mcp-arch-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .mcp-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(139, 92, 246, 0.08));
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 10px;
+            padding: 0.8rem 1.2rem;
+            text-align: center;
+            min-width: 140px;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .mcp-box.host {
+            border-color: rgba(139, 92, 246, 0.5);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
+        }
+
+        .mcp-box.server {
+            border-color: rgba(34, 197, 94, 0.5);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(16, 185, 129, 0.08));
+        }
+
+        .mcp-box.client {
+            border-color: rgba(251, 191, 36, 0.5);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.08));
+        }
+
+        .mcp-box-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.2rem;
+        }
+
+        .mcp-arrow {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.2rem;
+            margin: 0.3rem 0;
+        }
+
+        .mcp-capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .mcp-cap-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            border-radius: 12px;
+            padding: 1.2rem;
+        }
+
+        .mcp-cap-card h4 {
+            color: #38bdf8;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .mcp-cap-card p {
+            color: #cbd5e1;
+            margin: 0 0 0.5rem 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .mcp-cap-card ul {
+            color: #cbd5e1;
+            margin: 0.3rem 0 0 1.2rem;
+            padding: 0;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .mcp-usecase-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .mcp-usecase-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.08);
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .mcp-usecase-list li:last-child {
+            border-bottom: none;
+        }
+
+        .mcp-usecase-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .mcp-ecosystem-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .mcp-eco-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.82rem;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(139, 92, 246, 0.08));
+            color: #7dd3fc;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            font-weight: 500;
+        }
+
+        .mcp-eco-tag.highlight {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.15));
+            color: #c4b5fd;
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .mcp-code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(56, 189, 248, 0.12);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin: 0.8rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .mcp-code-block .comment { color: #64748b; }
+        .mcp-code-block .key { color: #7dd3fc; }
+        .mcp-code-block .string { color: #86efac; }
+
+        .mcp-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .mcp-comparison-table th {
+            background: rgba(56, 189, 248, 0.1);
+            color: #7dd3fc;
+            padding: 0.7rem 1rem;
+            text-align: left;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+            font-weight: 600;
+        }
+
+        .mcp-comparison-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.08);
+            color: #cbd5e1;
+        }
+
+        .mcp-comparison-table tr:hover td {
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        .mcp-body-text {
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin: 0.5rem 0;
+        }
+
+        .mcp-body-text strong {
+            color: #7dd3fc;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>🔌 MCP 深度解读</h1>
+
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-btn">🏠 首页</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🤖 OpenClaw ▾</button>
+                <div class="dropdown-menu">
+                    <a href="how-to-use.html"><span class="sub-icon">🎯</span>如何使用</a>
+                    <a href="openclaw-deploy.html"><span class="sub-icon">🚀</span>部署指南</a>
+                    <a href="openclaw-feishu-deploy.html"><span class="sub-icon">🦞</span>飞书妙搭部署</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn">🧠 Hermes ▾</button>
+                <div class="dropdown-menu">
+                    <a href="hermes-install-guide.html"><span class="sub-icon">📦</span>安装指南</a>
+                    <a href="hermes-usage-guide.html"><span class="sub-icon">📘</span>使用指南</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="ai-vendors.html" class="nav-btn">🌐 AI厂商</a>
+            </div>
+            <div class="nav-item">
+                <button class="nav-btn active">💡 文档 ▾</button>
+                <div class="dropdown-menu">
+                    <a href="ai-concepts.html"><span class="sub-icon">💡</span>AI新概念</a>
+                    <a href="vendor-detail-google.html"><span class="sub-icon">🔍</span>Google产品图谱</a>
+                </div>
+            </div>
+        </nav>
+
+        <p class="mcp-tagline">Model Context Protocol — 让AI应用拥有"手和眼"的统一协议</p>
+
+        <section class="mcp-detail">
+            <h2>📖 什么是 MCP？</h2>
+            <p class="mcp-body-text">
+                MCP（Model Context Protocol，模型上下文协议）是一个<strong>开源通信标准</strong>，定义了AI应用（如 Claude、ChatGPT）如何与外部数据源和工具进行交互。
+            </p>
+            <p class="mcp-body-text">
+                类比理解：如果大模型是"大脑"，MCP就是让大脑连接"眼睛"（读取数据）、"手"（执行操作）和"记忆"（访问知识库）的<strong>标准化神经系统</strong>。
+            </p>
+            <p class="mcp-body-text">
+                在MCP出现之前，每个AI应用需要为每个外部服务单独编写集成代码（N×M问题）。MCP将这个问题简化为 <strong>N+M</strong>：开发者只需为每个AI应用写一个MCP客户端，为每个服务写一个MCP Server，即可实现全面互通。
+            </p>
+
+            <h2 class="mcp-section-title">🏗️ 核心架构</h2>
+            <div class="mcp-arch-diagram">
+                <div class="mcp-arch-row">
+                    <div class="mcp-box host">
+                        <div><strong>MCP Host</strong></div>
+                        <div class="mcp-box-label">AI 应用（Claude / ChatGPT / Cursor）</div>
+                    </div>
+                </div>
+                <div class="mcp-arrow">↓ 管理多个 ↓</div>
+                <div class="mcp-arch-row">
+                    <div class="mcp-box client">
+                        <div><strong>MCP Client 1</strong></div>
+                        <div class="mcp-box-label">维护专用连接</div>
+                    </div>
+                    <div class="mcp-box client">
+                        <div><strong>MCP Client 2</strong></div>
+                        <div class="mcp-box-label">维护专用连接</div>
+                    </div>
+                    <div class="mcp-box client">
+                        <div><strong>MCP Client 3</strong></div>
+                        <div class="mcp-box-label">维护专用连接</div>
+                    </div>
+                </div>
+                <div class="mcp-arrow">↕ JSON-RPC 2.0 ↕</div>
+                <div class="mcp-arch-row">
+                    <div class="mcp-box server">
+                        <div><strong>Server A</strong></div>
+                        <div class="mcp-box-label">文件系统（本地）</div>
+                    </div>
+                    <div class="mcp-box server">
+                        <div><strong>Server B</strong></div>
+                        <div class="mcp-box-label">数据库（本地/远程）</div>
+                    </div>
+                    <div class="mcp-box server">
+                        <div><strong>Server C</strong></div>
+                        <div class="mcp-box-label">Sentry / GitHub（远程）</div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="mcp-comparison-table">
+                <thead>
+                    <tr>
+                        <th>角色</th>
+                        <th>说明</th>
+                        <th>示例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong style="color: #c4b5fd;">MCP Host</strong></td>
+                        <td>协调和管理多个 Client 的 AI 应用</td>
+                        <td>Claude Desktop、ChatGPT、VS Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #fbbf24;">MCP Client</strong></td>
+                        <td>与单个 Server 维持连接的组件</td>
+                        <td>Host 内部自动实例化的连接管理器</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #86efac;">MCP Server</strong></td>
+                        <td>暴露工具/资源/提示词的程序</td>
+                        <td>文件系统 Server、GitHub Server、数据库 Server</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="mcp-section-title">📡 传输层：两种通信模式</h2>
+            <div class="mcp-capabilities-grid">
+                <div class="mcp-cap-card">
+                    <h4>💻 STDIO 传输</h4>
+                    <p>通过标准输入/输出流进行进程间通信，零网络开销，适合<strong>本地 MCP Server</strong>。</p>
+                    <ul>
+                        <li>同机通信，延迟极低</li>
+                        <li>Server 作为子进程启动</li>
+                        <li>适合文件系统、本地数据库等场景</li>
+                    </ul>
+                </div>
+                <div class="mcp-cap-card">
+                    <h4>🌐 Streamable HTTP</h4>
+                    <p>基于 HTTP POST + SSE 的远程通信，支持标准认证，适合<strong>远程 MCP Server</strong>。</p>
+                    <ul>
+                        <li>支持 OAuth / Bearer Token / API Key</li>
+                        <li>一个 Server 可服务多个 Client</li>
+                        <li>适合云端 API、SaaS 集成等场景</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="mcp-section-title">🧩 三大核心原语</h2>
+            <div class="mcp-capabilities-grid">
+                <div class="mcp-cap-card">
+                    <h4>🔧 Tools（工具）</h4>
+                    <p>AI 可主动调用的可执行函数，<strong>模型决定何时使用</strong>。</p>
+                    <ul>
+                        <li>文件读写、API 调用、数据库查询</li>
+                        <li>搜索航班、发送消息、创建日程</li>
+                        <li>通过 JSON Schema 定义输入参数</li>
+                        <li>支持用户审批机制确保安全</li>
+                    </ul>
+                </div>
+                <div class="mcp-cap-card">
+                    <h4>📚 Resources（资源）</h4>
+                    <p>被动数据源，提供只读上下文信息，<strong>应用决定如何使用</strong>。</p>
+                    <ul>
+                        <li>文件内容、数据库 Schema、API 文档</li>
+                        <li>支持固定 URI 和动态模板两种模式</li>
+                        <li>可通过 URI 模板参数化查询</li>
+                        <li>如：calendar://events/2024</li>
+                    </ul>
+                </div>
+                <div class="mcp-cap-card">
+                    <h4>📝 Prompts（提示词模板）</h4>
+                    <p>预构建的交互模板，<strong>用户主动选择使用</strong>。</p>
+                    <ul>
+                        <li>结构化的任务引导模板</li>
+                        <li>支持参数化输入</li>
+                        <li>如："规划旅行"、"总结会议"、"起草邮件"</li>
+                        <li>可通过斜杠命令触发（/plan-vacation）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="mcp-section-title">⚡ 工作流程</h2>
+            <div class="mcp-arch-diagram" style="font-size: 0.9rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                    <div style="display: flex; align-items: center; gap: 0.8rem;">
+                        <span style="background: rgba(139, 92, 246, 0.2); color: #c4b5fd; padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center;">Step 1</span>
+                        <span style="color: #e2e8f0;"><strong>初始化握手</strong> — Client 与 Server 交换能力声明，协商协议版本</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.8rem;">
+                        <span style="background: rgba(56, 189, 248, 0.2); color: #7dd3fc; padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center;">Step 2</span>
+                        <span style="color: #e2e8f0;"><strong>能力发现</strong> — Client 调用 tools/list、resources/list 发现可用原语</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.8rem;">
+                        <span style="background: rgba(34, 197, 94, 0.2); color: #86efac; padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center;">Step 3</span>
+                        <span style="color: #e2e8f0;"><strong>执行操作</strong> — LLM 根据对话上下文决定调用哪个工具，Client 转发请求</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.8rem;">
+                        <span style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center;">Step 4</span>
+                        <span style="color: #e2e8f0;"><strong>结果返回</strong> — Server 执行完毕，结果作为上下文注入 LLM 对话流</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.8rem;">
+                        <span style="background: rgba(236, 72, 153, 0.2); color: #f472b6; padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: 600; min-width: 80px; text-align: center;">Step 5</span>
+                        <span style="color: #e2e8f0;"><strong>实时通知</strong> — Server 可主动推送变更通知（如工具列表更新），Client 按需刷新</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="mcp-section-title">🎯 典型使用场景</h2>
+            <ul class="mcp-usecase-list">
+                <li>
+                    <span class="mcp-usecase-icon">📁</span>
+                    <div><strong style="color: #7dd3fc;">文件系统访问</strong> — AI 读取/写入本地文件，进行代码分析、文档处理，无需手动复制粘贴内容</div>
+                </li>
+                <li>
+                    <span class="mcp-usecase-icon">🗄️</span>
+                    <div><strong style="color: #7dd3fc;">数据库查询</strong> — AI 直接查询 SQL/NoSQL 数据库，生成报表、分析数据趋势，支持自然语言转 SQL</div>
+                </li>
+                <li>
+                    <span class="mcp-usecase-icon">🌐</span>
+                    <div><strong style="color: #7dd3fc;">API 集成</strong> — AI 调用第三方服务（GitHub、Slack、Jira、日历），自动完成跨平台协作任务</div>
+                </li>
+                <li>
+                    <span class="mcp-usecase-icon">🔍</span>
+                    <div><strong style="color: #7dd3fc;">网页抓取与搜索</strong> — AI 获取实时网页内容、执行搜索引擎查询，突破训练数据的时间限制</div>
+                </li>
+                <li>
+                    <span class="mcp-usecase-icon">🧠</span>
+                    <div><strong style="color: #7dd3fc;">持久化记忆</strong> — 通过知识图谱 MCP Server 实现跨会话记忆，AI 不再"健忘"</div>
+                </li>
+                <li>
+                    <span class="mcp-usecase-icon">🔒</span>
+                    <div><strong style="color: #7dd3fc;">企业安全集成</strong> — AI 接入 Sentry 监控错误、连接内部系统，同时通过权限控制确保数据安全</div>
+                </li>
+            </ul>
+
+            <h2 class="mcp-section-title">🌍 生态系统支持</h2>
+            <p style="color: #94a3b8; margin: 0.5rem 0 0.8rem 0;">MCP 已获得广泛行业支持，"一次构建，处处集成"：</p>
+            <div class="mcp-ecosystem-tags">
+                <span class="mcp-eco-tag highlight">Anthropic Claude</span>
+                <span class="mcp-eco-tag highlight">OpenAI ChatGPT</span>
+                <span class="mcp-eco-tag">VS Code Copilot</span>
+                <span class="mcp-eco-tag">Cursor</span>
+                <span class="mcp-eco-tag">Windsurf</span>
+                <span class="mcp-eco-tag">Zed</span>
+                <span class="mcp-eco-tag">Sourcegraph</span>
+                <span class="mcp-eco-tag">Replit</span>
+                <span class="mcp-eco-tag">MCPJam</span>
+                <span class="mcp-eco-tag">Cline</span>
+                <span class="mcp-eco-tag">Continue</span>
+                <span class="mcp-eco-tag">Amazon Bedrock</span>
+                <span class="mcp-eco-tag">Google Vertex AI</span>
+            </div>
+
+            <h2 class="mcp-section-title">🚀 快速上手</h2>
+            <p style="color: #94a3b8; margin: 0.5rem 0;">在 Claude Desktop 中配置一个 MCP Server（以文件系统为例）：</p>
+            <div class="mcp-code-block">
+<span class="comment">// 在 Claude Desktop 配置文件中添加：</span>
+{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"filesystem"</span>: {
+      <span class="key">"command"</span>: <span class="string">"npx"</span>,
+      <span class="key">"args"</span>: [
+        <span class="string">"-y"</span>,
+        <span class="string">"@modelcontextprotocol/server-filesystem"</span>,
+        <span class="string">"/path/to/allowed/files"</span>
+      ]
+    }
+  }
+}
+            </div>
+            <p style="color: #94a3b8; margin: 0.5rem 0;">支持的 Server 启动方式：</p>
+            <div class="mcp-code-block">
+<span class="comment"># TypeScript Server（通过 npx）</span>
+npx -y @modelcontextprotocol/server-memory
+
+<span class="comment"># Python Server（通过 uvx）</span>
+uvx mcp-server-git
+
+<span class="comment"># Python Server（通过 pip）</span>
+pip install mcp-server-git
+python -m mcp_server_git
+            </div>
+
+            <h2 class="mcp-section-title">📊 MCP vs 传统集成方式</h2>
+            <table class="mcp-comparison-table">
+                <thead>
+                    <tr>
+                        <th>维度</th>
+                        <th>传统方式（N×M 集成）</th>
+                        <th>MCP（N+M 集成）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>集成复杂度</td>
+                        <td>每个 AI × 每个服务都需要单独适配</td>
+                        <td>AI 只需实现 Client，服务只需实现 Server</td>
+                    </tr>
+                    <tr>
+                        <td>可复用性</td>
+                        <td>集成代码绑死特定 AI 应用</td>
+                        <td>Server 可被任意 MCP Client 调用</td>
+                    </tr>
+                    <tr>
+                        <td>协议标准化</td>
+                        <td>各自定义接口，无统一规范</td>
+                        <td>统一 JSON-RPC 2.0 协议</td>
+                    </tr>
+                    <tr>
+                        <td>发现机制</td>
+                        <td>硬编码能力，无法动态发现</td>
+                        <td>运行时动态发现工具/资源/提示词</td>
+                    </tr>
+                    <tr>
+                        <td>安全模型</td>
+                        <td>各平台自行实现权限控制</td>
+                        <td>内置用户审批、权限协商机制</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- 右下角固定悬浮按钮 -->
+    <div class="float-buttons">
+        <button class="deploy-float-btn secondary" onclick="window.location.href='ai-concepts.html'">💡 返回AI新概念</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

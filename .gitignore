@@ -8,6 +8,8 @@
 config.local.*
 settings.local.*
 
+readmefortemp.md
+
 .claude/
 
 # IDE / Editor settings
