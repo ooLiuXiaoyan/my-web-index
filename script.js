@@ -1,9 +1,11 @@
 // ==================== 版本配置 ====================
-const APP_VERSION = '2.1.1';
+const APP_VERSION = '2.2.0';
 const VERSION_KEY = 'app_last_seen_version';
 const VISITOR_KEY = 'app_visitor_count';
 const CHANGELOG = [
-    'Hermes安装指南新增WSL启动说明',
+    '全量刷新 AI 厂商与 Google 产品信息（2026-11-23）',
+    '更新 OpenClaw 与 Hermes 安装、模型及命令示例',
+    '更新飞书 OpenClaw 计费与模型配置说明',
 ];
 
 // ==================== 版本更新提醒 ====================
@@ -101,7 +103,7 @@ const layerCards = document.querySelectorAll('.layer-card');
 
 function renderLayer(layer) {
     const node = layerData[layer];
-    if (!node) return;
+    if (!node || !detailContent) return;
     detailContent.innerHTML = `
         <h3 style="color:#7dd3fc;">${node.title}</h3>
         <p>${node.summary}</p>

@@ -54,7 +54,7 @@
 
         <p>OpenClaw是一个开源、本地优先的AI智能体框架。</p>
 
-        <p>OpenClaw 的架构基于微服务设计，包含前端界面、API 网关、核心服务、数据存储和监控组件。</p>
+        <p>OpenClaw 以 Gateway 为控制中枢，连接消息渠道、Agent 运行时、模型、工具与持久化状态；桌面端、CLI 和远程节点可按同一部署环境协同工作。</p>
 
         <!-- 智能体三层架构 -->
         <section class="section-group">
@@ -191,8 +191,8 @@
                         <div class="module-items">
                             <span class="tech-tag highlight">🤖 Claude</span>
                             <span class="tech-tag highlight">🚀 Moonshot Kimi</span>
-                            <span class="tech-tag">⭐ GPT-4</span>
-                            <span class="tech-tag">🌙 Gemini</span>
+                            <span class="tech-tag">⭐ GPT-6.2</span>
+                            <span class="tech-tag">🌙 Gemini 4</span>
                             <span class="tech-tag">🦙 LLaMA</span>
                             <span class="tech-tag highlight">💎 DeepSeek</span>
                             <span class="tech-tag highlight">🔥 Qwen</span>
@@ -201,7 +201,7 @@
                     <div class="module">
                         <div class="module-title">⚡ 模型基础设施</div>
                         <div class="module-items">
-                            <span class="tech-tag">GPU集群 A100/H100</span>
+                            <span class="tech-tag">AI加速计算 H100/B200/Rubin</span>
                             <span class="tech-tag">vLLM推理引擎</span>
                             <span class="tech-tag">Triton服务</span>
                             <span class="tech-tag">MLflow管理</span>
@@ -346,12 +346,12 @@
                             <div class="hermes-card-sub">跨平台详细安装教程</div>
                         </div>
                     </div>
-                    <p>支持 macOS、Windows（WSL2）和 Linux 三大主流操作系统。通过一键安装脚本或手动安装，快速部署 Hermes 智能体框架到本地环境。</p>
+                    <p>支持 macOS、Windows 原生、WSL2 和 Linux。官方安装器通过 PM 准备 Python 3.14 与受管依赖，也可使用桌面和容器包。</p>
                     <ul>
-                        <li>✅ macOS (Apple Silicon / Intel)</li>
-                        <li>✅ Windows (WSL2 / 原生)</li>
-                        <li>✅ Ubuntu / Debian / Fedora / Arch</li>
-                        <li>✅ Docker 容器化部署</li>
+                        <li>✅ macOS（Apple Silicon / Intel，CLI / DMG）</li>
+                        <li>✅ Windows（原生 PowerShell / App Installer，可选 WSL2）</li>
+                        <li>✅ 主流 Linux 发行版</li>
+                        <li>✅ Docker、Termux 等独立安装路径</li>
                     </ul>
                     <a href="hermes-install-guide.html" class="hermes-card-btn">🚀 查看安装指南</a>
                 </article>

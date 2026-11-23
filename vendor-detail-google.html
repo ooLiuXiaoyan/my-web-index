@@ -541,14 +541,14 @@
         <h1>🔍 Google / DeepMind 产品知识图谱</h1>
 
         <div class="page-intro">
-            Google / DeepMind 是全球AI领域布局最完整的科技巨头之一。从2017年 Transformer 论文到 2024 年诺贝尔化学奖，从 Gemini 多模态大模型到 Waymo 自动驾驶，其产品生态横跨基础模型、消费应用、开发者工具、企业办公、AI Agent、云计算、自研硬件与科学研究，形成了独特的"AI-first"全栈体系。
+            Google / DeepMind 的产品生态覆盖 Gemini 4、Gemma、消费应用、开发者工具、企业办公、Agent、云计算、自研硬件与科学研究。资料核对日期：<strong>2026-11-23</strong>；研究原型、正式产品和各地区可用功能在条目中分别说明。
         </div>
 
         <div class="stats-bar">
-            <div class="stat-item">🧠 <strong>9</strong> 大产品系列</div>
-            <div class="stat-item">📦 <strong>60+</strong> 核心产品</div>
-            <div class="stat-item">🏆 <strong>1</strong> 项诺贝尔奖</div>
-            <div class="stat-item">🌍 <strong>180+</strong> 国家可用</div>
+            <div class="stat-item">🧠 <strong>8</strong> 大产品分类</div>
+            <div class="stat-item">📦 <strong>50+</strong> 产品与研究方向</div>
+            <div class="stat-item">🏆 <strong>1</strong> 项诺贝尔化学奖</div>
+            <div class="stat-item">🌍 消费者、开发者与企业</div>
         </div>
 
         <div class="kg-layout">
@@ -587,137 +587,137 @@
             overview: {
                 title: 'Google / DeepMind 全景概览',
                 content: `
-                    <p>Google / DeepMind 是全球人工智能领域最具影响力的组织之一，由 Google Brain 与 DeepMind 于2023年合并而成，由 Demis Hassabis 领导。</p>
+                    <p>Google / DeepMind 由 Google Brain 与 DeepMind 于 2023 年合并而成，由 Demis Hassabis 领导。</p>
                     <ul>
-                        <li><strong>基础研究</strong>：Transformer 架构（2017）、AlphaGo/AlphaZero（强化学习）、AlphaFold（蛋白质结构预测）</li>
-                        <li><strong>大模型</strong>：Gemini 系列原生多模态模型，Gemma 开源生态</li>
-                        <li><strong>AI Agent</strong>：Project Astra（通用助手）、Mariner（浏览器Agent）、Jules（编程Agent）</li>
-                        <li><strong>基础设施</strong>：自研 TPU 芯片、Vertex AI 企业平台、Google Cloud AI</li>
-                        <li><strong>科学突破</strong>：2024年诺贝尔化学奖（AlphaFold）、GNoME 材料发现、气候预测</li>
+                        <li><strong>基础研究</strong>：Transformer、AlphaGo/AlphaZero、AlphaFold 等长期研究积累</li>
+                        <li><strong>当前模型</strong>：Gemini 4、Gemma 4，以及图像、视频、音频和世界模型</li>
+                        <li><strong>AI Agent</strong>：Antigravity、Jules、Gemini Agent Mode，以及 Astra、Mariner 等研究项目</li>
+                        <li><strong>基础设施</strong>：Cloud TPU、Vertex AI、Gemini API 与 Firebase 开发工具链</li>
+                        <li><strong>科学突破</strong>：AlphaFold 相关研究获 2024 年诺贝尔化学奖，GNoME 和气候模型持续推进</li>
                     </ul>
-                    <p style="margin-top:0.75rem;color:#94a3b8;font-size:0.85rem;">💡 点击左侧知识图谱中的任意节点，查看该分类下的详细产品信息。</p>
+                    <p style="margin-top:0.75rem;color:#94a3b8;font-size:0.85rem;">💡 点击左侧知识图谱中的任意节点查看详情。资料核对：2026-11-23。</p>
                 `
             },
             categories: {
                 model: {
                     title: '核心大模型',
                     color: '#f57c00',
-                    desc: '从旗舰 Gemini 到开源 Gemma，覆盖文本、图像、音频、视频的全模态模型矩阵',
+                    desc: 'Gemini 4、Gemma 开放模型及图像、视频、音频生成模型；资料核对：2026-11-23',
                     products: [
-                        { name: 'Gemini 3 / 3.1 Pro', desc: '当前最智能的旗舰模型，具备顶级推理、编码与多模态理解能力', link: 'https://deepmind.google/models/gemini/pro/' },
-                        { name: 'Gemini 3 / 3.1 Flash', desc: '快速且经济高效的多模态模型，适合高吞吐量场景', link: 'https://deepmind.google/models/gemini/flash/' },
-                        { name: 'Gemini 2.5 Pro', desc: '前代旗舰，以超长上下文与复杂推理著称，支持最高 200 万 token', link: 'https://deepmind.google/models/gemini/' },
-                        { name: 'Gemma 4', desc: '2026年发布的最新开源模型家族，Apache 2.0 协议，字节级最强开源模型', link: 'https://deepmind.google/models/gemma/' },
-                        { name: 'Gemma 3n', desc: '支持音频、文本、图像、视频的多模态开源模型，可在端侧运行', link: 'https://deepmind.google/models/gemma/' },
-                        { name: 'Imagen 4', desc: '领先的文本到图像生成模型，支持高质量图像创作与编辑', link: 'https://cloud.google.com/vertex-ai/generative-ai/docs/models/imagen/' },
-                        { name: 'Veo 3 / 3.1', desc: '视频生成模型，支持原生音频、4K 分辨率与竖屏视频', link: 'https://deepmind.google/models/veo/' },
-                        { name: 'Lyria 3', desc: '高保真音乐生成模型，支持最长 3 分钟的曲目创作', link: 'https://deepmind.google/models/lyria/' },
-                        { name: 'Gemini Diffusion', desc: '基于扩散架构的 Gemini 模型，生成速度比 Flash-Lite 快 5 倍', link: 'https://deepmind.google/models/gemini/' },
+                        { name: 'Gemini 4 Neon', desc: '2026 年 11 月发布的 Gemini 4 模型，能力、评测和限制以官方模型卡为准', link: 'https://deepmind.google/models/model-cards/gemini-4-neon/' },
+                        { name: 'Gemini 4 Hydrogen / Carbon / Argon', desc: 'Gemini 4 系列的其他当前型号，面向不同能力与使用场景', link: 'https://deepmind.google/models/model-cards/' },
+                        { name: 'Gemini 3.5 / 3.1', desc: '前代 Gemini 模型，继续使用时需检查 API 可用性和退役安排', link: 'https://deepmind.google/models/gemini/' },
+                        { name: 'Gemma 4', desc: '面向高级推理与 Agent 工作流的开放模型家族，许可与型号以 Gemma 官方页面为准', link: 'https://deepmind.google/models/gemma/gemma-4/' },
+                        { name: 'Gemma 3n', desc: '面向端侧的多模态开放模型，属于前代 Gemma 生态', link: 'https://deepmind.google/models/gemma/' },
+                        { name: 'Imagen 4', desc: '文本到图像生成模型，支持图像创作与编辑', link: 'https://cloud.google.com/vertex-ai/generative-ai/docs/models/imagen/' },
+                        { name: 'Veo', desc: '视频生成模型家族，具体版本、分辨率与音频能力以官方文档为准', link: 'https://deepmind.google/models/veo/' },
+                        { name: 'Lyria', desc: '音乐生成模型家族，版本与曲目限制以官方文档为准', link: 'https://deepmind.google/models/lyria/' },
+                        { name: 'Gemini Diffusion', desc: '探索以扩散架构进行文本生成的 Gemini 研究方向', link: 'https://deepmind.google/models/gemini/' },
                     ]
                 },
                 consumer: {
                     title: '通用产品',
                     color: '#4285f4',
-                    desc: '面向普通用户的 AI 消费级应用，集成在 Google 核心产品中',
+                    desc: '面向普通用户的 AI 应用与 Google 产品集成',
                     products: [
-                        { name: 'Gemini App', desc: '通用 AI 助手应用，集成搜索、文档处理与多轮对话', link: 'https://gemini.google.com' },
-                        { name: 'Gemini Live', desc: '实时语音/视频对话，支持屏幕共享、摄像头流与低延迟交互', link: 'https://gemini.google.com' },
-                        { name: 'Google AI Studio', desc: '开发者 Playground，可测试最新模型、管理 Prompt 与生成媒体', link: 'https://aistudio.google.com' },
-                        { name: 'NotebookLM', desc: 'AI 驱动的笔记与研究工具，可生成音频概览（Audio Overview）', link: 'https://notebooklm.google.com' },
-                        { name: 'AI Overviews / AI Mode', desc: 'Google 搜索中的 AI 摘要与深度问答模式', link: 'https://www.google.com' },
-                        { name: 'Circle to Search', desc: '圈选屏幕任意内容即可触发即时搜索', link: 'https://www.google.com' },
-                        { name: 'Google Lens', desc: '视觉识别与智能搜索，支持翻译、购物、文本提取', link: 'https://lens.google.com' },
-                        { name: 'Flow', desc: 'AI 视频生成创作工具，面向消费者的内容创作', link: 'https://gemini.google.com' },
+                        { name: 'Gemini App', desc: '通用 AI 助手，覆盖对话、文档、研究和多模态任务', link: 'https://gemini.google.com' },
+                        { name: 'Gemini Live', desc: '实时语音与视频交互，可用性取决于地区和设备', link: 'https://gemini.google.com' },
+                        { name: 'Google AI Studio', desc: '模型与媒体生成试验、Prompt 设计和 API 开发入口', link: 'https://aistudio.google.com' },
+                        { name: 'NotebookLM', desc: '基于用户资料的笔记、研究和音频概览工具', link: 'https://notebooklm.google.com' },
+                        { name: 'AI Overviews / AI Mode', desc: 'Google 搜索中的 AI 摘要与问答体验', link: 'https://www.google.com' },
+                        { name: 'Circle to Search', desc: '通过圈选屏幕内容发起搜索', link: 'https://www.google.com' },
+                        { name: 'Google Lens', desc: '视觉识别、翻译、购物与文本提取', link: 'https://lens.google.com' },
+                        { name: 'Flow', desc: '面向 AI 影视创作的工具，可用模型和功能以产品页面为准', link: 'https://gemini.google.com' },
                     ]
                 },
                 dev: {
                     title: '开发/编程',
                     color: '#34a853',
-                    desc: '面向开发者的工具链，从模型 API 到全栈 AI 应用框架',
+                    desc: '从 Gemini API 到 Agent-first 开发环境与全栈应用框架',
                     products: [
-                        { name: 'Gemini API', desc: 'REST/gRPC API，支持多模态输入、函数调用与工具使用，最高 200 万 token 上下文', link: 'https://ai.google.dev' },
-                        { name: 'Vertex AI', desc: '企业级 AI 平台，提供 200+ 模型与完整的训练/部署/编排工具', link: 'https://cloud.google.com/vertex-ai' },
-                        { name: 'Google Colab', desc: '在线 Python Notebook 环境，免费 GPU/TPU，内置 Gemini 辅助编程', link: 'https://colab.google' },
-                        { name: 'Firebase Genkit', desc: '开源框架，支持 Python/Go，用于构建 Agentic AI 应用与复杂工作流', link: 'https://firebase.google.com/docs/genkit' },
-                        { name: 'Project IDX', desc: '基于云的 AI 驱动开发环境，支持多种编程语言与框架', link: 'https://idx.google.com' },
-                        { name: 'SignGemma', desc: '开源手语翻译模型（ASL to English），服务听障人群', link: 'https://deepmind.google/models/gemma/' },
-                        { name: 'Gemini Code Assist', desc: 'IDE 中的 AI 代码助手，支持代码补全、解释与重构', link: 'https://cloud.google.com/products/gemini/code-assist' },
-                        { name: 'Google Antigravity', desc: 'Agent-first 时代的开发平台，将 IDE 演进为 Agent 驱动的工作流', link: 'https://aistudio.google.com' },
+                        { name: 'Gemini API', desc: '提供多模态输入、函数调用和工具使用；上下文上限按具体模型核对', link: 'https://ai.google.dev' },
+                        { name: 'Vertex AI', desc: '企业模型开发、部署、编排与治理平台', link: 'https://cloud.google.com/vertex-ai' },
+                        { name: 'Google Colab', desc: '在线 Notebook 环境，计算资源和 Gemini 功能以当前套餐为准', link: 'https://colab.google' },
+                        { name: 'Firebase Genkit', desc: '用于构建 AI 与 Agent 工作流的开源框架', link: 'https://firebase.google.com/docs/genkit' },
+                        { name: 'Firebase Studio', desc: 'Project IDX 的后续产品形态，提供云端全栈应用开发环境', link: 'https://firebase.google.com/docs/studio' },
+                        { name: 'SignGemma', desc: '面向手语理解的开放模型研究方向', link: 'https://deepmind.google/models/gemma/' },
+                        { name: 'Gemini Code Assist', desc: 'IDE 中的代码补全、解释、生成与重构助手', link: 'https://cloud.google.com/products/gemini/code-assist' },
+                        { name: 'Google Antigravity', desc: 'Agent-first 开发平台，支持以智能体驱动开发工作流', link: 'https://antigravity.google/' },
                     ]
                 },
                 enterprise: {
                     title: '企业办公',
                     color: '#00bcd4',
-                    desc: '深度集成 Google Workspace 的 AI 能力，提升办公效率',
+                    desc: 'Gemini for Workspace 与企业 Agent 平台需区分理解',
                     products: [
-                        { name: 'Gemini for Workspace', desc: 'Docs/Sheets/Slides/Gmail 全面 AI 化，支持智能撰写与数据分析', link: 'https://workspace.google.com/products/gemini/' },
-                        { name: 'Flow for Workspace', desc: 'Workspace 中的 AI 流程自动化工具', link: 'https://workspace.google.com' },
-                        { name: 'Gmail Smart Compose', desc: '智能邮件撰写与上下文感知回复建议', link: 'https://www.google.com/gmail/' },
-                        { name: 'Google Meet AI', desc: '会议实时摘要、翻译、智能笔记与行动项提取', link: 'https://meet.google.com' },
-                        { name: 'Gemini Enterprise', desc: 'Workspace 企业级 AI 附加组件，提供高级安全与治理', link: 'https://workspace.google.com/products/gemini/' },
+                        { name: 'Gemini for Workspace', desc: '集成 Docs、Sheets、Slides、Gmail 等办公产品的 AI 能力', link: 'https://workspace.google.com/products/gemini/' },
+                        { name: 'Workspace Studio', desc: '面向 Workspace 的自动化与工作流程能力', link: 'https://workspace.google.com' },
+                        { name: 'Gmail Smart Compose', desc: '邮件撰写建议与上下文辅助', link: 'https://www.google.com/gmail/' },
+                        { name: 'Google Meet AI', desc: '会议摘要、翻译、笔记与行动项功能，按版本提供', link: 'https://meet.google.com' },
+                        { name: 'Gemini Enterprise', desc: '面向企业 AI Agent 与治理的产品，不等同于 Workspace 附加组件', link: 'https://cloud.google.com/gemini-enterprise' },
                     ]
                 },
                 agent: {
                     title: '智能体Agent',
                     color: '#ea4335',
-                    desc: 'Google 全面进军 AI Agent 的核心产品矩阵，从通用助手到专业 Agent',
+                    desc: '区分研究原型、消费功能与已开放的开发者产品',
                     products: [
-                        { name: 'Project Astra', desc: '通用 AI 助手，支持视频理解与 10 分钟记忆保持，可在手机和原型眼镜上运行', link: 'https://deepmind.google/models/project-astra/' },
-                        { name: 'Project Mariner', desc: '自主浏览器 Agent，可理解网页内容、填写表单、完成多步骤任务', link: 'https://deepmind.google/models/project-mariner/' },
-                        { name: 'Jules', desc: '自主 AI 编程 Agent，GitHub 集成，异步执行，可修复 Bug 并提交 PR', link: 'https://jules.google.com' },
-                        { name: 'Deep Research / Max', desc: '自主研究 Agent，深度信息搜集、分析与报告生成，已接入 Gemini API', link: 'https://gemini.google.com' },
-                        { name: 'Gemini Agent Mode', desc: 'Gemini 应用中的 Agent 模式，支持端到端任务执行与多步骤规划', link: 'https://gemini.google.com' },
-                        { name: 'Gemini Robotics', desc: '最先进的视觉-语言-动作模型，支持真实世界机器人任务', link: 'https://deepmind.google/models/gemini/' },
+                        { name: 'Project Astra', desc: '通用多模态助手研究项目，能力不应对标为所有用户均可用的独立产品', link: 'https://deepmind.google/models/project-astra/' },
+                        { name: 'Project Mariner', desc: '浏览器 Agent 研究项目，用于网页理解与多步骤任务', link: 'https://deepmind.google/models/project-mariner/' },
+                        { name: 'Jules', desc: '异步编程 Agent，支持 GitHub 工作流和计划任务', link: 'https://jules.google.com' },
+                        { name: 'Deep Research', desc: '深度信息检索、分析与报告生成功能，API 可用性以官方文档为准', link: 'https://gemini.google.com' },
+                        { name: 'Gemini Agent Mode', desc: 'Gemini 中面向多步骤任务执行的 Agent 体验', link: 'https://gemini.google.com' },
+                        { name: 'Gemini Robotics 2.5 / ER 2 / On-Device 2', desc: '覆盖视觉-语言-动作、具身推理和机器人端侧运行的模型体系', link: 'https://deepmind.google/models/gemini-robotics/' },
                     ]
                 },
                 cloud: {
                     title: '云产品',
                     color: '#9c27b0',
-                    desc: 'Google Cloud 上的企业级 AI 基础设施与服务',
+                    desc: 'Google Cloud 上的企业 AI 基础设施与数据服务',
                     products: [
-                        { name: 'Vertex AI Agent Builder', desc: '可视化构建企业级 AI Agent，低代码/无代码方式', link: 'https://cloud.google.com/products/agent-builder' },
-                        { name: 'Vertex Model Garden', desc: '200+ 开源与第三方模型的集市，一键部署', link: 'https://cloud.google.com/vertex-ai/docs/model-garden' },
-                        { name: 'BigQuery ML + Gemini', desc: '数据仓库中的 AI 辅助 SQL 生成与自然语言数据分析', link: 'https://cloud.google.com/bigquery/docs/gemini-for-bigquery' },
-                        { name: 'Dialogflow / CCAI', desc: '对话 AI 平台，构建客服机器人、语音 Agent 与 IVR 系统', link: 'https://cloud.google.com/dialogflow' },
-                        { name: 'Document AI', desc: '非结构化文档的智能解析、OCR 与结构化数据提取', link: 'https://cloud.google.com/document-ai' },
-                        { name: 'Gemini Cloud Assist', desc: 'Cloud Console 中的 AI 架构设计助手，生成 IaC 配置与成本优化建议', link: 'https://cloud.google.com/products/gemini' },
+                        { name: 'Vertex AI Agent Builder', desc: '企业 Agent 构建、连接与治理能力', link: 'https://cloud.google.com/products/agent-builder' },
+                        { name: 'Vertex Model Garden', desc: '第一方、开放与第三方模型目录，模型数量以当前控制台为准', link: 'https://cloud.google.com/vertex-ai/docs/model-garden' },
+                        { name: 'BigQuery ML + Gemini', desc: '数据仓库中的模型调用、SQL 辅助与自然语言分析', link: 'https://cloud.google.com/bigquery/docs/gemini-for-bigquery' },
+                        { name: 'Dialogflow / CCAI', desc: '客服机器人、语音 Agent 与联络中心服务', link: 'https://cloud.google.com/dialogflow' },
+                        { name: 'Document AI', desc: '文档解析、OCR 与结构化数据提取', link: 'https://cloud.google.com/document-ai' },
+                        { name: 'Gemini Cloud Assist', desc: '面向云架构、运维和成本分析的 AI 辅助', link: 'https://cloud.google.com/products/gemini' },
                     ]
                 },
                 hardware: {
                     title: '硬件产品',
                     color: '#607d8b',
-                    desc: '从数据中心到边缘设备，自研 AI 算力基础设施',
+                    desc: '数据中心 TPU、终端 Tensor 与边缘 AI 硬件',
                     products: [
-                        { name: 'TPU v5 / v6', desc: '张量处理单元，专为深度学习训练与推理优化的 AI 加速器', link: 'https://cloud.google.com/tpu' },
-                        { name: 'Coral', desc: '边缘 AI 计算平台与开发板，支持在设备端运行机器学习模型', link: 'https://coral.ai' },
-                        { name: 'Pixel (Tensor chip)', desc: '自研手机 SoC，内置 AI 加速单元，支持本地 Gemini Nano', link: 'https://store.google.com' },
-                        { name: 'Nest', desc: '智能家居设备，集成 Gemini 语音助手与实时摄像头描述', link: 'https://store.google.com/category/nest' },
+                        { name: 'TPU（Trillium / Ironwood 等）', desc: '面向训练与推理的 Google 自研加速器，代际和可用性以 Cloud TPU 文档为准', link: 'https://cloud.google.com/tpu' },
+                        { name: 'Coral', desc: '边缘 AI 开发平台与加速器生态', link: 'https://coral.ai' },
+                        { name: 'Pixel（Tensor）', desc: '集成 Google 自研 SoC 与端侧 AI 能力的 Pixel 设备', link: 'https://store.google.com' },
+                        { name: 'Nest', desc: '智能家居设备，Gemini 功能取决于设备、地区和套餐', link: 'https://store.google.com/category/nest' },
                     ]
                 },
                 industry: {
                     title: '行业方案',
                     color: '#fbc02d',
-                    desc: '以 AI for Science 为核心理念，在科学、医疗、交通等领域的前沿探索',
+                    desc: 'AI for Science、医疗、交通与行业解决方案',
                     products: [
-                        { name: 'AlphaFold 3', desc: '蛋白质与所有生物分子结构预测，获 2024 诺贝尔化学奖', link: 'https://deepmind.google/discover/blog/alphafold-3-predicts-the-structure-and-interactions-of-all-of-lifes-molecules/' },
-                        { name: 'Med-PaLM / MedGemma', desc: '医疗大模型，多模态医学文本与图像理解', link: 'https://deepmind.google/models/gemma/' },
-                        { name: 'Waymo', desc: 'L4 级自动驾驶，累计行驶数千万英里，已在美国多城市商业运营', link: 'https://waymo.com' },
-                        { name: 'GNoME', desc: '材料发现 AI，预测 220 万种新材料晶体结构', link: 'https://deepmind.google/discover/blog/materials-ai-gnome/' },
-                        { name: '气候科学 AI', desc: '天气预报、洪水预测与气候建模，准确性超越传统物理模型', link: 'https://deepmind.google/discover/blog/' },
-                        { name: '零售 AI 工具', desc: 'AI Impact Summit 发布的零售行业智能化解决方案', link: 'https://blog.google/products/ai/' },
+                        { name: 'AlphaFold 3', desc: '预测蛋白质与多种生物分子相互作用；2024 年诺贝尔奖表彰的是 AlphaFold 相关前期研究，不应直接归为 AlphaFold 3 获奖', link: 'https://deepmind.google/discover/blog/alphafold-3-predicts-the-structure-and-interactions-of-all-of-lifes-molecules/' },
+                        { name: 'Med-PaLM / MedGemma', desc: '医疗文本、图像与多模态模型研究和开放模型体系', link: 'https://deepmind.google/models/gemma/' },
+                        { name: 'Waymo', desc: 'L4 自动驾驶技术及运营服务，覆盖范围以 Waymo 官方信息为准', link: 'https://waymo.com' },
+                        { name: 'GNoME', desc: '材料发现 AI，预测约 220 万种新材料晶体结构', link: 'https://deepmind.google/discover/blog/materials-ai-gnome/' },
+                        { name: '气候科学 AI', desc: '天气、洪水与气候建模研究，应按具体模型和指标比较传统方法', link: 'https://deepmind.google/discover/blog/' },
+                        { name: '零售 AI 工具', desc: '面向零售搜索、推荐、客服和运营的 Google Cloud 解决方案', link: 'https://cloud.google.com/solutions/retail' },
                     ]
                 }
             },
             cases: [
-                { year: '2016', title: 'AlphaGo 战胜李世石', desc: '4:1 战胜围棋世界冠军，首次证明 AI 可在完全信息博弈中超越人类顶尖水平，全球观看超 2 亿人次。' },
-                { year: '2017', title: 'Transformer 论文', desc: 'Google Brain 发表《Attention Is All You Need》，提出 Transformer 架构，奠定 GPT、BERT 等现代大模型的基础。' },
-                { year: '2020', title: 'AlphaFold 2 突破', desc: '在 CASP14 蛋白质结构预测竞赛中达到原子级精度，解决困扰生物学界 50 年的"蛋白质折叠问题"。' },
-                { year: '2022', title: 'PaLM 大模型', desc: '发布 5400 亿参数大语言模型，展示大规模语言模型的涌现能力（Emergent Abilities）。' },
-                { year: '2023', title: 'Gemini 发布', desc: '发布原生多模态大模型，可直接处理文本、图像、音频、视频，无需拼接独立模态模型。' },
-                { year: '2024', title: 'Agent Trio 战略', desc: '推出 Project Astra（通用助手）、Mariner（浏览器 Agent）、Jules（编程 Agent），全面进军 AI Agent 时代。' },
-                { year: '2024', title: '诺贝尔化学奖', desc: 'Demis Hassabis 与 John Jumper 因 AlphaFold 获 2024 诺贝尔化学奖，AI for Science 的里程碑时刻。' },
-                { year: '2025', title: 'Gemini 3 与 Jules GA', desc: 'Gemini 3 系列发布，推理与编码能力再上新台阶；Jules 从 Beta 转为正式版，新增 Scheduled Tasks 等功能。' },
-                { year: '2026', title: 'Gemma 4 开源', desc: '发布 Gemma 4 开源模型家族，被称为"字节级最强开源模型"，进一步开放 AI 生态。' },
+                { year: '2016', title: 'AlphaGo 战胜李世石', desc: '以 4:1 战胜围棋世界冠军，成为深度强化学习的重要公众里程碑。' },
+                { year: '2017', title: 'Transformer 论文', desc: 'Google 研究人员发表《Attention Is All You Need》，提出 Transformer 架构。' },
+                { year: '2020', title: 'AlphaFold 2 突破', desc: '在 CASP14 中实现蛋白质结构预测的重要精度突破。' },
+                { year: '2022', title: 'PaLM 大模型', desc: '发布 5400 亿参数语言模型，推动大规模语言模型研究。' },
+                { year: '2023', title: 'Gemini 发布', desc: '发布原生多模态 Gemini 模型系列。' },
+                { year: '2024', title: 'Agent 研究项目', desc: '展示 Project Astra 与 Project Mariner；Jules 属于后续发布的编程 Agent。' },
+                { year: '2024', title: '诺贝尔化学奖', desc: 'Demis Hassabis 与 John Jumper 因蛋白质结构预测研究共同获得诺贝尔化学奖。' },
+                { year: '2025', title: 'Gemini 3 与 Jules GA', desc: 'Gemini 3 系列发布，Jules 从测试阶段转为正式产品。' },
+                { year: '2026', title: 'Gemini 4、Gemma 4 与 Genie 4', desc: 'Gemini 4 系列陆续发布，Gemma 4 面向推理与 Agent 工作流，Genie 4 推进可交互世界模拟。' },
             ]
         };
 

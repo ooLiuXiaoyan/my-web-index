@@ -45,16 +45,20 @@
 
         <a href="index.html" class="back-btn">← 返回首页</a>
         <h1>🚀 OpenClaw 部署指南</h1>
-        <section class="deploy-section">
-            <h2>Type1:本地部署</h2>
-            <ul>
-                <li>个人电脑：通过 npm 或一键安装脚本在本地运行（示例：`npm install -g openclaw`）。</li>
-                <li>Docker 容器：映射 `~/.openclaw` 目录，暴露 18789 端口，可通过 docker-compose 管理。</li>
-                <li>家庭服务器/NAS：内网或穿透访问，依托自有网络；典型用户在 Synology、Unraid 上部署自托管 K8s。</li>
-            </ul>
-            <p>优点：数据主权、隐私可控、低延迟、离线可用；风险：运维、备份、变更管理由用户负责。</p>
+        <p>资料核对日期：2026-11-23。当前官方稳定版为 <strong>2026.11.7</strong>；版本和安装要求会持续变化，部署前请再次查看官方文档。</p>
 
-            <h3>目前已经部署的平台</h3>
+        <section class="deploy-section">
+            <h2>Type 1：本地部署</h2>
+            <ul>
+                <li>个人电脑：推荐使用官方安装脚本，macOS / Linux / WSL2 执行 <code>curl -fsSL https://openclaw.ai/install.sh | bash</code>，Windows PowerShell 执行 <code>iwr -useb https://openclaw.ai/install.ps1 | iex</code>。</li>
+                <li>已有 Node 环境时也可通过 npm 安装：当前要求 Node 24.16.0+（24.x）或 26.1.0+，推荐 Node 26；随后运行 <code>openclaw onboard --install-daemon</code> 完成初始化。</li>
+                <li>Windows 可优先使用原生 Windows Hub，也可选择 PowerShell CLI 或 WSL2 Gateway，不再局限于 WSL2。</li>
+                <li>Docker 容器：适合隔离或临时环境，状态目录、端口和启动方式以当前官方 Docker 文档为准。</li>
+                <li>家庭服务器/NAS：可在受支持的内网环境中自托管，远程访问时应配置认证、TLS 和访问控制。</li>
+            </ul>
+            <p>优点：数据和运行环境可控、内网延迟低，配合本地模型时可离线运行；代价是升级、备份、安全和故障恢复均由用户负责。使用云端模型时，对话上下文仍会发送给对应模型提供商。</p>
+
+            <h3>部署记录与当前参考环境</h3>
             <div class="platform-buttons">
                 <button class="platform-btn cute-btn macos" data-platform="macos" onclick="window.open('https://zcnbpdq25nk7.feishu.cn/wiki/YF4Jw78gsiNM8akXsJUcmPfdnZb', '_blank')">
                     <span class="icon">🍎</span>
@@ -71,44 +75,50 @@
             </div>
 
             <div class="deploy-configs">
-                <h4>部署配置信息</h4>
+                <h4>历史实测快照（保留原始环境，不作为当前推荐）</h4>
                 <ul class="config-list">
                     <li class="config-item">
-                        <strong>配置组合1：</strong>
+                        <strong>配置组合 1（2026 年上半年）：</strong>
                         <span class="config-detail">操作系统：macOS Monterey 12.7.6</span>
-                        <span class="config-detail">Node.js：22.16.0</span>
-                        <span class="config-detail">Model：Google/gemini-2.5-flash、deepseek-chat</span>
-                        <span class="config-detail">Search Provider：kimi(moonshot)</span>
+                        <span class="config-detail">Node.js：22.16.0（低于当前 OpenClaw 安装要求）</span>
+                        <span class="config-detail">Model：gemini-2.5-flash、deepseek-chat（均已属于旧配置）</span>
+                        <span class="config-detail">Search Provider：kimi (moonshot)</span>
                         <span class="config-detail">Channel：feishu</span>
                     </li>
                     <li class="config-item">
-                        <strong>配置组合2：</strong>
+                        <strong>配置组合 2（2026 年 3 月）：</strong>
                         <span class="config-detail">操作系统：Windows 10</span>
                         <span class="config-detail">OpenClaw：2026.3.x</span>
-                        <span class="config-detail">Model：kimi k2.5</span>
+                        <span class="config-detail">Model：kimi-k2.5（已于 2026-08-31 退役，迁移时可参考 kimi-k3.1-pro）</span>
                         <span class="config-detail">Channel：Feishu/Lark</span>
                         <span class="config-detail">Search Provider：kimi</span>
                     </li>
                     <li class="config-item">
-                        <strong>配置组合3：</strong>
+                        <strong>配置组合 3（2026 年 3 月）：</strong>
                         <span class="config-detail">操作系统：Ubuntu 24</span>
                         <span class="config-detail">OpenClaw：v2026.3.28</span>
-                        <span class="config-detail">Model：进行中ing</span>
+                        <span class="config-detail">Model：当时尚未完成配置</span>
+                    </li>
+                    <li class="config-item">
+                        <strong>当前官方参考（非本站实测记录）：</strong>
+                        <span class="config-detail">OpenClaw：v2026.11.7</span>
+                        <span class="config-detail">Node.js：24.16.0+（24.x）或 26.1.0+，推荐 Node 26</span>
+                        <span class="config-detail">模型示例：kimi-k3.1-pro、deepseek-flash、gpt-6.2-sol；按实际提供商模型列表配置</span>
                     </li>
                 </ul>
             </div>
         </section>
 
         <section class="deploy-section">
-            <h2>Type2:云端部署</h2>
+            <h2>Type 2：云端部署</h2>
             <ul>
-                <li>托管平台运行：例如 AWS ECS/Fargate、Azure Container Apps、Google Cloud Run。</li>
-                <li>通过 API 网关访问：统一入口，支持认证、限流和监控。</li>
-                <li>优势：部署简单、无基础设施运维、弹性扩缩容；缺点：依赖第三方，成本可变。</li>
+                <li>自托管云服务器或容器平台：可选择 VPS、AWS ECS/Fargate、Azure Container Apps、Google Cloud Run 等，仍需负责 OpenClaw 配置与升级。</li>
+                <li>托管服务：由平台承担实例和接入配置，例如飞书妙搭 OpenClaw，但应核对模型选择、额度和数据规则。</li>
+                <li>通过认证入口开放访问：按需配置 TLS、限流、日志和监控，避免直接暴露无认证的 Gateway。</li>
             </ul>
-            <p>风险：数据可能上传到第三方云平台，合规要求高，需做好加密、访问控制与审计。</p>
+            <p>云端部署可减少本地维护并获得更好的在线能力，但会增加第三方依赖和可变成本。敏感数据应做好最小化发送、加密、访问控制与审计。</p>
 
-            <h3>目前已经部署的平台</h3>
+            <h3>已使用的云端平台</h3>
             <div class="cloud-platform-row">
                 <button class="platform-btn cute-btn feishu" data-platform="feishu" onclick="window.location.href='openclaw-feishu-deploy.html'">
                     <span class="icon">🦞</span>
@@ -131,47 +141,49 @@
                 <tbody>
                     <tr>
                         <td>数据控制</td>
-                        <td>最高（完全自有）</td>
-                        <td>中等（依赖云供应商）</td>
+                        <td>环境自主性高，取决于模型与工具去向</td>
+                        <td>依赖云供应商及托管平台规则</td>
                     </tr>
                     <tr>
                         <td>部署速度</td>
-                        <td>中等（环境配置）</td>
-                        <td>高（即开即用）</td>
+                        <td>中等（需要环境配置）</td>
+                        <td>托管服务较快，自托管云端仍需配置</td>
                     </tr>
                     <tr>
                         <td>运维成本</td>
-                        <td>高（自运维）</td>
-                        <td>低（SaaS/托管模式）</td>
+                        <td>自行承担升级、备份与安全维护</td>
+                        <td>托管模式较低，自托管云端仍需运维</td>
                     </tr>
                     <tr>
                         <td>弹性伸缩</td>
-                        <td>有限（硬件资源）</td>
-                        <td>强（自动扩容）</td>
+                        <td>受本地硬件资源限制</td>
+                        <td>取决于所选平台能力</td>
                     </tr>
                     <tr>
                         <td>可用性</td>
-                        <td>取决于本地网络与电力</td>
-                        <td>高（云端 SLA）</td>
+                        <td>取决于本地网络、电力与硬件</td>
+                        <td>取决于平台 SLA 和自身配置</td>
                     </tr>
                 </tbody>
             </table>
         </section>
 
         <section class="market-cases">
-            <h2>市场常见案例</h2>
+            <h2>典型部署模式</h2>
             <ul>
-                <li>本地部署：企业内部 AI 办公助手（例如华为、腾讯内部版本），用于严格隐私工作流。</li>
-                <li>云端部署：SaaS 型GPT平台、OzAI、Aiquote，典型场景为跨团队协同、按需扩容。</li>
-                <li>混合部署：阿里云 RocketMQ+本地模型缓存，金融行业满足合规数据不出境。</li>
+                <li>本地部署：个人助手、内网办公和需要控制运行环境的自动化工作流。</li>
+                <li>云端自托管：跨团队访问、长期在线任务和需要公网渠道接入的机器人。</li>
+                <li>托管服务：快速试用、低运维门槛的飞书集成，以及不希望自行维护服务器的团队。</li>
             </ul>
         </section>
 
         <section class="references">
-            <h2>共享文档链接</h2>
+            <h2>官方资料与共享记录</h2>
             <ul>
-                <li>macOS部署记录：<a href="https://zcnbpdq25nk7.feishu.cn/wiki/YF4Jw78gsiNM8akXsJUcmPfdnZb" target="_blank" rel="noopener">https://zcnbpdq25nk7.feishu.cn/wiki/YF4Jw78gsiNM8akXsJUcmPfdnZb</a></li>
-                <li>Windows部署记录：<a href="https://zcnbpdq25nk7.feishu.cn/wiki/Kxzywr8AviScxXkexmBcQyHMn0e" target="_blank" rel="noopener">https://zcnbpdq25nk7.feishu.cn/wiki/Kxzywr8AviScxXkexmBcQyHMn0e</a></li>
+                <li><a href="https://docs.openclaw.ai/install" target="_blank" rel="noopener">OpenClaw 官方安装文档</a> · <a href="https://docs.openclaw.ai/platforms/windows" target="_blank" rel="noopener">Windows 部署</a> · <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.11.7" target="_blank" rel="noopener">2026.11.7 发布说明</a></li>
+                <li><a href="https://platform.moonshot.ai/docs/models" target="_blank" rel="noopener">Kimi 当前模型与弃用说明</a></li>
+                <li>macOS 部署记录：<a href="https://zcnbpdq25nk7.feishu.cn/wiki/YF4Jw78gsiNM8akXsJUcmPfdnZb" target="_blank" rel="noopener">飞书共享文档</a></li>
+                <li>Windows 部署记录：<a href="https://zcnbpdq25nk7.feishu.cn/wiki/Kxzywr8AviScxXkexmBcQyHMn0e" target="_blank" rel="noopener">飞书共享文档</a></li>
             </ul>
         </section>
 

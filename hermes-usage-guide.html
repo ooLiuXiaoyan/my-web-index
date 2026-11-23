@@ -366,8 +366,9 @@
 
         <!-- Hero -->
         <div class="hero-banner">
-            <h2>Hermes — 开源本地优先 AI 智能体框架</h2>
-            <p>由 Nous Research 开发，支持多模型接入、工具调用、自定义技能，覆盖从原型验证到企业级部署的全场景需求</p>
+            <h2>Hermes — 开源、可自我改进的 AI 智能体</h2>
+            <p>由 Nous Research 开发，支持多模型、工具调用、技能学习、持久记忆、定时任务和多种终端环境。</p>
+            <p style="margin-top: 0.75rem; font-size: 0.85rem;">适配 Hermes Agent v0.23.3 · 命令与功能核对日期：2026-11-23</p>
         </div>
 
         <!-- 核心能力概览 -->
@@ -375,27 +376,167 @@
         <div class="capability-grid">
             <div class="capability-card">
                 <h4>🧠 多模型接入</h4>
-                <p>支持 OpenAI、Anthropic、DeepSeek、本地 Ollama 等 20+ 模型提供商，按需切换。</p>
+                <p>支持 Nous Portal、OpenRouter、OpenAI、Anthropic、DeepSeek 和自定义端点等，可用 <code>hermes model</code> 切换。</p>
             </div>
             <div class="capability-card">
                 <h4>🔧 工具调用</h4>
-                <p>内置文件读写、Shell 执行、HTTP 请求、数据库查询等工具，支持自定义工具扩展。</p>
+                <p>提供文件、终端、浏览器和搜索等工具，支持本地、Docker、SSH 及多种云端沙箱。</p>
             </div>
             <div class="capability-card">
                 <h4>🎯 自定义技能</h4>
-                <p>通过 Skill 系统封装领域知识，一键安装社区技能，快速构建专属工作流。</p>
+                <p>通过 Skill 系统封装领域知识，支持从经验创建和改进技能，也可安装社区技能。</p>
             </div>
             <div class="capability-card">
                 <h4>💾 记忆系统</h4>
-                <p>短期对话缓存 + 长期持久记忆，跨会话保持上下文，知识持续积累。</p>
+                <p>MEMORY.md 与 USER.md 保存精选长期信息，历史会话则通过 SQLite 会话检索按需查询。</p>
             </div>
             <div class="capability-card">
                 <h4>🔌 MCP 协议</h4>
-                <p>原生支持 Model Context Protocol，无缝对接第三方 MCP 服务器和工具生态。</p>
+                <p>支持本地 stdio 和远程 HTTP MCP 服务器，可通过 <code>hermes mcp</code> 管理目录和连接。</p>
             </div>
             <div class="capability-card">
                 <h4>🔐 安全可控</h4>
-                <p>代码本地执行，数据不出境；权限分级管理，敏感操作需确认，合规无忧。</p>
+                <p>支持危险命令审批和隔离终端。使用云端模型或工具时，相关上下文仍可能发送给第三方，需按数据敏感度配置。</p>
+            </div>
+        </div>
+
+        <!-- 在 Hermes 中创建智能体 -->
+        <h2 style="margin-top: 3rem; border-bottom: 3px solid #8b5cf6; padding-bottom: 0.75rem; color: #c4b5fd;">🧬 在 Hermes 中创建智能体</h2>
+        <p style="color: #94a3b8;">Hermes 通过 <strong>Profile（智能体档案）</strong>隔离配置、记忆、技能和会话。身份、项目约定、用户偏好和长期经验分别由上下文文件与记忆系统维护。</p>
+
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">🎯</span>
+                <div>
+                    <h3 class="scenario-title">创建智能体的作用</h3>
+                    <div class="scenario-subtitle">从通用助手到领域专家的转变</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <ul class="use-case-list">
+                    <li><strong>持久身份与人格</strong> — 用 SOUL.md 定义稳定的角色定位、语气与工作风格。</li>
+                    <li><strong>项目约定</strong> — 用 AGENTS.md 等项目上下文记录架构、工具链和业务规则。</li>
+                    <li><strong>用户偏好与经验</strong> — 用 USER.md 和 MEMORY.md 保存需要跨会话保留的精选信息。</li>
+                    <li><strong>环境隔离</strong> — 为不同任务创建不同 Profile，避免配置和记忆相互污染。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">🛠️</span>
+                <div>
+                    <h3 class="scenario-title">创建步骤</h3>
+                    <div class="scenario-subtitle">Profile + 项目上下文 + 精选长期记忆</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <h4>步骤 1：创建 Profile</h4>
+                <p>使用 <code>hermes profile create</code> 命令创建一个新的智能体档案：</p>
+                <div class="code-example" style="white-space: pre;">
+<span class="comment"># 创建一个名为 mushroom 的 Agent Profile</span>
+<span class="cmd">hermes profile create</span> <span class="flag">mushroom</span>
+                </div>
+                <p>该命令会初始化独立的配置空间。默认 Profile 的记忆位于 <code>~/.hermes/memories/</code>，命名 Profile 则位于各自的 Profile 数据目录。</p>
+
+                <h4>步骤 2：配置上下文与长期记忆</h4>
+                <p>以下文件职责不同，不应把整套项目文档都塞入长期记忆：</p>
+
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th>文件</th>
+                            <th>位置与作用</th>
+                            <th>适合写什么</th>
+                            <th>避免写什么</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>AGENTS.md</code></td>
+                            <td>项目目录中的项目指令</td>
+                            <td>架构、目录约定、构建测试命令、项目规范</td>
+                            <td>用户私人偏好和密钥</td>
+                        </tr>
+                        <tr>
+                            <td><code>SOUL.md</code></td>
+                            <td>仅从当前 HERMES_HOME 加载的全局身份</td>
+                            <td>Agent 身份、语气、工作风格、长期行为准则</td>
+                            <td>临时任务和项目细节</td>
+                        </tr>
+                        <tr>
+                            <td><code>USER.md</code></td>
+                            <td><code>memories/</code> 下的用户画像，默认上限 1,375 字符</td>
+                            <td>用户身份、语言与回答风格偏好、稳定禁忌</td>
+                            <td>一次性指令和大段项目文档</td>
+                        </tr>
+                        <tr>
+                            <td><code>MEMORY.md</code></td>
+                            <td><code>memories/</code> 下的个人笔记，默认上限 2,200 字符</td>
+                            <td>环境事实、项目约定、工具经验和重要完成记录</td>
+                            <td>宽泛口号、原始数据和大段日志</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>步骤 3：加载并使用 Profile</h4>
+                <p>编辑完上下文文件后，启动 Hermes 时选择对应 Profile 即可生效。具体加载参数请以 <code>hermes --help</code> 输出为准，常见形式如下：</p>
+                <div class="code-example" style="white-space: pre;">
+<span class="comment"># 示例：加载 mushroom Profile</span>
+<span class="cmd">hermes</span> <span class="flag">--profile mushroom</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scenario-section">
+            <div class="scenario-header">
+                <span class="scenario-icon">📝</span>
+                <div>
+                    <h3 class="scenario-title">写法示例</h3>
+                    <div class="scenario-subtitle">三类上下文文件的具体内容参考</div>
+                </div>
+            </div>
+            <div class="scenario-content">
+                <h4>SOUL.md 示例</h4>
+                <div class="code-example" style="white-space: pre;">
+<span class="comment"># SOUL.md — 定义 Agent 的人格与行为总则</span>
+你是一位资深的地理信息（GIS）研发助手，擅长 GDAL、PostGIS、OpenLayers 和 Python 空间分析。
+
+语气：专业、简洁、耐心，使用中文回答。
+工作风格：先理解需求，再给出可执行的命令或代码；遇到可能损坏数据的操作，必须先提醒用户确认。
+长期角色：帮助用户完成空间数据处理、地图服务开发和坐标转换任务。
+                </div>
+
+                <h4>USER.md 示例</h4>
+                <div class="code-example" style="white-space: pre;">
+<span class="comment"># USER.md — 描述用户画像</span>
+用户是一名 GIS 开发工程师，熟悉 Python 但不喜欢读长篇大论。
+
+偏好：
+- 回答语言：中文
+- 称呼：用“你”或直呼其名即可，不要称“主人”
+- 风格：先给结论，再给代码示例，最后补充注意事项
+- 禁忌：不要生成未经验证的坐标系转换参数
+                </div>
+
+                <h4>MEMORY.md 示例</h4>
+                <div class="code-example" style="white-space: pre;">
+<span class="comment"># MEMORY.md — Agent 的个人笔记</span>
+- 当前项目使用 PostGIS 存储矢量数据，默认坐标系为 4326。
+- 用户经常批量处理 Shapefile 转 GeoJSON，可用 ogr2ogr 一键完成。
+- 遇到“空间数据”相关问题时，优先检查坐标系与数据范围。
+- 上次学到：Windows 下 GDAL 路径需用正斜杠，否则 ogr2ogr 会报错。
+                </div>
+
+                <div class="tip-box">
+                    <span class="icon">💡</span>
+                    <p><strong>最佳实践：</strong>把 <code>SOUL.md</code> 当作“岗位说明书”，把 <code>USER.md</code> 当作“用户画像卡”，把 <code>MEMORY.md</code> 当作“工作手账”。三类文件越具体，Agent 的长期行为越稳定。</p>
+                </div>
+
+                <div class="warning-box">
+                    <span class="icon">⚠️</span>
+                    <p><strong>注意：</strong>长期上下文会显著影响模型输出，建议在修改后先进行小范围测试，确认行为符合预期再投入生产使用。</p>
+                </div>
             </div>
         </div>
 
@@ -462,7 +603,7 @@
                 <p>地理信息研发中，数据来源多样（Shapefile、GeoJSON、遥感影像、矢量瓦片），格式转换与清洗是高频任务。Hermes 可通过自定义技能封装 GDAL/OGR 工具链，实现一键式数据转换。</p>
                 <div class="code-example">
 <span class="comment"># 通过 Hermes 批量转换 Shapefile 为 GeoJSON</span>
-<span class="cmd">hermes chat -q</span> <span class="flag">"将 data/shapes/ 目录下所有 .shp 文件转为 GeoJSON，输出到 output/geojson/"</span>
+<span class="cmd">hermes chat --oneshot -q</span> <span class="flag">"将 data/shapes/ 目录下所有 .shp 文件转为 GeoJSON，输出到 output/geojson/"</span>
 
 <span class="comment"># Hermes 会自动调用 GDAL 工具完成转换：</span>
 <span class="comment"># ogr2ogr -f GeoJSON output/file.geojson data/shapes/file.shp</span>
@@ -477,9 +618,9 @@
                 <p>使用 Hermes 辅助开发 Mapbox GL / OpenLayers / Leaflet 前端代码，快速搭建 WebGIS 应用原型。</p>
                 <div class="code-example">
 <span class="comment"># 让 Hermes 生成一个基于 OpenLayers 的矢量瓦片查看器</span>
-<span class="cmd">hermes</span> <span class="flag">--skill webgis-dev</span> <span class="flag">--model deepseek-v3</span>
+<span class="cmd">hermes</span> <span class="flag">--skills webgis-dev</span> <span class="flag">--model deepseek-flash</span>
 
-> 生成一个 OpenLayers 3.16 的矢量瓦片地图应用，
+> 生成一个基于当前稳定版 OpenLayers 的矢量瓦片地图应用，
 > 支持图层切换、要素点击查询、坐标显示功能
                 </div>
                 <div class="tip-box">
@@ -509,15 +650,14 @@
                 <h4>场景一：模型评估与对比</h4>
                 <p>AI 研发人员需要在多个模型之间快速切换，评估不同模型在特定任务上的表现。Hermes 的多模型接入能力使这一过程高效可控。</p>
                 <div class="code-example">
-<span class="comment"># 快速对比不同模型对同一任务的表现</span>
-<span class="cmd">hermes model</span>  <span class="comment"># 交互式选择模型</span>
+<span class="comment"># 先通过交互式向导配置对应提供商和模型</span>
+<span class="cmd">hermes model</span>
 
-<span class="comment"># 使用 DeepSeek-V3</span>
-<span class="cmd">hermes chat</span> <span class="flag">--model deepseek/deepseek-chat</span> <span class="flag">--q "分析这段代码的性能瓶颈"</span>
+<span class="comment"># 使用当前 DeepSeek Flash 执行单次查询</span>
+<span class="cmd">hermes chat</span> <span class="flag">--model deepseek-flash --oneshot -q "分析这段代码的性能瓶颈"</span>
 
-<span class="comment"># 切换到 Claude Sonnet 对比</span>
-<span class="cmd">hermes model</span> anthropic/claude-sonnet-4-20250514
-<span class="cmd">hermes chat</span> <span class="flag">--q "分析这段代码的性能瓶颈"</span>
+<span class="comment"># 切换到当前 Claude Sonnet 对比同一任务</span>
+<span class="cmd">hermes chat</span> <span class="flag">--model claude-sonnet-5-5 --oneshot -q "分析这段代码的性能瓶颈"</span>
                 </div>
                 <ul class="use-case-list">
                     <li><strong>Prompt 模板管理</strong> — 在记忆系统中存储经过验证的 Prompt 模板，跨会话复用</li>
@@ -529,7 +669,7 @@
                 <p>Hermes 可作为 AI 辅助编程助手，在项目目录中读取代码上下文，生成符合项目风格的新代码。</p>
                 <div class="code-example">
 <span class="comment"># 在项目目录中启动 Hermes，自动加载项目上下文</span>
-<span class="cmd">hermes</span> <span class="flag">--workspace ./my-project</span>
+<span class="cmd">hermes</span> <span class="flag">--in ./my-project</span>
 
 > 为 src/services/ 目录下的 API 模块编写单元测试，
 > 使用 pytest，覆盖正常路径和边界情况
@@ -562,7 +702,7 @@
                 <p>数据治理的核心挑战之一是数据质量。Hermes 可通过自定义技能封装数据质量检测规则，对数据集进行自动扫描并生成质量报告。</p>
                 <div class="code-example">
 <span class="comment"># 使用 Hermes 扫描 CSV 数据集质量</span>
-<span class="cmd">hermes chat</span> <span class="flag">--skill data-quality</span>
+<span class="cmd">hermes chat</span> <span class="flag">--skills data-quality</span>
 
 > 分析 data/customers.csv 的数据质量：
 > 1. 检查空值比例
@@ -578,20 +718,25 @@
 
                 <h4>场景二：元数据管理自动化</h4>
                 <p>通过 Hermes 与数据库工具的集成，自动提取表结构、字段描述、数据类型等元数据，生成数据字典。</p>
-                <div class="code-example">
-<span class="comment"># 通过 MCP 连接 PostgreSQL 数据库</span>
-<span class="comment"># 在 ~/.hermes/.env 中配置</span>
-<span class="cmd">MCP_SERVERS</span>=postgres@localhost:5432/mydb
+                <div class="code-example" style="white-space: pre;">
+<span class="comment"># 在 ~/.hermes/config.yaml 中配置所选 PostgreSQL MCP 服务器</span>
+<span class="comment"># 启动命令和参数以该服务器的官方文档为准</span>
+mcp_servers:
+  postgres:
+    command: "&lt;PostgreSQL MCP 服务器启动命令&gt;"
+    args: ["&lt;连接参数&gt;"]
 
-<span class="comment"># 让 Hermes 生成数据字典</span>
-<span class="cmd">hermes</span> <span class="flag">--mcp postgres</span>
+<span class="comment"># 也可通过 MCP 管理入口查看目录和连接</span>
+<span class="cmd">hermes mcp</span>
 
-> 连接数据库，提取所有表的元数据，
+<span class="comment"># 启动会话后提出只读任务</span>
+<span class="cmd">hermes chat</span>
+> 连接 postgres MCP，提取所有表的元数据，
 > 生成 Markdown 格式的数据字典到 docs/data-dict.md
                 </div>
                 <div class="tip-box">
                     <span class="icon">💡</span>
-                    <p><strong>合规提示：</strong>在处理敏感数据时，建议使用本地模型（如 Ollama 运行的 Qwen/Llama）以确保数据不出境。Hermes 原生支持本地模型接入。</p>
+                    <p><strong>合规提示：</strong>处理敏感数据时，可评估本地模型和隔离终端，减少上下文外发；同时检查 MCP、搜索及其他外部工具的数据去向。仅使用本地模型并不能自动保证满足全部合规要求。</p>
                 </div>
             </div>
             <div class="tag-row">
@@ -617,7 +762,7 @@
                 <p>企业出海面临的首要挑战是语言。Hermes 支持多语言 Prompt，可批量完成产品文案、帮助文档、营销素材的翻译与本地化。</p>
                 <div class="code-example">
 <span class="comment"># 批量翻译产品文案为多语言版本</span>
-<span class="cmd">hermes chat</span> <span class="flag">--model deepseek-v3</span>
+<span class="cmd">hermes chat</span> <span class="flag">--model deepseek-flash</span>
 
 > 将 docs/product-intro.md 翻译为英语、日语、韩语、西班牙语，
 > 保持技术术语一致性，输出到 docs/translations/ 目录下
@@ -667,7 +812,7 @@
                 <p>工业设备产生的日志量巨大，人工排查效率低。Hermes 可通过文件工具批量读取日志，结合模型能力进行智能诊断。</p>
                 <div class="code-example">
 <span class="comment"># 分析设备运行日志中的异常模式</span>
-<span class="cmd">hermes chat</span> <span class="flag">--model deepseek-v3</span>
+<span class="cmd">hermes chat</span> <span class="flag">--model deepseek-flash</span>
 
 > 读取 logs/ 目录下最近 7 天的设备运行日志，
 > 识别异常模式：
@@ -686,15 +831,16 @@
                 <h4>场景二：工业文档智能检索</h4>
                 <p>工业企业的设备手册、操作规程、维修记录通常分散在多个系统中。Hermes 的文件工具和记忆系统可用于构建智能文档助手。</p>
                 <div class="code-example">
-<span class="comment"># 构建设备知识库问答系统</span>
-<span class="cmd">hermes</span> <span class="flag">--skill industrial-docs</span> <span class="flag">--memory long-term</span>
+<span class="comment"># 加载预先准备的工业文档技能（名称仅为示例）</span>
+<span class="cmd">hermes</span> <span class="flag">--skills industrial-docs</span>
 
-> 将 docs/manuals/ 目录下所有设备手册加载到长期记忆中，
-> 之后可以快速查询："CNC 数控机床 X 轴报警 E07 的处理步骤是什么？"
+> 检索 docs/manuals/ 中的设备手册，
+> 查询："CNC 数控机床 X 轴报警 E07 的处理步骤是什么？"
+> 仅将常用设备位置和排障经验通过 memory 工具保存到长期记忆。
                 </div>
                 <div class="tip-box">
                     <span class="icon">💡</span>
-                    <p><strong>部署建议：</strong>工业场景对实时性要求高，建议将 Hermes 部署在边缘计算节点上，使用本地模型（如 Qwen-7B）以降低延迟。Hermes 支持 Ollama 本地部署。</p>
+                    <p><strong>部署建议：</strong>实时性或数据隔离要求较高时，可将 Hermes 部署在边缘节点，并根据硬件选择当前可用的本地 Qwen 等模型。模型能力与工具调用稳定性应通过实际任务验证。</p>
                 </div>
             </div>
             <div class="tag-row">
@@ -723,7 +869,7 @@
                     <td>日常开发、问答</td>
                 </tr>
                 <tr>
-                    <td><code style="color: #c4b5fd;">hermes chat -q "问题"</code></td>
+                    <td><code style="color: #c4b5fd;">hermes chat --oneshot -q "问题"</code></td>
                     <td>单次查询模式</td>
                     <td>脚本集成、批量任务</td>
                 </tr>

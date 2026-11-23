@@ -296,7 +296,7 @@
             <h2><span class="section-icon">🚀</span>七、快速开始</h2>
             <ol>
                 <li><span class="list-icon">📱</span><strong>选择 Channel：</strong>根据团队习惯选择 Web 端、飞书或 Slack 集成</li>
-                <li><span class="list-icon">🧠</span><strong>配置 Model：</strong>根据场景选择合适的 LLM（开发场景推荐 Claude/GPT-4）</li>
+                <li><span class="list-icon">🧠</span><strong>配置 Model：</strong>根据任务、成本和数据要求选择当前可用模型；开发场景可评估 Claude Sonnet 5.5、GPT-6.2 Sol、Kimi K3.1 Pro 等，具体以提供商模型列表为准</li>
                 <li><span class="list-icon">🎯</span><strong>设置 Skills：</strong>启用需要的技能（代码生成、代码审查等）</li>
                 <li><span class="list-icon">🔍</span><strong>接入 Search：</strong>配置搜索提供方，增强知识检索能力</li>
                 <li><span class="list-icon">✨</span><strong>开始使用：</strong>直接描述需求，与 OpenClaw 对话协作</li>
@@ -504,7 +504,7 @@
                             <div class="step-number">1</div>
                             <div class="step-content">
                                 <h5>安装 Claude Code 扩展</h5>
-                                <p>在 VS Code 扩展商店搜索并安装 "Claude Code" 扩展，或直接从 GitHub 仓库下载安装包。</p>
+                                <p>在 VS Code 扩展商店搜索并安装官方 "Claude Code" 扩展，或按照 Anthropic 官方文档完成安装。</p>
                                 <code>ext:anthropic.claude-code</code>
                             </div>
                         </div>
@@ -512,37 +512,31 @@
                         <div class="step-item">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h5>部署 CC Switch 代理服务</h5>
-                                <p>CC Switch 是一个Claude Code 配置管理工具，可以实现在多个 API 供应商之间快速切换，无需手动修改配置文件。在本案例中，它是是连接 Claude Code 与 Kimi API 的智能网关，实现协议转换和流量调度。</p>
-                                <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
-                                    <li>协议适配：将 Claude Code 的 OpenAI 格式请求转换为 Kimi API 格式</li>
-                                    <li>多模型路由：支持 Kimi、DeepSeek、Gemini 等多种模型动态切换</li>
-                                    <li>流量控制：请求限流、重试机制、错误降级</li>
-                                    <li>安全加固：API Key 集中管理，支持请求审计日志</li>
-                                </ul>
-                                <code>docker run -p 8080:8080 -e KIMI_API_KEY=xxx cc-switch:latest</code>
+                                <h5>安装 CC Switch 桌面工具</h5>
+                                <p>CC Switch 当前是跨平台桌面配置管理工具，用于集中维护 Claude Code、Codex、Kimi Code 等工具的供应商、模型、MCP 和技能配置。它不是必须单独部署的 Docker 网关。</p>
+                                <p>从官方仓库 Releases 下载对应系统版本：<a href="https://github.com/farion1231/cc-switch/releases" target="_blank" rel="noopener" style="color: #7dd3fc;">farion1231/cc-switch</a>。如确需本地代理或故障转移，再按官方代理服务文档单独开启。</p>
                             </div>
                         </div>
 
                         <div class="step-item">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h5>配置 Kimi API</h5>
-                                <p>在 Claude Code 设置中指向 CC Switch 服务地址，实现无缝接入 Kimi 大模型能力。</p>
-                                <p><strong>Tips：当使用CC Switch 作为代理服务时，这一步要提前到第二步，只要获取一下key，然后配置到ccswitch中即可</strong></p>
-                                <code>settings.json: openai.baseUrl = "http://localhost:8080/v1"</code>
+                                <h5>在 CC Switch 中配置 Kimi</h5>
+                                <p>先在 Kimi 开放平台创建 API Key，再在 CC Switch 的 Claude Code 供应商配置中选择或新增 Kimi，填写官方提供的 Base URL、API Key 和当前可用模型。Claude Code 使用 Anthropic Messages 协议，不应配置为 OpenAI 的 <code>openai.baseUrl</code>。</p>
+                                <p>截至 2026-11-23，新配置可优先选择 <code>kimi-k3.1-pro</code>；不要继续使用已退役的 <code>kimi-k2.5</code>。模型和接入地址以 <a href="https://platform.moonshot.ai/docs/models" target="_blank" rel="noopener" style="color: #7dd3fc;">Kimi 官方模型列表</a>为准。</p>
                             </div>
                         </div>
 
                         <div class="step-item">
                             <div class="step-number">4</div>
                             <div class="step-content">
-                                <h5>启用智能功能</h5>
+                                <h5>启用并验证</h5>
+                                <p>在 CC Switch 中启用对应供应商，让其写入 Claude Code 配置；如未热切换，则完全重启 Claude Code。随后用一个只读小任务验证模型、工作目录和工具权限。</p>
                                 <ul style="margin: 0.5rem 0; padding-left: 1.2rem; color: #cbd5e1;">
-                                    <li>智能代码补全 (Tab)</li>
-                                    <li>自然语言生成代码 (Cmd+K)</li>
-                                    <li>代码解释与重构建议</li>
-                                    <li>自动化单元测试生成</li>
+                                    <li>基于仓库上下文生成和修改代码</li>
+                                    <li>代码解释、审查与重构建议</li>
+                                    <li>生成并运行单元测试</li>
+                                    <li>按审批策略执行终端命令</li>
                                 </ul>
                             </div>
                         </div>
@@ -712,7 +706,7 @@
                             <div class="step-content">
                                 <h5>代码生成引擎</h5>
                                 <p>调用大模型生成代码，支持多轮迭代优化。</p>
-                                <code>模型：Claude/GPT-4 + 领域微调</code>
+                                <code>模型：按任务选择当前可用的通用或领域模型，必要时结合领域微调</code>
                             </div>
                         </div>
 
@@ -852,10 +846,10 @@ public ResponseEntity&lt;?&gt; addDict(@RequestBody DataDict dict) {
                     </div>
 
                     <div class="drawer-section" style="margin-top: 1rem;">
-                        <a href="examples/USER_LOG_ANNOTATION_GUIDE.md" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; color: #7dd3fc; text-decoration: none; font-size: 0.9rem; transition: all 0.2s;">
+                        <p style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; color: #7dd3fc; font-size: 0.9rem;">
                             <span>📄</span>
-                            <span>查看完整指南文档</span>
-                        </a>
+                            <span>完整指南文档待补充</span>
+                        </p>
                     </div>
                 `
             },

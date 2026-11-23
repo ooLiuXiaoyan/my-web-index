@@ -422,22 +422,25 @@
     <header class="header">
         <h1>Hermes Agent 安装指南</h1>
         <p>跨平台 AI 智能体框架详细安装教程</p>
-        <span class="version-badge">v2.1.0 | 支持 macOS / Windows / Linux</span>
+        <span class="version-badge">适配 Hermes Agent v0.23.3 | 资料核对：2026-11-23</span>
     </header>
 
     <div class="container">
-        <!-- Quick Start -->
         <div class="quick-start">
             <h2>快速安装</h2>
-            <p>使用官方安装脚本一键安装（适用于 macOS 和 Linux）：</p>
+            <p>macOS、Linux 或 WSL2 使用官方 POSIX 安装脚本：</p>
             <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                <code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>
+                <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code>
             </div>
-            <p style="opacity: 0.8; font-size: 0.9rem;">Windows 用户请查看下方的 Windows 详细安装步骤</p>
+            <p>Windows 原生环境使用 PowerShell：</p>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                <code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code>
+            </div>
+            <p style="opacity: 0.8; font-size: 0.9rem;">当前首次安装由 Hermes PM 管理 Python 3.14、Node.js 和其他工具，不再要求用户预装 Python 3.11。</p>
         </div>
 
-        <!-- OS Tabs -->
         <div class="os-tabs">
             <div class="os-tab active" onclick="showOS('macos')">
                 <span class="icon">🍎</span>
@@ -453,124 +456,69 @@
             </div>
         </div>
 
-        <!-- macOS Section -->
         <div id="macos" class="content-section active macos-theme">
             <div class="card">
                 <h2><span>🍎</span> macOS 安装指南</h2>
-                <p style="color: var(--text-light); margin-bottom: 20px;">支持 macOS 10.15 (Catalina) 及更高版本。推荐 macOS 12+ 以获得最佳体验。</p>
-
-                <h3>系统要求</h3>
+                <p style="color: var(--text-light); margin-bottom: 20px;">支持 Intel 和 Apple Silicon。可选择官方 DMG 桌面包，或使用下方 CLI 源码安装脚本。</p>
+                <h3>准备事项</h3>
                 <ul class="requirements">
-                    <li><span class="check">✓</span> macOS 10.15+ (Intel 或 Apple Silicon)</li>
-                    <li><span class="check">✓</span> Python 3.11 或更高版本</li>
-                    <li><span class="check">✓</span> 至少 4GB 可用内存</li>
-                    <li><span class="check">✓</span> 网络连接（用于下载模型和工具）</li>
+                    <li><span class="check">✓</span> 源码安装需要 Git、curl、tar 和 SHA-256 工具</li>
+                    <li><span class="check">✓</span> 当前运行时由 PM 提供 Python 3.14，无需自行安装 Python</li>
+                    <li><span class="check">✓</span> 安装和首次配置需要网络连接</li>
                 </ul>
-
                 <div class="note info">
                     <span class="icon">💡</span>
-                    <p><strong>提示：</strong>Apple Silicon (M1/M2/M3) 用户无需额外配置，安装脚本会自动检测架构。</p>
+                    <p>如果只使用桌面应用，可从 <a href="https://hermes-agent.nousresearch.com/" target="_blank">Hermes 官网</a>下载 DMG，无需手动准备源码构建环境。</p>
                 </div>
             </div>
 
             <div class="card">
-                <h2>安装步骤</h2>
-
+                <h2>CLI 安装步骤</h2>
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h4>安装 Homebrew（如尚未安装）</h4>
-                        <p>Homebrew 是 macOS 的包管理器，用于安装 Python 等依赖。</p>
+                        <h4>准备基础工具</h4>
+                        <p>如使用 Homebrew，可安装源码脚本所需的 Git 和 curl；无需再安装 Python 3.11。</p>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code>
+                            <code>brew install git curl</code>
                         </div>
                     </div>
                 </div>
-
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h4>安装 Python 3.11+</h4>
-                        <p>使用 Homebrew 安装最新版 Python：</p>
+                        <h4>运行官方安装脚本</h4>
+                        <p>脚本默认安装最新稳定版，并由 PM 准备固定版本的运行时和依赖。</p>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>brew install python@3.11</code>
-                        </div>
-                        <div class="note success">
-                            <span class="icon">✓</span>
-                            <p>验证安装：<code class="code-inline">python3 --version</code> 应显示 3.11.x 或更高版本</p>
+                            <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code>
                         </div>
                     </div>
                 </div>
-
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h4>安装 Hermes Agent</h4>
-                        <p>运行官方安装脚本：</p>
+                        <h4>重新加载 Shell</h4>
+                        <p>POSIX 启动器位于 <code class="code-inline">~/.local/bin/hermes</code>。安装器通常会配置 PATH，也可手动确认：</p>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>
-                        </div>
-                        <p>或手动安装：</p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>git clone https://github.com/NousResearch/hermes-agent.git ~/.hermes/hermes-agent
-cd ~/.hermes/hermes-agent
-pip install -e .</code>
+                            <code>export PATH="$HOME/.local/bin:$PATH"
+source ~/.zshrc  # Bash 用户改为 source ~/.bash_profile</code>
                         </div>
                     </div>
                 </div>
-
                 <div class="step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h4>配置环境变量</h4>
-                        <p>将 Hermes 添加到系统 PATH（根据你的 shell 选择）：</p>
-                        <p><strong>Bash (默认):</strong></p>
+                        <h4>配置并验证</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>echo 'export PATH="$HOME/.hermes/bin:$PATH"' >> ~/.bash_profile
-source ~/.bash_profile</code>
+                            <code>hermes setup
+hermes doctor
+hermes --version</code>
                         </div>
-                        <p><strong>Zsh (macOS Catalina+ 默认):</strong></p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>echo 'export PATH="$HOME/.hermes/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc</code>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>运行设置向导</h4>
-                        <p>配置模型提供商和 API 密钥：</p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>hermes setup</code>
-                        </div>
-                        <div class="note info">
-                            <span class="icon">💡</span>
-                            <p>向导会引导你配置默认模型、API 密钥等。你也可以稍后使用 <code class="code-inline">hermes model</code> 更改设置。</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">6</div>
-                    <div class="step-content">
-                        <h4>验证安装</h4>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>hermes doctor</code>
-                        </div>
-                        <div class="note success">
-                            <span class="icon">✓</span>
-                            <p>如果显示所有检查通过，安装成功！运行 <code class="code-inline">hermes</code> 开始交互式会话。</p>
-                        </div>
+                        <p>验证通过后运行 <code class="code-inline">hermes</code> 开始交互式会话，或运行 <code class="code-inline">hermes desktop</code> 安装并启动桌面应用。</p>
                     </div>
                 </div>
             </div>
@@ -578,26 +526,11 @@ source ~/.zshrc</code>
             <div class="card">
                 <h2>常见问题</h2>
                 <table>
-                    <tr>
-                        <th>问题</th>
-                        <th>解决方案</th>
-                    </tr>
-                    <tr>
-                        <td>"command not found: hermes"</td>
-                        <td>检查 PATH 配置，确保 <code class="code-inline">~/.hermes/bin</code> 已添加</td>
-                    </tr>
-                    <tr>
-                        <td>Python 版本过低</td>
-                        <td>运行 <code class="code-inline">brew install python@3.11</code> 升级</td>
-                    </tr>
-                    <tr>
-                        <td>权限被拒绝</td>
-                        <td>运行 <code class="code-inline">chmod +x ~/.hermes/bin/hermes</code></td>
-                    </tr>
-                    <tr>
-                        <td>Apple Silicon 兼容性问题</td>
-                        <td>确保使用 ARM 版 Python：<code class="code-inline">brew install python@3.11</code></td>
-                    </tr>
+                    <tr><th>问题</th><th>解决方案</th></tr>
+                    <tr><td>"command not found: hermes"</td><td>重新加载 Shell，并确认 <code class="code-inline">~/.local/bin</code> 已加入 PATH</td></tr>
+                    <tr><td>旧安装使用 Python 3.11–3.13</td><td>先运行 <code class="code-inline">hermes update</code>，由更新程序和 PM 迁移到当前托管运行时</td></tr>
+                    <tr><td>需要检查安装方式</td><td>运行 <code class="code-inline">hermes doctor</code> 查看安装来源和诊断信息</td></tr>
+                    <tr><td>安装或更新失败</td><td>查看 Hermes 数据目录下 <code class="code-inline">logs/install.log</code>，不要直接删除数据目录</td></tr>
                 </table>
             </div>
         </div>
@@ -606,25 +539,24 @@ source ~/.zshrc</code>
         <div id="windows" class="content-section windows-theme">
             <div class="card">
                 <h2><span>🪟</span> Windows 安装指南</h2>
-                <p style="color: var(--text-light); margin-bottom: 20px;">支持 Windows 10/11。推荐通过 WSL2 (Windows Subsystem for Linux) 或 PowerShell 安装。</p>
+                <p style="color: var(--text-light); margin-bottom: 20px;">当前 Windows 原生 CLI、Gateway、TUI 和工具均已受支持；也可按兼容性需求选择 WSL2。</p>
 
-                <h3>系统要求</h3>
+                <h3>准备事项</h3>
                 <ul class="requirements">
-                    <li><span class="check">✓</span> Windows 10 (build 19041+) 或 Windows 11</li>
-                    <li><span class="check">✓</span> Python 3.11 或更高版本</li>
-                    <li><span class="check">✓</span> PowerShell 5.1+ 或 Windows Terminal</li>
-                    <li><span class="check">✓</span> 至少 4GB 可用内存</li>
+                    <li><span class="check">✓</span> Windows 10/11，具体功能支持以官方平台矩阵为准</li>
+                    <li><span class="check">✓</span> 原生安装使用 PowerShell，运行时由 PM 提供 Python 3.14</li>
+                    <li><span class="check">✓</span> 没有系统 Git 时，Windows 安装器可准备固定版本的 Git 工具</li>
                 </ul>
 
-                <div class="note warning">
-                    <span class="icon">⚠️</span>
-                    <p><strong>注意：</strong>Windows 原生安装可能遇到路径和权限问题。强烈推荐使用 WSL2 获得最佳体验。</p>
+                <div class="note info">
+                    <span class="icon">💡</span>
+                    <p>桌面用户可直接安装官方 App Installer / MSIX 包。命令行用户优先使用下方原生 PowerShell 一键安装；WSL2 是可选方案，不再是唯一推荐路径。</p>
                 </div>
             </div>
 
             <div class="card">
-                <h2>方案 A：WSL2 安装（推荐）</h2>
-                <p>WSL2 提供完整的 Linux 环境，是 Windows 上运行 Hermes 的最佳方式。</p>
+                <h2>方案 A：WSL2 安装（可选）</h2>
+                <p>需要 Linux 兼容环境时使用 WSL2，并在 WSL 内执行 POSIX 安装脚本。</p>
 
                 <div class="step">
                     <div class="step-number">1</div>
@@ -649,14 +581,9 @@ source ~/.zshrc</code>
                         <p>打开 WSL2 Ubuntu 终端，运行：</p>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>
+                            <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code>
                         </div>
-                        <p>或手动安装：</p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>sudo apt update && sudo apt install -y python3-pip git
-pip3 install --user hermes-agent</code>
-                        </div>
+                        <p>脚本会准备受管 Python 3.14 和依赖。安装完成后重新加载 Shell，再运行 <code class="code-inline">hermes setup</code> 与 <code class="code-inline">hermes doctor</code>。</p>
                     </div>
                 </div>
 
@@ -679,76 +606,35 @@ pip3 install --user hermes-agent</code>
             </div>
 
             <div class="card">
-                <h2>方案 B：Windows 原生安装</h2>
-                <p>直接在 Windows PowerShell 或 cmd 中运行。</p>
-
+                <h2>方案 B：Windows 原生安装（推荐）</h2>
+                <p>打开 PowerShell，运行官方安装器：</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code>
+                </div>
+                <p>安装器会准备 Git、uv、Python 3.14 和其他受管工具。原生安装代码位于 <code class="code-inline">%LOCALAPPDATA%\hermes\hermes-agent</code>，启动器位于 <code class="code-inline">%LOCALAPPDATA%\hermes\bin</code>。</p>
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h4>安装 Python 3.11+</h4>
-                        <p>从 <a href="https://python.org" target="_blank">python.org</a> 下载并安装 Python。安装时勾选 "Add Python to PATH"。</p>
+                        <h4>重新打开 PowerShell 并验证</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code># 验证安装
-python --version
-# 应显示 Python 3.11.x 或更高</code>
+                            <code>hermes doctor
+hermes --version</code>
                         </div>
+                        <p>如果找不到命令，请确认 <code class="code-inline">%LOCALAPPDATA%\hermes\bin</code> 已在用户 PATH 中。</p>
                     </div>
                 </div>
-
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h4>安装 Git</h4>
-                        <p>从 <a href="https://git-scm.com/download/win" target="_blank">git-scm.com</a> 下载 Git for Windows。</p>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>安装 Hermes</h4>
-                        <p>打开 PowerShell（以管理员身份），运行：</p>
+                        <h4>完成配置</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code># 创建安装目录
-mkdir $env:USERPROFILE\.hermes
-cd $env:USERPROFILE\.hermes
-
-# 克隆仓库
-git clone https://github.com/NousResearch/hermes-agent.git hermes-agent
-
-# 安装
-cd hermes-agent
-pip install -e .</code>
+                            <code>hermes setup
+hermes</code>
                         </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h4>配置 PATH</h4>
-                        <p>将 Hermes 添加到系统 PATH：</p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code># 添加到用户 PATH
-[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE\.hermes\bin", "User")
-
-# 刷新环境变量
-$env:Path = [Environment]::GetEnvironmentVariable("Path", "User")</code>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>运行设置向导</h4>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>hermes setup</code>
-                        </div>
+                        <p>需要桌面界面时运行 <code class="code-inline">hermes desktop</code>。Microsoft Store 和 App Installer 包由各自包管理器负责更新，不要混用源码更新方式。</p>
                     </div>
                 </div>
             </div>
@@ -829,59 +715,15 @@ export HTTPS_PROXY="http://$HOST_IP:7890"</code>
                 </div>
                 <p>执行 <code class="code-inline">source ~/.bashrc</code> 生效。每次打开终端自动适配新 IP。</p>
 
-                <h3>问题 4：Python 3.14 版本不兼容</h3>
-                <p>Hermes 要求 Python <code class="code-inline">>=3.11,&lt;3.14</code>。如果系统 Python 是 3.14+，需要降级。</p>
-
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>安装 pyenv</h4>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>sudo apt install -y make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-curl https://pyenv.run | bash</code>
-                        </div>
-                    </div>
+                <h3>问题 4：旧 Python 环境导致安装或更新失败</h3>
+                <p>当前首次安装使用 PM 托管的 Python 3.14。不要再用 pyenv 将新版本降级到 3.12；旧安装可先通过原有环境运行 <code class="code-inline">hermes update</code>，让更新程序完成迁移。</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code>hermes update
+hermes doctor
+hermes --version</code>
                 </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>配置 pyenv 并安装 Python 3.12</h4>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-source ~/.bashrc
-pyenv install 3.12.9</code>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>在项目中使用 Python 3.12</h4>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>cd ~/hermes-agent
-pyenv local 3.12.9
-rm -rf venv
-python -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install -e .</code>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="note info">
-                    <span class="icon">💡</span>
-                    <p>备选方案：使用 deadsnakes PPA <code class="code-inline">sudo add-apt-repository ppa:deadsnakes/ppa && sudo apt install python3.12 python3.12-venv</code>，但可能与系统 Python 冲突，推荐用 pyenv。</p>
-                </div>
+                <p>如果旧环境已无法启动更新程序，请按官方安装文档重新运行当前安装脚本，并保留原有 Hermes 数据目录。</p>
 
                 <h3>问题 5：git config --unset-all 报错 wrong number of arguments</h3>
                 <p><code class="code-inline">--unset-all</code> 后面只需要跟一个配置键名，不能同时跟值。</p>
@@ -1041,41 +883,18 @@ source ~/.bashrc</code>
                 <!-- 问题 4 -->
                 <div class="note danger">
                     <span class="icon">🔴</span>
-                    <p><strong>问题 4：Python 版本不兼容（"requires-python = &gt;=3.11,&lt;3.14"）</strong></p>
+                    <p><strong>问题 4：沿用旧文档手动创建 Python 3.12 环境</strong></p>
                 </div>
-                <p><strong>原因：</strong>Hermes 要求 Python 3.11~3.13，但 Ubuntu 可能安装了 Python 3.14（开发版），导致 <code class="code-inline">pip install -e .</code> 报错。</p>
-                <h4>解决方案：使用 pyenv 安装正确的 Python 版本</h4>
+                <p><strong>原因：</strong>当前 Hermes 首次安装使用 PM 托管的 Python 3.14，旧的 pyenv 降级和 <code class="code-inline">pip install -e .</code> 普通用户安装流程已不再适用。</p>
+                <h4>解决方案：使用当前官方安装与更新路径</h4>
                 <div class="code-block">
                     <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                    <code># 1. 安装 pyenv 依赖
-sudo apt update
-sudo apt install -y make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-
-# 2. 安装 pyenv
-curl https://pyenv.run | bash
-
-# 3. 配置（添加到 ~/.bashrc 末尾）
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo 'command -v pyenv &gt;/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+                    <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 source ~/.bashrc
-
-# 4. 安装 Python 3.12
-pyenv install 3.12.9
-
-# 5. 在项目中使用
-cd ~/hermes-agent
-pyenv local 3.12.9
-
-# 6. 重建虚拟环境并安装
-rm -rf venv
-python -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install -e .</code>
+hermes setup
+hermes doctor</code>
                 </div>
+                <p>旧安装优先运行 <code class="code-inline">hermes update</code>。开发者源码构建应遵循官方 PM developer workflow，而不是按本页旧示例手动维护 venv。</p>
 
                 <!-- 问题 5 -->
                 <div class="note danger">
@@ -1168,99 +987,55 @@ git config --global --list | grep -i proxy</code>
         <div id="linux" class="content-section linux-theme">
             <div class="card">
                 <h2><span>🐧</span> Linux 安装指南</h2>
-                <p style="color: var(--text-light); margin-bottom: 20px;">支持 Ubuntu 20.04+, Debian 11+, Fedora 35+, Arch Linux 等主流发行版。</p>
+                <p style="color: var(--text-light); margin-bottom: 20px;">支持主流 glibc Linux 发行版；具体平台与架构支持以官方平台矩阵为准。</p>
 
-                <h3>系统要求</h3>
+                <h3>准备事项</h3>
                 <ul class="requirements">
-                    <li><span class="check">✓</span> Linux 内核 5.4+</li>
-                    <li><span class="check">✓</span> Python 3.11 或更高版本</li>
-                    <li><span class="check">✓</span> pip 包管理器</li>
-                    <li><span class="check">✓</span> Git</li>
-                    <li><span class="check">✓</span> 至少 4GB 可用内存</li>
+                    <li><span class="check">✓</span> 源码安装需要 Git、curl、tar 和 SHA-256 工具</li>
+                    <li><span class="check">✓</span> PM 提供 Python 3.14、Node.js 和其他受管依赖，无需预装 pip</li>
+                    <li><span class="check">✓</span> 精简系统可能需要 libatomic 和 Chromium 运行库</li>
+                    <li><span class="check">✓</span> 需要网络连接以下载稳定版和工具</li>
                 </ul>
             </div>
 
             <div class="card">
                 <h2>Ubuntu / Debian 安装</h2>
-
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h4>更新系统包</h4>
+                        <h4>准备源码脚本基础工具</h4>
+                        <p>无需预装 Python 或 pip，PM 会提供 Python 3.14 和依赖。</p>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>sudo apt update && sudo apt upgrade -y</code>
+                            <code>sudo apt update
+sudo apt install -y git curl tar coreutils libatomic1</code>
                         </div>
+                        <p>浏览器自动化还可能需要发行版提供的 Chromium 系统库；缺失时按安装日志提示安装。</p>
                     </div>
                 </div>
-
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h4>安装依赖</h4>
+                        <h4>安装 Hermes</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>sudo apt install -y python3.11 python3.11-pip python3.11-venv git curl wget</code>
-                        </div>
-                        <div class="note info">
-                            <span class="icon">💡</span>
-                            <p>如果仓库中没有 Python 3.11，使用 <code class="code-inline">deadsnakes</code> PPA：<code class="code-inline">sudo add-apt-repository ppa:deadsnakes/ppa</code></p>
+                            <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code>
                         </div>
                     </div>
                 </div>
-
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h4>安装 Hermes</h4>
-                        <p>使用官方安装脚本：</p>
+                        <h4>配置 PATH 并完成设置</h4>
+                        <p>POSIX 启动器位于 <code class="code-inline">~/.local/bin/hermes</code>：</p>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>
+                            <code>echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+hermes setup
+hermes doctor</code>
                         </div>
-                        <p>或手动安装：</p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>git clone https://github.com/NousResearch/hermes-agent.git ~/.hermes/hermes-agent
-cd ~/.hermes/hermes-agent
-python3.11 -m pip install --user -e .</code>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h4>配置 PATH</h4>
-                        <p>将 Hermes 添加到 PATH（根据你的 shell）：</p>
-                        <p><strong>Bash:</strong></p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>echo 'export PATH="$HOME/.local/bin:$HOME/.hermes/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc</code>
-                        </div>
-                        <p><strong>Zsh:</strong></p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>echo 'export PATH="$HOME/.local/bin:$HOME/.hermes/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc</code>
-                        </div>
-                        <p><strong>Fish:</strong></p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>set -Ux PATH $HOME/.local/bin $HOME/.hermes/bin $PATH</code>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>运行设置向导</h4>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>hermes setup</code>
-                        </div>
+                        <p>Fish 可执行 <code class="code-inline">set -Ux PATH $HOME/.local/bin $PATH</code>。</p>
                     </div>
                 </div>
             </div>
@@ -1274,7 +1049,7 @@ source ~/.zshrc</code>
                         <h4>安装依赖</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>sudo dnf install -y python3.11 python3.11-pip git curl</code>
+                            <code>sudo dnf install -y git curl tar libatomic</code>
                         </div>
                     </div>
                 </div>
@@ -1285,7 +1060,7 @@ source ~/.zshrc</code>
                         <h4>安装 Hermes</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>
+                            <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code>
                         </div>
                     </div>
                 </div>
@@ -1300,7 +1075,7 @@ source ~/.zshrc</code>
                         <h4>安装依赖</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>sudo pacman -S python python-pip git curl</code>
+                            <code>sudo pacman -S git curl tar gcc-libs</code>
                         </div>
                     </div>
                 </div>
@@ -1311,7 +1086,7 @@ source ~/.zshrc</code>
                         <h4>安装 Hermes</h4>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                            <code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code>
+                            <code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code>
                         </div>
                     </div>
                 </div>
@@ -1320,30 +1095,12 @@ source ~/.zshrc</code>
             <div class="card">
                 <h2>Linux 常见问题</h2>
                 <table>
-                    <tr>
-                        <th>问题</th>
-                        <th>解决方案</th>
-                    </tr>
-                    <tr>
-                        <td>pip 安装权限错误</td>
-                        <td>使用 <code class="code-inline">--user</code> 标志或创建虚拟环境</td>
-                    </tr>
-                    <tr>
-                        <td>Python 版本过低</td>
-                        <td>使用 pyenv 或发行版特定 PPA 安装 Python 3.11+</td>
-                    </tr>
-                    <tr>
-                        <td>网关服务无法后台运行</td>
-                        <td>启用 systemd linger：<code class="code-inline">sudo loginctl enable-linger $USER</code></td>
-                    </tr>
-                    <tr>
-                        <td>SSL 证书错误</td>
-                        <td>更新 ca-certificates：<code class="code-inline">sudo apt install ca-certificates</code></td>
-                    </tr>
-                    <tr>
-                        <td>找不到 hermes 命令</td>
-                        <td>检查 <code class="code-inline">~/.local/bin</code> 是否在 PATH 中</td>
-                    </tr>
+                    <tr><th>问题</th><th>解决方案</th></tr>
+                    <tr><td>旧 Python 或手动 venv 干扰</td><td>使用当前安装脚本和 PM 托管运行时；旧安装先尝试 <code class="code-inline">hermes update</code></td></tr>
+                    <tr><td>网关服务需在注销后运行</td><td>按官方服务配置启用 systemd linger：<code class="code-inline">sudo loginctl enable-linger $USER</code></td></tr>
+                    <tr><td>SSL 证书错误</td><td>更新系统 CA 证书，并检查企业代理或 TLS 拦截配置</td></tr>
+                    <tr><td>提示缺少 libatomic</td><td>Debian/Ubuntu 安装 <code class="code-inline">libatomic1</code>，Fedora/RHEL 安装 <code class="code-inline">libatomic</code></td></tr>
+                    <tr><td>找不到 hermes 命令</td><td>检查 <code class="code-inline">~/.local/bin</code> 是否在 PATH 中，并运行 <code class="code-inline">hermes doctor</code></td></tr>
                 </table>
             </div>
         </div>
@@ -1370,8 +1127,8 @@ source ~/.zshrc</code>
                     <td>启动交互式会话</td>
                 </tr>
                 <tr>
-                    <td><code class="code-inline">hermes chat -q "问题"</code></td>
-                    <td>单次查询模式</td>
+                    <td><code class="code-inline">hermes chat --oneshot -q "问题"</code></td>
+                    <td>单次查询并在回答后退出</td>
                 </tr>
                 <tr>
                     <td><code class="code-inline">hermes doctor</code></td>
@@ -1413,36 +1170,15 @@ DEEPSEEK_API_KEY=your_key_here</code>
             </div>
 
             <h3>4. 关闭终端后重新进入 Hermes</h3>
-            <p>关闭终端后再次使用 Hermes，只需重新激活虚拟环境：</p>
+            <p>标准安装使用全局启动器，不需要重新激活 venv。直接打开对应终端运行：</p>
             <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                <code># 打开windows终端，输入命令进入linux终端
-wsl
-
-# 然后进入项目目录
-cd ~/hermes-agent
-
-# 激活虚拟环境（看到提示符前出现 (venv) 即成功）
-source venv/bin/activate
-
-# 开始使用
-hermes chat</code>
+                <code>hermes</code>
             </div>
+            <p>WSL 用户先进入原来的 WSL 发行版，再运行 <code class="code-inline">hermes</code>。如果提示找不到命令，请检查前文对应的 PATH 和安装诊断步骤，不要重新执行旧的 <code class="code-inline">pip install -e .</code> 示例。</p>
             <div class="note info">
                 <span class="icon">💡</span>
-                <p><strong>一键快捷方式：</strong>在 <code class="code-inline">~/.bashrc</code> 中添加别名，之后只需输入 <code class="code-inline">hermes-go chat</code> 即可直接进入：</p>
-            </div>
-            <div class="code-block">
-                <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                <code>echo 'alias hermes-go="cd ~/hermes-agent && source venv/bin/activate && hermes"' >> ~/.bashrc
-source ~/.bashrc
-
-# 之后使用
-hermes-go chat</code>
-            </div>
-            <div class="note warning">
-                <span class="icon">⚠️</span>
-                <p><strong>验证虚拟环境：</strong>运行 <code class="code-inline">which python</code>，如果显示 <code class="code-inline">~/hermes-agent/venv/bin/python</code> 说明已正确激活。如果 <code class="code-inline">hermes</code> 命令找不到，重新执行 <code class="code-inline">pip install -e .</code> 安装。</p>
+                <p><strong>更新方式：</strong>源码 CLI 安装使用 <code class="code-inline">hermes update</code>；桌面、Microsoft Store、Docker 和 Termux 包分别使用其包管理器的更新机制。</p>
             </div>
         </div>
 
@@ -1453,13 +1189,14 @@ hermes-go chat</code>
                 <li><span class="check">💬</span> GitHub Discussions：<a href="https://github.com/NousResearch/hermes-agent/discussions" target="_blank">讨论区</a></li>
                 <li><span class="check">🐛</span> 提交 Issue：<a href="https://github.com/NousResearch/hermes-agent/issues" target="_blank">GitHub Issues</a></li>
                 <li><span class="check">🚀</span> 项目主页：<a href="https://github.com/NousResearch/hermes-agent" target="_blank">github.com/NousResearch/hermes-agent</a></li>
+                <li><span class="check">🧭</span> 当前版本：<a href="https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.3" target="_blank">Hermes Agent v0.23.3 发布说明</a></li>
             </ul>
         </div>
     </div>
 
     <footer class="footer">
         <p>Hermes Agent 由 Nous Research 开发 | 开源 AI 智能体框架</p>
-        <p style="margin-top: 10px;">本文档基于 Hermes Agent v2.1.0 生成</p>
+        <p style="margin-top: 10px;">本文档适配 Hermes Agent v0.23.3，资料核对日期：2026-11-23</p>
     </footer>
 
     <script src="script.js"></script>

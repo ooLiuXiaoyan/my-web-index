@@ -73,7 +73,7 @@ flowchart TB
         subgraph LLMProviders["🧠 大模型提供商"]
             direction LR
             LLM1[🤖 Claude<br/>Anthropic]
-            LLM2[⭐ GPT-4<br/>OpenAI]
+            LLM2[⭐ GPT-6.2<br/>OpenAI]
             LLM3[🌙 Gemini<br/>Google]
             LLM4[🦙 LLaMA<br/>Meta]
             LLM5[💎 DeepSeek<br/>深度求索]
@@ -82,7 +82,7 @@ flowchart TB
 
         subgraph ModelInfra["⚡ 模型基础设施"]
             direction LR
-            MI1[🎮 GPU集群<br/>A100/H100]
+            MI1[🎮 AI加速计算<br/>H100/B200/Rubin]
             MI2[⚙️ vLLM<br/>推理引擎]
             MI3[🔧 Triton<br/>模型服务]
             MI4[📊 MLflow<br/>模型管理]
@@ -220,7 +220,7 @@ flowchart TB
 
 | 模块 | 技术组件 | 功能描述 |
 |------|----------|----------|
-| **大模型提供商** | Claude、GPT-4、Gemini、LLaMA、DeepSeek、Qwen | 提供基础大语言模型能力 |
+| **大模型提供商** | Claude、GPT-6.2、Gemini、LLaMA、DeepSeek、Qwen | 提供基础大语言模型能力 |
 | **模型基础设施** | GPU集群、vLLM、Triton、MLflow | 模型推理加速与服务化管理 |
 | **向量数据库** | Pinecone、Milvus、pgvector、Weaviate | 向量存储与语义检索（RAG） |
 
