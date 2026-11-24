@@ -48,7 +48,7 @@ jobs:
 
             ### 操作步骤
             1. 访问各厂商官网获取最新信息
-            2. 更新 \`ai-vendors.html\` 中对应厂商的产品标签、描述和特性
+            2. 更新 \`docs/series/ai-vendors/01-overview.md\` 中对应厂商的产品标签、描述和特性
             3. 提交并推送到 GitHub
             4. 关闭此 Issue
 
