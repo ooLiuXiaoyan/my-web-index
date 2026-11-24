@@ -1,0 +1,16 @@
+{
+  "name": "aigo-blog",
+  "version": "3.0.0",
+  "private": true,
+  "description": "南仔的 AI 技术博客 — 系列专栏制，基于 VitePress",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "mermaid": "^11.17.2",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  }
+}

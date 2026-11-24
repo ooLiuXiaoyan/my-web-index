@@ -1,15 +1,20 @@
 stages:
   - deploy
 
+# v3.0：构建 VitePress 静态站点（Node 构建，产物在 docs/.vitepress/dist）
 pages:
   stage: deploy
+  image: node:22
+  cache:
+    key: npm
+    paths:
+      - node_modules/
   script:
-    - mkdir -p public
-    - cp -f *.html public/
-    - cp -f *.css public/
-    - cp -f *.js public/
-    - cp -rf examples public/
-    - echo "Deployed to public/"
+    - npm ci
+    - npm run build
+    - rm -rf public
+    - cp -rf dist public
+    - echo "Deployed VitePress site to public/"
   artifacts:
     paths:
       - public
