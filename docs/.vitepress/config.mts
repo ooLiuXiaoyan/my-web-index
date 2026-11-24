@@ -9,6 +9,8 @@ const seriesNav = [
   { text: '💡 AI 概念词典', link: '/series/ai-concepts/' },
   { text: '🔌 MCP 协议', link: '/series/mcp/' },
   { text: '🏗️ 架构随笔', link: '/series/architecture/' },
+  { text: '🖥️ AI 桌面办公助手', link: '/series/desktop-ai/' },
+  { text: '🧩 Agent Harness 研究', link: '/series/agent-harness/' },
 ]
 
 export default withMermaid(defineConfig({
@@ -19,6 +21,14 @@ export default withMermaid(defineConfig({
   lastUpdated: true,
   // 输出到项目根 dist/（根目录 .gitignore 已覆盖），避免 .vitepress 内残留损坏目录
   outDir: '../dist',
+
+  // dev 模式下 fastdom（mermaid 间接依赖，CJS）需要强制预打包，
+  // 否则浏览器报 "does not provide an export named 'default'"
+  vite: {
+    optimizeDeps: {
+      include: ['mermaid', 'fastdom'],
+    },
+  },
 
   head: [
     ['link', { rel: 'icon', href: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧪</text></svg>' }],
@@ -88,6 +98,35 @@ export default withMermaid(defineConfig({
           items: [
             { text: '系列导览', link: '/series/architecture/' },
             { text: '01 · 智能体基础设施架构', link: '/series/architecture/01-infrastructure' },
+          ],
+        },
+      ],
+      '/series/desktop-ai/': [
+        {
+          text: '🖥️ AI 桌面办公助手',
+          items: [
+            { text: '系列导览', link: '/series/desktop-ai/' },
+            { text: '01 · 从聊天框到桌面 Agent', link: '/series/desktop-ai/01-from-chat-to-agent' },
+            { text: '02 · 主流产品全景横评', link: '/series/desktop-ai/02-landscape' },
+            { text: '03 · 核心能力拆解', link: '/series/desktop-ai/03-capabilities' },
+            { text: '04 · 同一任务实测', link: '/series/desktop-ai/04-hands-on-test' },
+            { text: '05 · WorkBuddy 深度体验', link: '/series/desktop-ai/05-workbuddy' },
+            { text: '06 · Computer Use 原理', link: '/series/desktop-ai/06-computer-use' },
+            { text: '07 · 安全与隐私边界', link: '/series/desktop-ai/07-security-privacy' },
+            { text: '08 · 搭建自己的桌面工作流', link: '/series/desktop-ai/08-diy-workflow' },
+          ],
+        },
+      ],
+      '/series/agent-harness/': [
+        {
+          text: '🧩 Agent Harness 研究',
+          items: [
+            { text: '系列导览', link: '/series/agent-harness/' },
+            { text: '01 · 什么是 Harness', link: '/series/agent-harness/01-what-is-harness' },
+            { text: '02 · DeerFlow 2.0 深度解析', link: '/series/agent-harness/02-deerflow' },
+            { text: '03 · DeepSeek Harness 深度解析', link: '/series/agent-harness/03-deepseek-harness' },
+            { text: '04 · 两条路线之争', link: '/series/agent-harness/04-two-philosophies' },
+            { text: '05 · Harness 设计的关键取舍', link: '/series/agent-harness/05-design-tradeoffs' },
           ],
         },
       ],

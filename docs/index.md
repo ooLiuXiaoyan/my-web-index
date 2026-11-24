@@ -44,4 +44,14 @@ features:
     details: 智能体基础设施的分层架构、技术选型思考与工程实践记录。
     link: /series/architecture/
     linkText: 进入系列
+  - icon: 🖥️
+    title: AI 桌面办公助手
+    details: 从聊天框到桌面 Agent：产品横评、能力拆解、实测与原理，看清这个进化最快的品类。
+    link: /series/desktop-ai/
+    linkText: 进入系列
+  - icon: 🧩
+    title: Agent Harness 研究
+    details: Agent = Model + Harness：以 DeerFlow 与 DeepSeek Harness 为样本，研究智能体运行时的设计路线之争。
+    link: /series/agent-harness/
+    linkText: 进入系列
 ---
