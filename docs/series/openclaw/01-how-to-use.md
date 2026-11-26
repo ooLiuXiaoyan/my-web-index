@@ -21,10 +21,66 @@ source: how-to-use.html
 
 ### 1.2 代码审查与重构
 
-- 👀 **自动 Code Review**：提交 PR 前自动检查代码规范、潜在 Bug、安全漏洞 ✨（已在实施）
+- 👀 **自动 Code Review**：提交 PR 前自动检查代码规范、潜在 Bug、安全漏洞 ✨（已在实施，见下方阿里 OCR 实战）
 - 🔄 **重构建议**：识别代码坏味道，提供重构方案
 - ⚡ **性能分析**：发现性能瓶颈，给出优化建议
 - 📦 **依赖检查**：检测过时依赖，提示安全漏洞
+
+::: details 🛡️ 实战案例：阿里 Open Code Review（OCR）——确定性工程 + LLM Agent 的代码审查框架
+阿里巴巴内部用 AI 做 Code Review 两年后，于 2026 年 5 月将工具开源为 **Open Code Review**（命令 `ocr`，GitHub `alibaba/open-code-review`，Go + TypeScript，Apache-2.0）：内部服务过数万名开发者、识别数百万个代码缺陷，开源两周即破千 Star。
+
+**为什么不用通用 Agent 直接审查**
+
+用 Claude Code 加个 Skill 做 Review 的常见问题：大 diff 时 Agent「偷懒」漏审文件、报出的行号对不上、换个 prompt 写法质量就跳水。这不是模型不聪明，而是**纯语言驱动的架构缺少硬约束**。
+
+**核心设计：确定性工程 × Agent 混合架构**
+
+把「不能出错」的部分交给工程代码，把「需要判断力」的部分交给 LLM：
+
+- **精准文件筛选**：哪些文件该审、哪些过滤（lock 文件、生成代码），由工程逻辑决定，不靠 LLM 判断，确保重要改动一个不漏
+- **智能文件打包**：关联文件（如中英文 properties 文件）归并为一个审查单元，每个包作为独立 sub-agent 运行，上下文隔离、天然并发，超大变更集也稳定
+- **精细化规则匹配**：Java 文件查 NPE 和线程安全、XML mapper 查 SQL 注入、前端文件查 XSS——按文件特征自动匹配规则模板
+- **外挂定位与反思模块**：独立组件保证行号精确、对生成意见做二次校验，而不是 prompt 里的一句话
+
+**三阶段审查流程**
+
+1. **Plan**：变更超 50 行先做风险分析，小改动直接进主审查
+2. **Main Task**：每个文件独立 goroutine 并发处理（默认 8 并发、单文件 10 分钟超时），LLM 多轮工具调用，直到调用 `task_done` 结束
+3. **Memory Compression**：上下文超限时自动压缩，分冻结区 / 压缩区 / 活跃区
+
+**内置规则与自定义**
+
+内置覆盖国内团队最高频的坑：NPE、SQL 注入、XSS、线程安全、参数校验缺失、Mapper SQL 配置错误。规则按四层优先级解析：`--rule` 参数 > 项目级 `<repo>/.opencodereview/rule.json` > 全局 `~/.opencodereview/rule.json` > 系统内置，团队可沉淀自己的 Review 标准。
+
+**快速上手**
+
+```bash
+# 安装
+npm install -g @alibaba-group/open-code-review
+
+# 配置模型（兼容 OpenAI / Anthropic，也兼容 Claude Code 环境变量）
+ocr config set llm.url https://api.anthropic.com/v1/messages
+ocr config set llm.auth_token your-api-key
+ocr config set llm.model claude-opus-4-6
+ocr config set llm.use_anthropic true
+ocr llm test   # 测试连通性
+
+# 日常使用
+ocr review                          # 审查工作区变更
+ocr review --from main --to feat    # 分支对比
+ocr review --commit abc123          # 单个提交
+ocr review --preview                # 预览审查范围，不调 LLM 零成本
+ocr viewer                          # Web UI 翻审查历史
+```
+
+**与 Agent / CI 的集成**
+
+- 装成 Skill：`npx skills add alibaba/open-code-review --skill open-code-review`，编码 Agent 学会调用 `ocr` 并按优先级分类修复
+- Claude Code 插件：`/plugin marketplace add alibaba/open-code-review`，获得 `/open-code-review:review` 斜杠命令
+- CI/CD：`ocr review --from origin/main --to origin/feature --format json --audience agent` 输出机器可读结果，官方提供 GitHub Actions / GitLab CI 示例
+
+> 💡 **经验**：OCR 的思路——「确定性工程兜底稳定性，Agent 负责判断力」——与 OpenClaw 的技能体系可以组合使用：把 `ocr review` 封装为 OpenClaw 技能，在提交流水线中自动触发，是代码审查场景目前最稳的落地姿势。
+:::
 
 ### 1.3 技术方案设计
 
