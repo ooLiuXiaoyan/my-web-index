@@ -54,4 +54,9 @@ features:
     details: Agent = Model + Harness：以 DeerFlow 与 DeepSeek Harness 为样本，研究智能体运行时的设计路线之争。
     link: /series/agent-harness/
     linkText: 进入系列
+  - icon: 📚
+    title: AI 知识库实战
+    details: 从存起来到用起来：Dify / ima / Coze 实战手记、产品深度、横评选型与知识库质量工程。
+    link: /series/knowledge-base/
+    linkText: 进入系列
 ---

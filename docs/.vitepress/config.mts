@@ -11,6 +11,7 @@ const seriesNav = [
   { text: '🏗️ 架构随笔', link: '/series/architecture/' },
   { text: '🖥️ AI 桌面办公助手', link: '/series/desktop-ai/' },
   { text: '🧩 Agent Harness 研究', link: '/series/agent-harness/' },
+  { text: '📚 AI 知识库实战', link: '/series/knowledge-base/' },
 ]
 
 export default withMermaid(defineConfig({
@@ -127,6 +128,21 @@ export default withMermaid(defineConfig({
             { text: '03 · DeepSeek Harness 深度解析', link: '/series/agent-harness/03-deepseek-harness' },
             { text: '04 · 两条路线之争', link: '/series/agent-harness/04-two-philosophies' },
             { text: '05 · Harness 设计的关键取舍', link: '/series/agent-harness/05-design-tradeoffs' },
+          ],
+        },
+      ],
+      '/series/knowledge-base/': [
+        {
+          text: '📚 AI 知识库实战',
+          items: [
+            { text: '系列导览', link: '/series/knowledge-base/' },
+            { text: '01 · 从存起来到用起来', link: '/series/knowledge-base/01-from-storage-to-execution' },
+            { text: '02 · 我的知识库实战手记', link: '/series/knowledge-base/02-my-practice' },
+            { text: '03 · ima 深度', link: '/series/knowledge-base/03-ima' },
+            { text: '04 · Dify 深度', link: '/series/knowledge-base/04-dify' },
+            { text: '05 · Coze 深度', link: '/series/knowledge-base/05-coze' },
+            { text: '06 · 横评与选型', link: '/series/knowledge-base/06-landscape' },
+            { text: '07 · 知识库质量工程', link: '/series/knowledge-base/07-quality-engineering' },
           ],
         },
       ],
